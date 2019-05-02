@@ -128,7 +128,10 @@ describe('Ao adicionar uma conta, ContaNegocio', () => {
         conta.dataVencimento = new Date('2019-12-15');
         conta = contaNegocio.criar(conta);
         const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.vencimento);
-        expect([new Date('2019-12-15'), new Date('2020-01-15'), new Date('2020-02-15')]).toEqual(vencimentos);
+        const vencimentosEsperados = [new Date('2019-12-15'), new Date('2020-01-15'), new Date('2020-02-15')];
+        expect(vencimentosEsperados).toEqual(vencimentos);
     });
+
+    xit('deve gerar uma transação caso a conta seja do tipo DINHEIRO', () => {});
 
 });

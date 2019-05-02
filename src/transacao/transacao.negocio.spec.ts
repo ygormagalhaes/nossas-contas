@@ -51,4 +51,8 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
         }).toThrow(new TransacaoException(TransacaoException.TIPO_INVALIDO));
     });
 
+    xit('deve atualizar o status de uma conta após o pagamento', () => {});
+    xit('deve atualizar o status de uma parcela após o pagamento', () => {});
+    xit('deve atualizar o status de uma parcela e da conta após o pagamento da última parcela', () => {});
+    xit('deve validar a data da transação', () => {});
 });
