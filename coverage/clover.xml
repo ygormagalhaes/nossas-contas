@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1556821052496" clover="3.2.0">
+  <project timestamp="1556821052496" name="All files">
+    <metrics statements="80" coveredstatements="79" conditionals="34" coveredconditionals="33" methods="18" coveredmethods="18" elements="132" coveredelements="130" complexity="0" loc="80" ncloc="80" packages="4" files="8" classes="8">
+      <package name="conta">
+        <metrics statements="53" coveredstatements="53" conditionals="24" coveredconditionals="24" methods="10" coveredmethods="10"/>
+        <file name="conta.exception.ts" path="/home/formati/lixo/nossas-contas/src/conta/conta.exception.ts">
+          <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+        </file>
+        <file name="conta.negocio.ts" path="/home/formati/lixo/nossas-contas/src/conta/conta.negocio.ts">
+          <metrics statements="43" coveredstatements="43" conditionals="22" coveredconditionals="22" methods="9" coveredmethods="9"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="12" count="13" type="stmt"/>
+          <line num="15" count="12" type="stmt"/>
+          <line num="16" count="10" type="stmt"/>
+          <line num="17" count="8" type="stmt"/>
+          <line num="18" count="6" type="stmt"/>
+          <line num="19" count="5" type="stmt"/>
+          <line num="20" count="5" type="stmt"/>
+          <line num="22" count="4" type="stmt"/>
+          <line num="26" count="12" type="cond" truecount="2" falsecount="0"/>
+          <line num="27" count="1" type="stmt"/>
+          <line num="30" count="11" type="stmt"/>
+          <line num="31" count="11" type="cond" truecount="2" falsecount="0"/>
+          <line num="32" count="1" type="stmt"/>
+          <line num="37" count="10" type="cond" truecount="2" falsecount="0"/>
+          <line num="38" count="1" type="stmt"/>
+          <line num="41" count="9" type="cond" truecount="2" falsecount="0"/>
+          <line num="42" count="1" type="stmt"/>
+          <line num="47" count="8" type="cond" truecount="4" falsecount="0"/>
+          <line num="48" count="2" type="stmt"/>
+          <line num="53" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="54" count="6" type="stmt"/>
+          <line num="55" count="6" type="cond" truecount="4" falsecount="0"/>
+          <line num="56" count="1" type="stmt"/>
+          <line num="59" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="60" count="2" type="stmt"/>
+          <line num="65" count="2" type="stmt"/>
+          <line num="66" count="2" type="stmt"/>
+          <line num="67" count="2" type="stmt"/>
+          <line num="68" count="4" type="stmt"/>
+          <line num="69" count="4" type="stmt"/>
+          <line num="74" count="4" type="stmt"/>
+          <line num="75" count="4" type="stmt"/>
+          <line num="80" count="5" type="stmt"/>
+          <line num="84" count="5" type="stmt"/>
+          <line num="85" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="86" count="1" type="stmt"/>
+          <line num="88" count="4" type="stmt"/>
+        </file>
+        <file name="tipo-conta.enum.ts" path="/home/formati/lixo/nossas-contas/src/conta/tipo-conta.enum.ts">
+          <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+          <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="transacao">
+        <metrics statements="21" coveredstatements="20" conditionals="10" coveredconditionals="9" methods="5" coveredmethods="5"/>
+        <file name="tipo-transacao.enum.ts" path="/home/formati/lixo/nossas-contas/src/transacao/tipo-transacao.enum.ts">
+          <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+          <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+        </file>
+        <file name="transacao.exception.ts" path="/home/formati/lixo/nossas-contas/src/transacao/transacao.exception.ts">
+          <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+        </file>
+        <file name="transacao.negocio.ts" path="/home/formati/lixo/nossas-contas/src/transacao/transacao.negocio.ts">
+          <metrics statements="14" coveredstatements="13" conditionals="8" coveredconditionals="7" methods="4" coveredmethods="4"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="8" count="4" type="stmt"/>
+          <line num="9" count="3" type="stmt"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="11" count="0" type="stmt"/>
+          <line num="15" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="16" count="1" type="stmt"/>
+          <line num="21" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="22" count="1" type="stmt"/>
+          <line num="27" count="3" type="cond" truecount="4" falsecount="0"/>
+          <line num="28" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="usuario">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <file name="usuario.service.ts" path="/home/formati/lixo/nossas-contas/src/usuario/usuario.service.ts">
+          <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="1" count="3" type="stmt"/>
+          <line num="4" count="3" type="stmt"/>
+          <line num="7" count="4" type="stmt"/>
+        </file>
+      </package>
+      <package name="utils">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <file name="enum.utils.ts" path="/home/formati/lixo/nossas-contas/src/utils/enum.utils.ts">
+          <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="4" count="29" type="stmt"/>
+          <line num="5" count="10" type="stmt"/>
+        </file>
+      </package>
+    </metrics>
+  </project>
+</coverage>

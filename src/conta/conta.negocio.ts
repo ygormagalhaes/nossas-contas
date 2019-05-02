@@ -1,3 +1,4 @@
+import { Parcela } from './parcela.model';
 import { Injectable } from '@nestjs/common';
 import { Conta } from './conta.model';
 import { ContaException } from './conta.exception';
@@ -8,55 +9,84 @@ import { EnumUtils } from '../utils/enum.utils';
 @Injectable()
 export class ContaNegocio {
 
-  constructor(private readonly usuarioService: UsuarioService) {}
+    constructor(private readonly usuarioService: UsuarioService) { }
 
-  criar(conta: Conta) {
-    this.validarDataVencimento(conta);
-    this.validarTipo(conta);
-    this.validarValor(conta);
-    this.setarDataLancamento(conta);
-    this.setarUsuario(conta);
+    criar(conta: Conta) {
+        this.validarDataVencimento(conta);
+        this.validarTipo(conta);
+        this.validarValor(conta);
+        this.validarParcelado(conta);
+        this.setarDataLancamento(conta);
+        this.setarUsuario(conta);
 
-    return conta;
-  }
-
-  private validarDataVencimento(conta: Conta) {
-    if (!conta.dataVencimento) {
-      throw new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA);
+        return conta;
     }
 
-    const tipoValido = typeof conta.dataVencimento.getTime !== 'function';
-    if (tipoValido) {
-      throw new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA);
-    }
-  }
+    private validarDataVencimento(conta: Conta) {
+        if (!conta.dataVencimento) {
+            throw new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA);
+        }
 
-  private validarTipo(conta: Conta) {
-    if (!conta.tipo) {
-      throw new ContaException(ContaException.TIPO_INVALIDO);
+        const tipoValido = typeof conta.dataVencimento.getTime !== 'function';
+        if (tipoValido) {
+            throw new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA);
+        }
     }
 
-    if (!EnumUtils.existeValorNoEnum(conta.tipo, TipoConta)) {
-      throw new ContaException(ContaException.TIPO_INVALIDO);
-    }
-  }
+    private validarTipo(conta: Conta) {
+        if (!conta.tipo) {
+            throw new ContaException(ContaException.TIPO_INVALIDO);
+        }
 
-  private validarValor(conta: Conta) {
-    if (!conta.valor || conta.valor <= 0) {
-      throw new ContaException(ContaException.VALOR_INVALIDO);
+        if (!EnumUtils.existeValorNoEnum(conta.tipo, TipoConta)) {
+            throw new ContaException(ContaException.TIPO_INVALIDO);
+        }
     }
-  }
 
-  private setarDataLancamento(conta: Conta) {
-    conta.dataLancamento = new Date();
-  }
-
-  private setarUsuario(conta: Conta) {
-    const usuarioLogado: any = this.usuarioService.getUsuarioLogado();
-    if (!usuarioLogado) {
-      throw new ContaException(ContaException.USUARIO_NAO_LOGADO);
+    private validarValor(conta: Conta) {
+        if (!conta.valor || conta.valor <= 0) {
+            throw new ContaException(ContaException.VALOR_INVALIDO);
+        }
     }
-    conta.usuario = usuarioLogado;
-  }
+
+    private validarParcelado(conta: Conta) {
+        const parcelado = conta.numeroParcelas && conta.numeroParcelas > 0;
+        const compraCartaoCredito = conta.tipo === TipoConta.CARTAO_CREDITO;
+        if (parcelado && !compraCartaoCredito) {
+            throw new ContaException(ContaException.TIPO_INVALIDO_PARCELAS);
+        }
+
+        if (parcelado) {
+            this.calcuarParcelas(conta);
+        }
+    }
+
+    private calcuarParcelas(conta: Conta) {
+        let vencimento = conta.dataVencimento;
+        conta.parcelas = [];
+        for (let i = 0; i < conta.numeroParcelas; i++) {
+            const valorParcela = conta.valor / conta.numeroParcelas;
+            const parcela: Parcela = {
+                conta,
+                valor: valorParcela,
+                vencimento,
+            };
+            vencimento = new Date(vencimento);
+            vencimento.setMonth(vencimento.getMonth() + 1);
+            conta.parcelas.push(parcela);
+        }
+    }
+
+    private setarDataLancamento(conta: Conta) {
+        conta.dataLancamento = new Date();
+    }
+
+    private setarUsuario(conta: Conta) {
+        const usuarioLogado: any = this.usuarioService.getUsuarioLogado();
+        if (!usuarioLogado) {
+            throw new ContaException(ContaException.USUARIO_NAO_LOGADO);
+        }
+        conta.usuario = usuarioLogado;
+    }
 
 }
