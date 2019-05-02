@@ -3,6 +3,7 @@ import { Conta } from './conta.model';
 import { ContaException } from './conta.exception';
 import { TipoConta } from './tipo-conta.enum';
 import { UsuarioService } from '../usuario/usuario.service';
+import { EnumUtils } from '../utils/enum.utils';
 
 @Injectable()
 export class ContaNegocio {
@@ -35,9 +36,7 @@ export class ContaNegocio {
       throw new ContaException(ContaException.TIPO_INVALIDO);
     }
 
-    // TODO: Criar classe utilitária para verificação de dados de enum.
-    const valoresTipo: string[] = Object.keys(TipoConta).map(key => TipoConta[key]);
-    if (!valoresTipo.includes(conta.tipo)) {
+    if (!EnumUtils.existeValorNoEnum(conta.tipo, TipoConta)) {
       throw new ContaException(ContaException.TIPO_INVALIDO);
     }
   }

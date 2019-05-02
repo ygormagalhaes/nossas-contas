@@ -1,4 +1,7 @@
+import { UtilsModule } from './../utils/utils.module';
 import { Module } from '@nestjs/common';
 
-@Module({})
+@Module({
+    imports: [UtilsModule]
+})
 export class TransacaoModule {}

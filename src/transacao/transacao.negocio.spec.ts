@@ -29,6 +29,13 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
     });
 
     it('deve lançar um erro caso não seja informado um valor', () => {
+        delete transacao.valor;
+        expect(() => {
+            transacaoNegocio.criar(transacao);
+        }).toThrow(new TransacaoException(TransacaoException.VALOR_INVALIDO));
+    });
+
+    it('deve lançar um erro caso seja informado um valor igual ou inferior a zero', () => {
         transacao.valor = 0;
         expect(() => {
             transacaoNegocio.criar(transacao);
