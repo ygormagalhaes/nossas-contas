@@ -1,4 +1,3 @@
-import { Transacao } from './../transacao/transacao.model';
 import { TestingModule, Test } from '@nestjs/testing';
 import { TransacaoService } from './../transacao/transacao.service';
 import { SaldoNegocio } from './saldo.negocio';

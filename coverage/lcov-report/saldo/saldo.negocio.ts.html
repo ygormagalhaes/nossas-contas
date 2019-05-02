@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for transacao/transacao.negocio.ts</title>
+    <title>Code coverage report for saldo/saldo.negocio.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,18 +16,18 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">All files</a> / <a href="index.html">transacao</a> transacao.negocio.ts
+      <a href="../index.html">All files</a> / <a href="index.html">saldo</a> saldo.negocio.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">94.12% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>16/17</span>
+        <span class='fraction'>19/19</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">87.5% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>7/8</span>
+        <span class='fraction'>3/4</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">93.33% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>14/15</span>
+        <span class='fraction'>17/17</span>
       </div>
     </div>
   </div>
@@ -75,71 +75,68 @@
 30
 31
 32
-33
-34</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+33</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { TipoTransacao } from './tipo-transacao.enum';
-import { TransacaoException } from './transacao.exception';
-import { Transacao } from './transacao.model';
-import { EnumUtils } from '../utils/enum.utils';
-import { Injectable } from '@nestjs/common';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Injectable } from '@nestjs/common';
+import { Transacao } from './../transacao/transacao.model';
+import { TransacaoService } from './../transacao/transacao.service';
+import { TipoTransacao } from '../transacao/tipo-transacao.enum';
+&nbsp;
 @Injectable()
-export class TransacaoNegocio {
+export class SaldoNegocio {
 &nbsp;
-    criar(transacao: Transacao) {
-        this.validarObjeto(transacao);
-        this.validarValor(transacao);
-        this.validarTipo(transacao);
-<span class="cstat-no" title="statement not covered" >        return transacao;</span>
+    constructor(private readonly transacaoService: TransacaoService) {}
+&nbsp;
+    async obter(date: Date): Promise&lt;number&gt; {
+        let totalTransacoes = 0;
+        const saldoTransacoes = await this.processaTransacoesDoMes(date);
+        totalTransacoes += saldoTransacoes;
+        // TODO: Obter contas com vencimento do mês.
+        return totalTransacoes;
     }
 &nbsp;
-    private validarTipo(transacao: Transacao) {
-        <span class="missing-if-branch" title="else path not taken" >E</span>if (!EnumUtils.existeValorNoEnum(transacao.tipo, TipoTransacao)) {
-            throw new TransacaoException(TransacaoException.TIPO_INVALIDO);
-        }
-    }
+    private async processaTransacoesDoMes(date: Date): Promise&lt;number&gt; {
+        const transacoesDoMes: Transacao[] = await this.transacaoService.obterDoMes(date);
+        let saldoTransacoes = 0;
+        transacoesDoMes.forEach(transacao =&gt; {
+            if (transacao.tipo === TipoTransacao.ENTRADA) {
+                saldoTransacoes += transacao.valor;
+            } else <span class="missing-if-branch" title="else path not taken" >E</span>if (transacao.tipo === TipoTransacao.SAIDA) {
+                saldoTransacoes -= transacao.valor;
+            }
+        });
 &nbsp;
-    private validarObjeto(transacao: Transacao) {
-        if (!transacao) {
-            throw new TransacaoException(TransacaoException.TRANSACAO_NULA);
-        }
-    }
-&nbsp;
-    private validarValor(transacao: Transacao) {
-        if (!transacao.valor || transacao.valor &lt;= 0) {
-            throw new TransacaoException(TransacaoException.VALOR_INVALIDO);
-        }
+        return saldoTransacoes;
     }
 }
 &nbsp;</pre></td></tr>
