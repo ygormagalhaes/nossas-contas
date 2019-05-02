@@ -1,11 +1,20 @@
+import { TipoTransacao } from './tipo-transacao.enum';
 import { TransacaoException } from './transacao.exception';
 import { Transacao } from './transacao.model';
+import { EnumUtils } from '../utils/enum.utils';
 export class TransacaoNegocio {
 
     criar(transacao: Transacao) {
         this.validarObjeto(transacao);
         this.valirValor(transacao);
+        this.validarTipo(transacao);
         return transacao;
+    }
+
+    private validarTipo(transacao: Transacao) {
+        if (!EnumUtils.existeValorNoEnum(transacao.tipo, TipoTransacao)) {
+            throw new TransacaoException(TransacaoException.TIPO_INVALIDO);
+        }
     }
 
     private validarObjeto(transacao: Transacao) {

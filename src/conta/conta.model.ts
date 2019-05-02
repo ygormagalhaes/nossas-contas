@@ -7,4 +7,5 @@ export class Conta {
   valor: number;
   tipo: TipoConta;
   usuario: Usuario;
+  // parcelas?: Parcela; TODO: Implementar funcionalidade de parcelas
 }

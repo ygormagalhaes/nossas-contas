@@ -1,3 +1,4 @@
+import { TipoTransacao } from './tipo-transacao.enum';
 import { TransacaoException } from './transacao.exception';
 import { TransacaoNegocio } from './transacao.negocio';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -18,6 +19,7 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
 
         transacao = {
             valor: 10,
+            tipo: TipoTransacao.ENTRADA,
         };
     });
 
@@ -40,6 +42,13 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
         expect(() => {
             transacaoNegocio.criar(transacao);
         }).toThrow(new TransacaoException(TransacaoException.VALOR_INVALIDO));
+    });
+
+    it('deve lançar um erro caso seja informado um tipo de transação inválido', () => {
+        transacao.tipo = 'foo';
+        expect(() => {
+            transacaoNegocio.criar(transacao);
+        }).toThrow(new TransacaoException(TransacaoException.TIPO_INVALIDO));
     });
 
 });
