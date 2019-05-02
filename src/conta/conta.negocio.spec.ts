@@ -32,59 +32,59 @@ describe('Ao adicionar uma conta, ContaNegocio', () => {
   it('deve lançar um erro com uma data de vencimento inválida', () => {
     conta.dataVencimento = 'blabla';
     expect(() => {
-      contaNegocio.adicionar(conta);
+      contaNegocio.criar(conta);
     }).toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
   });
 
   it('deve definir uma data de lançamento', () => {
-    conta = contaNegocio.adicionar(conta);
+    conta = contaNegocio.criar(conta);
     expect(conta.dataLancamento).toBeDefined();
   });
 
   it('deve lançar um erro com um valor inferior a zero', () => {
     conta.valor = -1;
     expect(() => {
-      contaNegocio.adicionar(conta);
+      contaNegocio.criar(conta);
     }).toThrow(new ContaException(ContaException.VALOR_INVALIDO));
   });
 
   it('deve lançar um erro caso o tipo da conta não for informado', () => {
     delete conta.tipo;
     expect(() => {
-      contaNegocio.adicionar(conta);
+      contaNegocio.criar(conta);
     }).toThrow(new ContaException(ContaException.TIPO_INVALIDO));
   });
 
   it('deve lançar um erro caso o tipo informado seja inválido', () => {
     conta.tipo = 'foo';
     expect(() => {
-      contaNegocio.adicionar(conta);
+      contaNegocio.criar(conta);
     }).toThrow(new ContaException(ContaException.TIPO_INVALIDO));
   });
 
   it('deve setar o usuário com base no usuário logado', () => {
-    conta = contaNegocio.adicionar(conta);
+    conta = contaNegocio.criar(conta);
     expect(conta.usuario).toBeDefined();
   });
 
   it('deve lançar um erro caso não haja usuário logado', () => {
     spyOn(usuarioService, 'getUsuarioLogado').and.returnValue(undefined);
     expect(() => {
-      contaNegocio.adicionar(conta);
+      contaNegocio.criar(conta);
     }).toThrow(new ContaException(ContaException.USUARIO_NAO_LOGADO));
   });
 
   it('deve lançar um erro caso a data de vencimento não seja informada', () => {
     delete conta.dataVencimento;
     expect(() => {
-      contaNegocio.adicionar(conta);
+      contaNegocio.criar(conta);
     }).toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
   });
 
   it('deve lançar um erro caso o valor não seja informado', () => {
     delete conta.valor;
     expect(() => {
-      contaNegocio.adicionar(conta);
+      contaNegocio.criar(conta);
     }).toThrow(new ContaException(ContaException.VALOR_INVALIDO));
   });
 

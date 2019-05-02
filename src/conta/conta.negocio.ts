@@ -9,7 +9,7 @@ export class ContaNegocio {
 
   constructor(private readonly usuarioService: UsuarioService) {}
 
-  adicionar(conta: Conta) {
+  criar(conta: Conta) {
     this.validarDataVencimento(conta);
     this.validarTipo(conta);
     this.validarValor(conta);
