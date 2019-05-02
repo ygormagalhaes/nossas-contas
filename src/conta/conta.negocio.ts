@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ContaModel } from './conta.model';
+import { Conta } from './conta.model';
 import { ContaException } from './conta.exception';
 import { TipoConta } from './tipo-conta.enum';
 import { UsuarioService } from '../usuario/usuario.service';
@@ -9,7 +9,7 @@ export class ContaNegocio {
 
   constructor(private readonly usuarioService: UsuarioService) {}
 
-  adicionar(conta: ContaModel) {
+  adicionar(conta: Conta) {
     this.validarDataVencimento(conta);
     this.validarTipo(conta);
     this.validarValor(conta);
@@ -19,7 +19,7 @@ export class ContaNegocio {
     return conta;
   }
 
-  private validarDataVencimento(conta: ContaModel) {
+  private validarDataVencimento(conta: Conta) {
     if (!conta.dataVencimento) {
       throw new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA);
     }
@@ -30,7 +30,7 @@ export class ContaNegocio {
     }
   }
 
-  private validarTipo(conta: ContaModel) {
+  private validarTipo(conta: Conta) {
     if (!conta.tipo) {
       throw new ContaException(ContaException.TIPO_INVALIDO);
     }
@@ -42,17 +42,17 @@ export class ContaNegocio {
     }
   }
 
-  private validarValor(conta: ContaModel) {
+  private validarValor(conta: Conta) {
     if (!conta.valor || conta.valor <= 0) {
       throw new ContaException(ContaException.VALOR_INVALIDO);
     }
   }
 
-  private setarDataLancamento(conta: ContaModel) {
+  private setarDataLancamento(conta: Conta) {
     conta.dataLancamento = new Date();
   }
 
-  private setarUsuario(conta: ContaModel) {
+  private setarUsuario(conta: Conta) {
     const usuarioLogado: any = this.usuarioService.getUsuarioLogado();
     if (!usuarioLogado) {
       throw new ContaException(ContaException.USUARIO_NAO_LOGADO);

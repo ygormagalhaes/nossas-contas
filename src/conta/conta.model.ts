@@ -1,9 +1,10 @@
+import { Usuario } from './../usuario/usuario.model';
 import { TipoConta } from './tipo-conta.enum';
 
-export class ContaModel {
+export class Conta {
   dataLancamento: Date;
   dataVencimento: Date;
   valor: number;
   tipo: TipoConta;
-  usuario: any; // TODO: Implementar model usuário.
+  usuario: Usuario;
 }
