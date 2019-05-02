@@ -6,7 +6,7 @@ export class TransacaoNegocio {
 
     criar(transacao: Transacao) {
         this.validarObjeto(transacao);
-        this.valirValor(transacao);
+        this.validarValor(transacao);
         this.validarTipo(transacao);
         return transacao;
     }
@@ -23,7 +23,7 @@ export class TransacaoNegocio {
         }
     }
 
-    private valirValor(transacao: Transacao) {
+    private validarValor(transacao: Transacao) {
         if (!transacao.valor || transacao.valor <= 0) {
             throw new TransacaoException(TransacaoException.VALOR_INVALIDO);
         }
