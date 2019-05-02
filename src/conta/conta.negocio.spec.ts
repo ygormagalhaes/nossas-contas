@@ -132,6 +132,10 @@ describe('Ao adicionar uma conta, ContaNegocio', () => {
         expect(vencimentosEsperados).toEqual(vencimentos);
     });
 
-    xit('deve gerar uma transação caso a conta seja do tipo DINHEIRO', () => {});
+    it('deve gerar uma transação caso a conta seja do tipo DINHEIRO', () => {
+        conta.tipo = TipoConta.DINHEIRO;
+        conta = contaNegocio.criar(conta);
+        expect(conta.transacoes.length === 1);
+    });
 
 });

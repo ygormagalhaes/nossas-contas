@@ -1,3 +1,4 @@
+import { Transacao } from './../transacao/transacao.model';
 import { Parcela } from './parcela.model';
 import { Usuario } from './../usuario/usuario.model';
 import { TipoConta } from './tipo-conta.enum';
@@ -12,4 +13,6 @@ export class Conta {
   numeroParcelas?: number;
   parcelas?: Parcela[];
   status: StatusConta; // TODO: Confeccionar testes
+  transacoes: Transacao[];
+  descricao: string;
 }

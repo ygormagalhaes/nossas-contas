@@ -1,3 +1,4 @@
+import { Transacao } from './../transacao/transacao.model';
 import { Parcela } from './parcela.model';
 import { Injectable } from '@nestjs/common';
 import { Conta } from './conta.model';
@@ -5,6 +6,7 @@ import { ContaException } from './conta.exception';
 import { TipoConta } from './tipo-conta.enum';
 import { UsuarioService } from '../usuario/usuario.service';
 import { EnumUtils } from '../utils/enum.utils';
+import { StatusParcela } from './status-parcela.enum';
 
 @Injectable()
 export class ContaNegocio {
@@ -41,6 +43,18 @@ export class ContaNegocio {
         if (!EnumUtils.existeValorNoEnum(conta.tipo, TipoConta)) {
             throw new ContaException(ContaException.TIPO_INVALIDO);
         }
+
+        if (conta.tipo === TipoConta.DINHEIRO) {
+            const transacao = {
+                valor: conta.valor,
+                conta,
+                data: new Date(),
+                descricao: `Pagamento da conta: ${conta.descricao}`,
+            };
+
+            conta.transacoes = [];
+            conta.transacoes.push(transacao as Transacao);
+        }
     }
 
     private validarValor(conta: Conta) {
@@ -70,6 +84,7 @@ export class ContaNegocio {
                 conta,
                 valor: valorParcela,
                 vencimento,
+                status: StatusParcela.EM_ABERTO,
             };
             vencimento = new Date(vencimento);
             vencimento.setMonth(vencimento.getMonth() + 1);
