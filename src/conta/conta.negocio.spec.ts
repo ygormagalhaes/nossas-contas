@@ -1,11 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContaNegocio } from './conta.negocio';
 import { ContaException } from './conta.exception';
-import { ContaModel } from './conta.model';
+import { TipoConta } from './tipo-conta.enum';
+import { UsuarioService } from 'src/usuario/usuario.service';
 
-describe('Ao adicionar uma conta ContaNegocio', () => {
+describe('Ao adicionar uma conta, ContaNegocio', () => {
   let contaNegocio: ContaNegocio;
-  let conta;
+  let usuarioService: UsuarioService;
+  let conta: any;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -13,11 +15,17 @@ describe('Ao adicionar uma conta ContaNegocio', () => {
     }).compile();
 
     contaNegocio = module.get<ContaNegocio>(ContaNegocio);
+    usuarioService = module.get<UsuarioService>(UsuarioService);
 
     conta = {
       dataVencimento: new Date('2019-05-01'),
-      conta: 100.50,
+      valor: 100.50,
+      tipo: TipoConta.CARTAO_CREDITO,
     };
+
+    spyOn(usuarioService, 'getUsuarioLogado').and.returnValue({
+      id: 1,
+    });
   });
 
   it('deve estar definido pelo Nest', () => {
@@ -41,6 +49,31 @@ describe('Ao adicionar uma conta ContaNegocio', () => {
     expect(() => {
       contaNegocio.adicionar(conta);
     }).toThrow(new ContaException(ContaException.VALOR_INVALIDO));
+  });
+
+  it('deve lançar um erro caso o tipo da conta não for informado', () => {
+    delete conta.tipo;
+    expect(() => {
+      contaNegocio.adicionar(conta);
+    }).toThrow(new ContaException(ContaException.TIPO_INVALIDO));
+  });
+
+  it('deve lançar um erro caso o tipo informado seja inválido', () => {
+    conta.tipo = 'foo';
+    expect(() => {
+      contaNegocio.adicionar(conta);
+    }).toThrow(new ContaException(ContaException.TIPO_INVALIDO));
+  });
+
+  it('deve setar o usuário com base no usuário logado', () => {
+    conta = contaNegocio.adicionar(conta);
+    expect(conta.usuario).toBeDefined();
+  });
+
+  it('deve lançar um erro caso não haja usuário logado', () => {
+    expect(() => {
+      contaNegocio.adicionar(conta);
+    }).toThrow(new ContaException(ContaException.USUARIO_NAO_LOGADO));
   });
 
 });
