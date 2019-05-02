@@ -2,6 +2,8 @@ import { TipoTransacao } from './tipo-transacao.enum';
 import { TransacaoException } from './transacao.exception';
 import { Transacao } from './transacao.model';
 import { EnumUtils } from '../utils/enum.utils';
+import { Injectable } from '@nestjs/common';
+@Injectable()
 export class TransacaoNegocio {
 
     criar(transacao: Transacao) {
