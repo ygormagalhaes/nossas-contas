@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ContaModel } from './conta.model';
 import { ContaException } from './conta.exception';
 import { TipoConta } from './tipo-conta.enum';
-import { UsuarioService } from 'src/usuario/usuario.service';
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class ContaNegocio {
@@ -21,7 +21,7 @@ export class ContaNegocio {
   }
 
   private setarUsuario(conta: ContaModel) {
-    const usuarioLogado = this.usuarioService.getUsuarioLogado();
+    const usuarioLogado: any = this.usuarioService.getUsuarioLogado();
     conta.usuario = usuarioLogado;
   }
 
