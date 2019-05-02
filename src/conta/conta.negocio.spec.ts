@@ -67,12 +67,25 @@ describe('Ao adicionar uma conta, ContaNegocio', () => {
     expect(conta.usuario).toBeDefined();
   });
 
-  // TODO: Aprender a mockar um método de uma dependência.
-  xit('deve lançar um erro caso não haja usuário logado', () => {
+  it('deve lançar um erro caso não haja usuário logado', () => {
     spyOn(usuarioService, 'getUsuarioLogado').and.returnValue(undefined);
     expect(() => {
       contaNegocio.adicionar(conta);
-    }).toThrowError();
+    }).toThrow(new ContaException(ContaException.USUARIO_NAO_LOGADO));
+  });
+
+  it('deve lançar um erro caso a data de vencimento não seja informada', () => {
+    delete conta.dataVencimento;
+    expect(() => {
+      contaNegocio.adicionar(conta);
+    }).toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
+  });
+
+  it('deve lançar um erro caso o valor não seja informado', () => {
+    delete conta.valor;
+    expect(() => {
+      contaNegocio.adicionar(conta);
+    }).toThrow(new ContaException(ContaException.VALOR_INVALIDO));
   });
 
 });

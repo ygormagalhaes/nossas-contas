@@ -9,7 +9,6 @@ export class ContaNegocio {
 
   constructor(private readonly usuarioService: UsuarioService) {}
 
-  // TODO: Reorganizar métodos de acordo com as chamadas.
   adicionar(conta: ContaModel) {
     this.validarDataVencimento(conta);
     this.validarTipo(conta);
@@ -20,9 +19,15 @@ export class ContaNegocio {
     return conta;
   }
 
-  private setarUsuario(conta: ContaModel) {
-    const usuarioLogado: any = this.usuarioService.getUsuarioLogado();
-    conta.usuario = usuarioLogado;
+  private validarDataVencimento(conta: ContaModel) {
+    if (!conta.dataVencimento) {
+      throw new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA);
+    }
+
+    const tipoValido = typeof conta.dataVencimento.getTime !== 'function';
+    if (tipoValido) {
+      throw new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA);
+    }
   }
 
   private validarTipo(conta: ContaModel) {
@@ -37,19 +42,22 @@ export class ContaNegocio {
     }
   }
 
-  private setarDataLancamento(conta: ContaModel) {
-    conta.dataLancamento = new Date();
-  }
-
   private validarValor(conta: ContaModel) {
-    if (conta.valor <= 0) {
+    if (!conta.valor || conta.valor <= 0) {
       throw new ContaException(ContaException.VALOR_INVALIDO);
     }
   }
 
-  private validarDataVencimento(conta: ContaModel) {
-    if (typeof conta.dataVencimento.getTime !== 'function') {
-      throw new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA);
-    }
+  private setarDataLancamento(conta: ContaModel) {
+    conta.dataLancamento = new Date();
   }
+
+  private setarUsuario(conta: ContaModel) {
+    const usuarioLogado: any = this.usuarioService.getUsuarioLogado();
+    if (!usuarioLogado) {
+      throw new ContaException(ContaException.USUARIO_NAO_LOGADO);
+    }
+    conta.usuario = usuarioLogado;
+  }
+
 }
