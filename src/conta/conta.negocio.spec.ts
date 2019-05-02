@@ -16,6 +16,7 @@ describe('Ao adicionar uma conta ContaNegocio', () => {
 
     conta = {
       dataVencimento: new Date('2019-05-01'),
+      conta: 100.50,
     };
   });
 
@@ -33,6 +34,13 @@ describe('Ao adicionar uma conta ContaNegocio', () => {
   it('deve definir uma data de lançamento', () => {
     conta = contaNegocio.adicionar(conta);
     expect(conta.dataLancamento).toBeDefined();
+  });
+
+  it('deve lançar um erro com um valor inferior a zero', () => {
+    conta.valor = -1;
+    expect(() => {
+      contaNegocio.adicionar(conta);
+    }).toThrow(new ContaException(ContaException.VALOR_INVALIDO));
   });
 
 });

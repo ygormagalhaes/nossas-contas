@@ -8,6 +8,11 @@ export class ContaNegocio {
   adicionar(conta: ContaModel) {
     this.validarDataVencimento(conta);
     conta.dataLancamento = new Date();
+
+    if (conta.valor <= 0) {
+      throw new ContaException(ContaException.VALOR_INVALIDO);
+    }
+
     return conta;
   }
 
