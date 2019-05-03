@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>19/19</span>
+        <span class='fraction'>28/28</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">75% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>4/4</span>
+        <span class='fraction'>6/6</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>17/17</span>
+        <span class='fraction'>26/26</span>
       </div>
     </div>
   </div>
@@ -75,54 +75,96 @@
 30
 31
 32
-33</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Injectable } from '@nestjs/common';
 import { Transacao } from './../transacao/transacao.model';
 import { TransacaoService } from './../transacao/transacao.service';
 import { TipoTransacao } from '../transacao/tipo-transacao.enum';
+import { ContaService } from '../conta/conta.service';
+import { Conta } from 'src/conta/conta.model';
 &nbsp;
 @Injectable()
 export class SaldoNegocio {
 &nbsp;
-    constructor(private readonly transacaoService: TransacaoService) {}
+    constructor(private readonly transacaoService: TransacaoService,
+                private readonly contaService: ContaService) {}
 &nbsp;
-    async obter(date: Date): Promise&lt;number&gt; {
-        let totalTransacoes = 0;
-        const saldoTransacoes = await this.processaTransacoesDoMes(date);
-        totalTransacoes += saldoTransacoes;
-        // TODO: Obter contas com vencimento do mês.
-        return totalTransacoes;
+    async obter(data: Date): Promise&lt;number&gt; {
+        let saldoFinal = 0;
+        const saldoTransacoes = await this.processaTransacoesDoMes(data);
+        saldoFinal += saldoTransacoes; // Apenas soma pois o saldo poderá vir negativo ou positivo.
+        const saldoContas = await this.processaContasDoMes(data);
+        saldoFinal -= saldoContas; // Subtrai pois o processamento totaliza os valores das contas obtidas.
+        // TODO: Obter o total em dinheiro do mês (salários, freelas, etc...)
+        return saldoFinal;
+    }
+&nbsp;
+    private async processaContasDoMes(data: Date) {
+        const contasDoMes: Conta[] = await this.contaService.obterDoMesSemParcelas(data);
+        let saldoContas = 0;
+        contasDoMes.forEach(conta =&gt; {
+            saldoContas += conta.valor;
+        });
+        return saldoContas;
     }
 &nbsp;
     private async processaTransacoesDoMes(date: Date): Promise&lt;number&gt; {
@@ -145,7 +187,7 @@ export class SaldoNegocio {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 02 2019 19:01:03 GMT-0300 (Brasilia Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri May 03 2019 00:05:28 GMT-0300 (-03)
 </div>
 </div>
 <script src="../prettify.js"></script>

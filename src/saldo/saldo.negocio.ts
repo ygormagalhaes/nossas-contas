@@ -17,6 +17,7 @@ export class SaldoNegocio {
         saldoFinal += saldoTransacoes; // Apenas soma pois o saldo poderá vir negativo ou positivo.
         const saldoContas = await this.processaContasDoMes(data);
         saldoFinal -= saldoContas; // Subtrai pois o processamento totaliza os valores das contas obtidas.
+        // TODO: Obter o total em dinheiro do mês (salários, freelas, etc...)
         return saldoFinal;
     }
 

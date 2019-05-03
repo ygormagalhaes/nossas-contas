@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1556834463399" clover="3.2.0">
-  <project timestamp="1556834463399" name="All files">
-    <metrics statements="114" coveredstatements="112" conditionals="42" coveredconditionals="40" methods="26" coveredmethods="25" elements="182" coveredelements="177" complexity="0" loc="114" ncloc="114" packages="5" files="12" classes="12">
+<coverage generated="1556852728886" clover="3.2.0">
+  <project timestamp="1556852728886" name="All files">
+    <metrics statements="126" coveredstatements="123" conditionals="42" coveredconditionals="40" methods="29" coveredmethods="27" elements="197" coveredelements="190" complexity="0" loc="126" ncloc="126" packages="5" files="13" classes="13">
       <package name="conta">
-        <metrics statements="62" coveredstatements="62" conditionals="28" coveredconditionals="28" methods="11" coveredmethods="11"/>
-        <file name="conta.exception.ts" path="/home/formati/lixo/nossas-contas/src/conta/conta.exception.ts">
+        <metrics statements="65" coveredstatements="64" conditionals="28" coveredconditionals="28" methods="12" coveredmethods="11"/>
+        <file name="conta.exception.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/conta/conta.exception.ts">
           <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="1" count="1" type="stmt"/>
           <line num="2" count="1" type="stmt"/>
@@ -13,7 +13,7 @@
           <line num="5" count="1" type="stmt"/>
           <line num="6" count="1" type="stmt"/>
         </file>
-        <file name="conta.negocio.ts" path="/home/formati/lixo/nossas-contas/src/conta/conta.negocio.ts">
+        <file name="conta.negocio.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/conta/conta.negocio.ts">
           <metrics statements="49" coveredstatements="49" conditionals="24" coveredconditionals="24" methods="9" coveredmethods="9"/>
           <line num="3" count="1" type="stmt"/>
           <line num="5" count="1" type="stmt"/>
@@ -65,13 +65,19 @@
           <line num="102" count="1" type="stmt"/>
           <line num="104" count="7" type="stmt"/>
         </file>
-        <file name="status-parcela.enum.ts" path="/home/formati/lixo/nossas-contas/src/conta/status-parcela.enum.ts">
+        <file name="conta.service.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/conta/conta.service.ts">
+          <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="8" count="0" type="stmt"/>
+        </file>
+        <file name="status-parcela.enum.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/conta/status-parcela.enum.ts">
           <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
           <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
           <line num="2" count="1" type="stmt"/>
           <line num="3" count="1" type="stmt"/>
         </file>
-        <file name="tipo-conta.enum.ts" path="/home/formati/lixo/nossas-contas/src/conta/tipo-conta.enum.ts">
+        <file name="tipo-conta.enum.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/conta/tipo-conta.enum.ts">
           <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
           <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
           <line num="2" count="1" type="stmt"/>
@@ -80,44 +86,53 @@
         </file>
       </package>
       <package name="saldo">
-        <metrics statements="17" coveredstatements="17" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="4"/>
-        <file name="saldo.negocio.ts" path="/home/formati/lixo/nossas-contas/src/saldo/saldo.negocio.ts">
-          <metrics statements="17" coveredstatements="17" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="4"/>
+        <metrics statements="26" coveredstatements="26" conditionals="4" coveredconditionals="3" methods="6" coveredmethods="6"/>
+        <file name="saldo.negocio.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/saldo/saldo.negocio.ts">
+          <metrics statements="26" coveredstatements="26" conditionals="4" coveredconditionals="3" methods="6" coveredmethods="6"/>
           <line num="1" count="1" type="stmt"/>
           <line num="3" count="1" type="stmt"/>
           <line num="4" count="1" type="stmt"/>
-          <line num="7" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
           <line num="9" count="1" type="stmt"/>
-          <line num="12" count="1" type="stmt"/>
-          <line num="13" count="1" type="stmt"/>
-          <line num="14" count="1" type="stmt"/>
-          <line num="16" count="1" type="stmt"/>
-          <line num="20" count="1" type="stmt"/>
-          <line num="21" count="1" type="stmt"/>
-          <line num="22" count="1" type="stmt"/>
-          <line num="23" count="4" type="cond" truecount="2" falsecount="0"/>
-          <line num="24" count="2" type="stmt"/>
-          <line num="25" count="2" type="cond" truecount="1" falsecount="1"/>
-          <line num="26" count="2" type="stmt"/>
-          <line num="30" count="1" type="stmt"/>
+          <line num="11" count="3" type="stmt"/>
+          <line num="12" count="3" type="stmt"/>
+          <line num="15" count="3" type="stmt"/>
+          <line num="16" count="3" type="stmt"/>
+          <line num="17" count="3" type="stmt"/>
+          <line num="18" count="3" type="stmt"/>
+          <line num="19" count="3" type="stmt"/>
+          <line num="21" count="3" type="stmt"/>
+          <line num="25" count="3" type="stmt"/>
+          <line num="26" count="3" type="stmt"/>
+          <line num="27" count="3" type="stmt"/>
+          <line num="28" count="8" type="stmt"/>
+          <line num="30" count="3" type="stmt"/>
+          <line num="34" count="3" type="stmt"/>
+          <line num="35" count="3" type="stmt"/>
+          <line num="36" count="3" type="stmt"/>
+          <line num="37" count="8" type="cond" truecount="2" falsecount="0"/>
+          <line num="38" count="4" type="stmt"/>
+          <line num="39" count="4" type="cond" truecount="1" falsecount="1"/>
+          <line num="40" count="4" type="stmt"/>
+          <line num="44" count="3" type="stmt"/>
         </file>
       </package>
       <package name="transacao">
         <metrics statements="25" coveredstatements="23" conditionals="10" coveredconditionals="9" methods="6" coveredmethods="5"/>
-        <file name="tipo-transacao.enum.ts" path="/home/formati/lixo/nossas-contas/src/transacao/tipo-transacao.enum.ts">
+        <file name="tipo-transacao.enum.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/transacao/tipo-transacao.enum.ts">
           <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
           <line num="1" count="2" type="cond" truecount="2" falsecount="0"/>
           <line num="2" count="2" type="stmt"/>
           <line num="3" count="2" type="stmt"/>
         </file>
-        <file name="transacao.exception.ts" path="/home/formati/lixo/nossas-contas/src/transacao/transacao.exception.ts">
+        <file name="transacao.exception.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/transacao/transacao.exception.ts">
           <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="1" count="1" type="stmt"/>
           <line num="2" count="1" type="stmt"/>
           <line num="3" count="1" type="stmt"/>
           <line num="4" count="1" type="stmt"/>
         </file>
-        <file name="transacao.negocio.ts" path="/home/formati/lixo/nossas-contas/src/transacao/transacao.negocio.ts">
+        <file name="transacao.negocio.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/transacao/transacao.negocio.ts">
           <metrics statements="15" coveredstatements="14" conditionals="8" coveredconditionals="7" methods="4" coveredmethods="4"/>
           <line num="1" count="1" type="stmt"/>
           <line num="2" count="1" type="stmt"/>
@@ -135,7 +150,7 @@
           <line num="29" count="3" type="cond" truecount="4" falsecount="0"/>
           <line num="30" count="2" type="stmt"/>
         </file>
-        <file name="transacao.service.ts" path="/home/formati/lixo/nossas-contas/src/transacao/transacao.service.ts">
+        <file name="transacao.service.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/transacao/transacao.service.ts">
           <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
           <line num="2" count="1" type="stmt"/>
           <line num="5" count="1" type="stmt"/>
@@ -144,7 +159,7 @@
       </package>
       <package name="usuario">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <file name="usuario.service.ts" path="/home/formati/lixo/nossas-contas/src/usuario/usuario.service.ts">
+        <file name="usuario.service.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/usuario/usuario.service.ts">
           <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
           <line num="1" count="3" type="stmt"/>
           <line num="4" count="3" type="stmt"/>
@@ -153,14 +168,14 @@
       </package>
       <package name="utils">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
-        <file name="date.utils.ts" path="/home/formati/lixo/nossas-contas/src/utils/date.utils.ts">
+        <file name="date.utils.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/utils/date.utils.ts">
           <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
           <line num="1" count="1" type="stmt"/>
           <line num="3" count="1" type="stmt"/>
           <line num="6" count="1" type="stmt"/>
           <line num="10" count="1" type="stmt"/>
         </file>
-        <file name="enum.utils.ts" path="/home/formati/lixo/nossas-contas/src/utils/enum.utils.ts">
+        <file name="enum.utils.ts" path="/home/ygor/Documents/workspace/nossas-contas/src/utils/enum.utils.ts">
           <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
           <line num="1" count="2" type="stmt"/>
           <line num="4" count="38" type="stmt"/>
