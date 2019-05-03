@@ -2,18 +2,31 @@ import { Injectable } from '@nestjs/common';
 import { Transacao } from './../transacao/transacao.model';
 import { TransacaoService } from './../transacao/transacao.service';
 import { TipoTransacao } from '../transacao/tipo-transacao.enum';
+import { ContaService } from '../conta/conta.service';
+import { Conta } from 'src/conta/conta.model';
 
 @Injectable()
 export class SaldoNegocio {
 
-    constructor(private readonly transacaoService: TransacaoService) {}
+    constructor(private readonly transacaoService: TransacaoService,
+                private readonly contaService: ContaService) {}
 
-    async obter(date: Date): Promise<number> {
-        let totalTransacoes = 0;
-        const saldoTransacoes = await this.processaTransacoesDoMes(date);
-        totalTransacoes += saldoTransacoes;
-        // TODO: Obter contas com vencimento do mês.
-        return totalTransacoes;
+    async obter(data: Date): Promise<number> {
+        let saldoFinal = 0;
+        const saldoTransacoes = await this.processaTransacoesDoMes(data);
+        saldoFinal += saldoTransacoes; // Apenas soma pois o saldo poderá vir negativo ou positivo.
+        const saldoContas = await this.processaContasDoMes(data);
+        saldoFinal -= saldoContas; // Subtrai pois o processamento totaliza os valores das contas obtidas.
+        return saldoFinal;
+    }
+
+    private async processaContasDoMes(data: Date) {
+        const contasDoMes: Conta[] = await this.contaService.obterDoMesSemParcelas(data);
+        let saldoContas = 0;
+        contasDoMes.forEach(conta => {
+            saldoContas += conta.valor;
+        });
+        return saldoContas;
     }
 
     private async processaTransacoesDoMes(date: Date): Promise<number> {
