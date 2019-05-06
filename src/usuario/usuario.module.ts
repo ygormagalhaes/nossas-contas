@@ -4,6 +4,6 @@ import { UsuarioException } from './usuario.exception';
 
 @Module({
   providers: [UsuarioService],
-  exports: [UsuarioService, UsuarioException],
+  exports: [UsuarioService],
 })
 export class UsuarioModule {}

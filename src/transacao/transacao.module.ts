@@ -5,6 +5,6 @@ import { TransacaoService } from './transacao.service';
 @Module({
     imports: [UtilsModule],
     providers: [TransacaoService],
-    exports: [TransacaoService]
+    exports: [TransacaoService],
 })
 export class TransacaoModule {}
