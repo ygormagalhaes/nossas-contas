@@ -26,7 +26,7 @@ describe('Ao solicitar o saldo mensal, SaldoNegocio', () => {
             {valor: 10, tipo: TipoTransacao.ENTRADA},
             {valor: 500, tipo: TipoTransacao.SAIDA},
         ];
-        spyTransacaoService = spyOn(transacaoService, 'obterDoMes').and.returnValues(transacoesMes);
+        spyTransacaoService = spyOn(transacaoService, 'obterDoMesEMensais').and.returnValues(transacoesMes);
 
         const contasMes: any[] = [
             {valor: 120},

@@ -15,7 +15,6 @@ export class SaldoNegocio {
         let saldoFinal = 0;
         saldoFinal = await this.processaTransacoesDoMes(data, saldoFinal);
         saldoFinal = await this.processaContasAVistaDoMes(data, saldoFinal);
-        // TODO: Obter o total em dinheiro do mês (salários, freelas, etc...)
         return saldoFinal;
     }
 
@@ -29,8 +28,9 @@ export class SaldoNegocio {
         return saldoFinal - saldoContas; // Subtrai pois o processamento totaliza os valores das contas obtidas.
     }
 
+    // TODO: Buscar as transações mensais (entradas e despesas fixas como salário, tim, etc.)
     private async processaTransacoesDoMes(date: Date, saldoFinal: number): Promise<number> {
-        const transacoesDoMes: Transacao[] = await this.transacaoService.obterDoMes(date);
+        const transacoesDoMes: Transacao[] = await this.transacaoService.obterDoMesEMensais(date);
         let saldoTransacoes = 0;
         transacoesDoMes.forEach(transacao => {
             if (transacao.tipo === TipoTransacao.ENTRADA) {
