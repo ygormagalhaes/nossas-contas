@@ -5,3 +5,5 @@ before_install:
   - pip install --user codecov
 after_success:
   - codecov --file coverage/lcov.info --disable search
+env:
+  - CODECOV_TOKEN="fafd8820-4682-4407-b867-08be54ebf420"
