@@ -13,24 +13,23 @@ export class SaldoNegocio {
 
     async obter(data: Date): Promise<number> {
         let saldoFinal = 0;
-        const saldoTransacoes = await this.processaTransacoesDoMes(data);
-        saldoFinal += saldoTransacoes; // Apenas soma pois o saldo poderá vir negativo ou positivo.
-        const saldoContas = await this.processaContasDoMes(data);
-        saldoFinal -= saldoContas; // Subtrai pois o processamento totaliza os valores das contas obtidas.
+        saldoFinal = await this.processaTransacoesDoMes(data, saldoFinal);
+        saldoFinal = await this.processaContasAVistaDoMes(data, saldoFinal);
         // TODO: Obter o total em dinheiro do mês (salários, freelas, etc...)
         return saldoFinal;
     }
 
-    private async processaContasDoMes(data: Date) {
-        const contasDoMes: Conta[] = await this.contaService.obterDoMesSemParcelas(data);
+    private async processaContasAVistaDoMes(data: Date, saldoFinal: number) {
+        const contasDoMes: Conta[] = await this.contaService.obterDoMesAVista(data);
         let saldoContas = 0;
         contasDoMes.forEach(conta => {
             saldoContas += conta.valor;
         });
-        return saldoContas;
+
+        return saldoFinal - saldoContas; // Subtrai pois o processamento totaliza os valores das contas obtidas.
     }
 
-    private async processaTransacoesDoMes(date: Date): Promise<number> {
+    private async processaTransacoesDoMes(date: Date, saldoFinal: number): Promise<number> {
         const transacoesDoMes: Transacao[] = await this.transacaoService.obterDoMes(date);
         let saldoTransacoes = 0;
         transacoesDoMes.forEach(transacao => {
@@ -41,6 +40,6 @@ export class SaldoNegocio {
             }
         });
 
-        return saldoTransacoes;
+        return saldoFinal + saldoTransacoes; // Apenas soma pois o saldo poderá vir negativo ou positivo.
     }
 }

@@ -34,7 +34,7 @@ describe('Ao solicitar o saldo mensal, SaldoNegocio', () => {
             {valor: 79.90},
             {valor: 80},
         ];
-        spyContaService = spyOn(contaService, 'obterDoMesSemParcelas').and.returnValues(contasMes);
+        spyContaService = spyOn(contaService, 'obterDoMesAVista').and.returnValues(contasMes);
     });
 
     it('dada uma lista de transações do mês, calcular o saldo corretamente', async () => {

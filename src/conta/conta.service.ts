@@ -4,7 +4,7 @@ import { Conta } from './conta.model';
 @Injectable()
 export class ContaService {
 
-    async obterDoMesSemParcelas(date: Date): Promise<Conta[]> {
+    async obterDoMesAVista(date: Date): Promise<Conta[]> {
         throw new Error('Implementar método');
     }
 
