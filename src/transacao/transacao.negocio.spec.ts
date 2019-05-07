@@ -105,6 +105,14 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
             .rejects.toThrow(new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_PARCELA));
     });
 
-    xit('deve atualizar o status de uma parcela e da conta após o pagamento da última parcela', () => {});
+    /**
+     * 1. Tentar buscar parcelas com vencimentos posteriores à parcela a ser paga
+     * 2. Caso não venha nenhuma o status da parcela e da conta deverá ser atualizado
+     * 3. Caso tenha mais parcelas apenas o status da parcela é atualizado.
+     */
+    xit('deve atualizar o status de uma parcela e da conta após o pagamento da última parcela', () => {
+
+    });
+
     xit('deve validar a data da transação', () => {});
 });

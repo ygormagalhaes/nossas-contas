@@ -1,3 +1,4 @@
+import { StatusConta } from './status-conta.enum';
 import { Parcela } from './parcela.model';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContaNegocio } from './conta.negocio';
@@ -136,6 +137,11 @@ describe('Ao adicionar uma conta, ContaNegocio', () => {
         conta.tipo = TipoConta.DINHEIRO;
         conta = contaNegocio.criar(conta);
         expect(conta.transacoes.length === 1);
+    });
+
+    it('deve setar o status inicial da conta como em aberto', () => {
+        conta = contaNegocio.criar(conta);
+        expect(conta.status === StatusConta.EM_ABERTO);
     });
 
 });
