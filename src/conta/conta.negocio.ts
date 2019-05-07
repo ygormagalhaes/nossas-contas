@@ -71,16 +71,16 @@ export class ContaNegocio {
         }
 
         if (parcelado) {
-            this.calcuarParcelas(conta);
+            this.calcularParcelas(conta);
         }
     }
 
-    private calcuarParcelas(conta: Conta) {
+    private calcularParcelas(conta: Conta) {
         let vencimento = conta.dataVencimento;
         conta.parcelas = [];
         for (let i = 0; i < conta.numeroParcelas; i++) {
             const valorParcela = conta.valor / conta.numeroParcelas;
-            const parcela: Parcela = {
+            const parcela = {
                 conta,
                 valor: valorParcela,
                 vencimento,
@@ -88,7 +88,7 @@ export class ContaNegocio {
             };
             vencimento = new Date(vencimento);
             vencimento.setMonth(vencimento.getMonth() + 1);
-            conta.parcelas.push(parcela);
+            conta.parcelas.push(parcela as Parcela);
         }
     }
 

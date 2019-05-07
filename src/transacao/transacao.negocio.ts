@@ -39,6 +39,9 @@ export class TransacaoNegocio {
         }
     }
 
+    /**
+     * Tenta liquidar uma conta desde que ela não seja uma conta parcelada (CC).
+     */
     private async verificarLiquidacaoConta(transacao: Transacao): Promise<void> {
         if (transacao.conta) {
             const conta = await this.contaService.detalhar(transacao.conta.id);
