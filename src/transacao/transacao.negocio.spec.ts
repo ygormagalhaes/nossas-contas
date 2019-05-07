@@ -6,6 +6,7 @@ import { UsuarioService } from '../usuario/usuario.service';
 import { ContaService } from '../conta/conta.service';
 import { TransacaoService } from './transacao.service';
 import { StatusConta } from '../conta/status-conta.enum';
+import { StatusParcela } from '../conta/status-parcela.enum';
 
 describe('Ao adicionar uma transação, TransacaoNegocio', () => {
     let transacaoNegocio: TransacaoNegocio;
@@ -78,7 +79,32 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
             .rejects.toThrow(new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_CONTA));
     });
 
-    xit('deve atualizar o status de uma parcela após o pagamento', () => {});
+    it('deve atualizar o status de uma parcela após o pagamento', async () => {
+        transacao.parcela = {id: 1};
+
+        const mockParcela = {
+            valor: 10,
+            status: StatusParcela.EM_ABERTO,
+        };
+        spyOn(contaService, 'detalharParcela').and.returnValue(mockParcela);
+        spyOn(contaService, 'salvarParcela').and.stub();
+        const novaTransacao = await transacaoNegocio.criar(transacao);
+        expect(novaTransacao.parcela.status).toEqual(StatusParcela.PAGA);
+    });
+
+    it('deve retornar um erro caso o valor da transação não seja compatível com valor da parcela', async () => {
+        transacao.parcela = {id: 1};
+
+        const mockParcela = {
+            valor: 11,
+            status: StatusParcela.EM_ABERTO,
+        };
+        spyOn(contaService, 'detalharParcela').and.returnValue(mockParcela);
+        spyOn(contaService, 'salvarParcela').and.stub();
+        await expect(transacaoNegocio.criar(transacao))
+            .rejects.toThrow(new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_PARCELA));
+    });
+
     xit('deve atualizar o status de uma parcela e da conta após o pagamento da última parcela', () => {});
     xit('deve validar a data da transação', () => {});
 });

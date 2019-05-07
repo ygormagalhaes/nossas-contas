@@ -5,6 +5,7 @@ import { EnumUtils } from '../utils/enum.utils';
 import { Injectable } from '@nestjs/common';
 import { ContaService } from '../conta/conta.service';
 import { StatusConta } from '../conta/status-conta.enum';
+import { StatusParcela } from '../conta/status-parcela.enum';
 
 @Injectable()
 export class TransacaoNegocio {
@@ -16,6 +17,7 @@ export class TransacaoNegocio {
         this.validarValor(transacao);
         this.validarTipo(transacao);
         await this.verificarLiquidacaoConta(transacao);
+        await this.verificarPagamentoParcela(transacao);
         return transacao;
     }
 
@@ -37,7 +39,7 @@ export class TransacaoNegocio {
         }
     }
 
-    private async verificarLiquidacaoConta(transacao: Transacao) {
+    private async verificarLiquidacaoConta(transacao: Transacao): Promise<void> {
         if (transacao.conta) {
             const conta = await this.contaService.detalhar(transacao.conta.id);
             if (!conta.parcelas && conta.valor === transacao.valor) {
@@ -46,6 +48,19 @@ export class TransacaoNegocio {
                 await this.contaService.salvar(conta);
             } else if (!conta.parcelas && conta.valor !== transacao.valor) {
                 throw new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_CONTA);
+            }
+        }
+    }
+
+    private async verificarPagamentoParcela(transacao: Transacao): Promise<void> {
+        if (transacao.parcela) {
+            const parcela = await this.contaService.detalharParcela(transacao.parcela.id);
+            if (transacao.valor === parcela.valor) {
+                parcela.status = StatusParcela.PAGA;
+                transacao.parcela = parcela;
+                await this.contaService.salvarParcela(parcela);
+            } else if (transacao.parcela.valor !== parcela.valor) {
+                throw new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_PARCELA);
             }
         }
     }
