@@ -15,13 +15,7 @@ export class TransacaoNegocio {
         this.validarObjeto(transacao);
         this.validarValor(transacao);
         this.validarTipo(transacao);
-        if (transacao.conta) {
-            const conta = await this.contaService.detalhar(transacao.conta.id);
-            if (!conta.parcelas && conta.valor === transacao.valor) {
-                conta.status = StatusConta.LIQUIDADA;
-                await this.contaService.salvar(conta);
-            }
-        }
+        await this.verificarLiquidacaoConta(transacao);
         return transacao;
     }
 
@@ -40,6 +34,19 @@ export class TransacaoNegocio {
     private validarValor(transacao: Transacao) {
         if (!transacao.valor || transacao.valor <= 0) {
             throw new TransacaoException(TransacaoException.VALOR_INVALIDO);
+        }
+    }
+
+    private async verificarLiquidacaoConta(transacao: Transacao) {
+        if (transacao.conta) {
+            const conta = await this.contaService.detalhar(transacao.conta.id);
+            if (!conta.parcelas && conta.valor === transacao.valor) {
+                conta.status = StatusConta.LIQUIDADA;
+                transacao.conta = conta; //
+                await this.contaService.salvar(conta);
+            } else if (!conta.parcelas && conta.valor !== transacao.valor) {
+                throw new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_CONTA);
+            }
         }
     }
 }

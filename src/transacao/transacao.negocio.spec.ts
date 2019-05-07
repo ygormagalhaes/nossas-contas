@@ -5,10 +5,12 @@ import { TransacaoNegocio } from './transacao.negocio';
 import { UsuarioService } from '../usuario/usuario.service';
 import { ContaService } from '../conta/conta.service';
 import { TransacaoService } from './transacao.service';
+import { StatusConta } from '../conta/status-conta.enum';
 
 describe('Ao adicionar uma transação, TransacaoNegocio', () => {
     let transacaoNegocio: TransacaoNegocio;
     let usuarioService: UsuarioService;
+    let contaService: ContaService;
     let transacao;
 
     beforeEach(async () => {
@@ -18,6 +20,7 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
 
         transacaoNegocio = module.get<TransacaoNegocio>(TransacaoNegocio);
         usuarioService = module.get<UsuarioService>(UsuarioService);
+        contaService = module.get<ContaService>(ContaService);
 
         transacao = {
             valor: 10,
@@ -49,7 +52,32 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
             .rejects.toThrow(new TransacaoException(TransacaoException.TIPO_INVALIDO));
     });
 
-    xit('deve atualizar o status de uma conta após o pagamento', () => {});
+    it('deve atualizar o status de uma conta após o pagamento', async () => {
+        transacao.conta = {id: 1};
+
+        const mockConta = {
+            valor: 10,
+            status: StatusConta.EM_ABERTO,
+        };
+        spyOn(contaService, 'detalhar').and.returnValue(mockConta);
+        spyOn(contaService, 'salvar').and.stub();
+        const novaTransacao = await transacaoNegocio.criar(transacao);
+        expect(novaTransacao.conta.status).toEqual(StatusConta.LIQUIDADA);
+    });
+
+    it('deve retornar um erro caso o valor da transação não seja compatível com valor de conta', async () => {
+        transacao.conta = {id: 1};
+
+        const mockConta = {
+            valor: 11,
+            status: StatusConta.EM_ABERTO,
+        };
+        spyOn(contaService, 'detalhar').and.returnValue(mockConta);
+        spyOn(contaService, 'salvar').and.stub();
+        await expect(transacaoNegocio.criar(transacao))
+            .rejects.toThrow(new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_CONTA));
+    });
+
     xit('deve atualizar o status de uma parcela após o pagamento', () => {});
     xit('deve atualizar o status de uma parcela e da conta após o pagamento da última parcela', () => {});
     xit('deve validar a data da transação', () => {});
