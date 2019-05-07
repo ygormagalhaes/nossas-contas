@@ -48,7 +48,6 @@ export class TransacaoNegocio {
             const conta = await this.contaService.detalhar(transacao.conta.id);
             if (!conta.parcelas && conta.valor === transacao.valor) {
                 conta.status = StatusConta.LIQUIDADA;
-                transacao.conta = conta; //
                 await this.contaService.salvar(conta);
             } else if (!conta.parcelas && conta.valor !== transacao.valor) {
                 throw new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_CONTA);
@@ -61,7 +60,6 @@ export class TransacaoNegocio {
             const parcela = await this.contaService.detalharParcela(transacao.parcela.id);
             if (transacao.valor === parcela.valor) {
                 parcela.status = StatusParcela.PAGA;
-                transacao.parcela = parcela;
                 await this.contaService.salvarParcela(parcela);
             } else if (transacao.parcela.valor !== parcela.valor) {
                 throw new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_PARCELA);

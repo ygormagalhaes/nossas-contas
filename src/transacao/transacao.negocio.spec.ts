@@ -62,8 +62,8 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
         };
         spyOn(contaService, 'detalhar').and.returnValue(mockConta);
         spyOn(contaService, 'salvar').and.stub();
-        const novaTransacao = await transacaoNegocio.criar(transacao);
-        expect(novaTransacao.conta.status).toEqual(StatusConta.LIQUIDADA);
+        await transacaoNegocio.criar(transacao);
+        expect(contaService.salvar).toBeCalledWith(expect.objectContaining({status: StatusConta.LIQUIDADA}));
     });
 
     it('deve retornar um erro caso o valor da transação não seja compatível com valor de conta', async () => {
@@ -88,8 +88,8 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
         };
         spyOn(contaService, 'detalharParcela').and.returnValue(mockParcela);
         spyOn(contaService, 'salvarParcela').and.stub();
-        const novaTransacao = await transacaoNegocio.criar(transacao);
-        expect(novaTransacao.parcela.status).toEqual(StatusParcela.PAGA);
+        await transacaoNegocio.criar(transacao);
+        expect(contaService.salvarParcela).toBeCalledWith(expect.objectContaining({status: StatusParcela.PAGA}));
     });
 
     it('deve retornar um erro caso o valor da transação não seja compatível com valor da parcela', async () => {
@@ -105,17 +105,18 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
             .rejects.toThrow(new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_PARCELA));
     });
 
+    it('deve setar a data da transação como a data do sistema caso ela não tenha sido informada', async () => {
+        const novaTransacao = await transacaoNegocio.criar(transacao);
+        expect(novaTransacao.data).toBeDefined();
+    });
+
     /**
      * 1. Tentar buscar parcelas com vencimentos posteriores à parcela a ser paga
      * 2. Caso não venha nenhuma o status da parcela e da conta deverá ser atualizado
      * 3. Caso tenha mais parcelas apenas o status da parcela é atualizado.
      */
     xit('deve atualizar o status de uma parcela e da conta após o pagamento da última parcela', () => {
+        transacao.parcela = {id: 1};
 
-    });
-
-    it('deve setar a data da transação como a data do sistema caso ela não tenha sido informada', async () => {
-        const novaTransacao = await transacaoNegocio.criar(transacao);
-        expect(novaTransacao.data).toBeDefined();
     });
 });
