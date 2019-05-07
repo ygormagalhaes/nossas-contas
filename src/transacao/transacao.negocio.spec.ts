@@ -8,9 +8,9 @@ import { TransacaoService } from './transacao.service';
 import { StatusConta } from '../conta/status-conta.enum';
 import { StatusParcela } from '../conta/status-parcela.enum';
 
+// TODO: Usar describe aninhados para agrupar cenários em comum
 describe('Ao adicionar uma transação, TransacaoNegocio', () => {
     let transacaoNegocio: TransacaoNegocio;
-    let usuarioService: UsuarioService;
     let contaService: ContaService;
     let transacao;
 
@@ -20,7 +20,6 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
         }).compile();
 
         transacaoNegocio = module.get<TransacaoNegocio>(TransacaoNegocio);
-        usuarioService = module.get<UsuarioService>(UsuarioService);
         contaService = module.get<ContaService>(ContaService);
 
         transacao = {
@@ -85,9 +84,14 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
         const mockParcela = {
             valor: 10,
             status: StatusParcela.EM_ABERTO,
+            conta: {
+                id: 1,
+            },
         };
         spyOn(contaService, 'detalharParcela').and.returnValue(mockParcela);
         spyOn(contaService, 'salvarParcela').and.stub();
+        spyOn(contaService, 'salvar').and.stub();
+        spyOn(contaService, 'obterParcelasAposData').and.returnValue([]);
         await transacaoNegocio.criar(transacao);
         expect(contaService.salvarParcela).toBeCalledWith(expect.objectContaining({status: StatusParcela.PAGA}));
     });
@@ -115,8 +119,41 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
      * 2. Caso não venha nenhuma o status da parcela e da conta deverá ser atualizado
      * 3. Caso tenha mais parcelas apenas o status da parcela é atualizado.
      */
-    xit('deve atualizar o status de uma parcela e da conta após o pagamento da última parcela', () => {
+    it('deve atualizar o status de uma parcela e da conta após o pagamento da última parcela', async () => {
         transacao.parcela = {id: 1};
-
+        const mockParcela = {
+            valor: 10,
+            status: StatusParcela.EM_ABERTO,
+            conta: {
+                id: 1,
+            },
+        };
+        spyOn(contaService, 'detalharParcela').and.returnValue(mockParcela);
+        spyOn(contaService, 'salvarParcela').and.stub();
+        spyOn(contaService, 'salvar').and.stub();
+        spyOn(contaService, 'obterParcelasAposData').and.returnValue([]);
+        await transacaoNegocio.criar(transacao);
+        expect(contaService.salvarParcela).toBeCalledWith(expect.objectContaining({status: StatusParcela.PAGA}));
+        expect(contaService.salvar).toBeCalledWith(expect.objectContaining({status: StatusConta.LIQUIDADA}));
     });
+
+    it('deve atualizar o status de uma parcela e não da conta após o pagamento de uma parcela que não seja a última', async () => {
+        transacao.parcela = {id: 1};
+        const mockParcela = {
+            valor: 10,
+            status: StatusParcela.EM_ABERTO,
+            conta: {
+                id: 1,
+            },
+        };
+        spyOn(contaService, 'detalharParcela').and.returnValue(mockParcela);
+        spyOn(contaService, 'salvarParcela').and.stub();
+        spyOn(contaService, 'salvar').and.stub();
+        spyOn(contaService, 'obterParcelasAposData').and.returnValue([{id: 2}]);
+        await transacaoNegocio.criar(transacao);
+        expect(contaService.salvarParcela).toBeCalledWith(expect.objectContaining({status: StatusParcela.PAGA}));
+        expect(contaService.salvar).not.toBeCalled();
+    });
+
+    xit('lançar um erro caso seja informado uma conta e uma parcela ao mesmo tempo', () => {});
 });

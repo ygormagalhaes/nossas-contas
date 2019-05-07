@@ -1,11 +1,12 @@
+import { Injectable } from '@nestjs/common';
 import { TipoTransacao } from './tipo-transacao.enum';
 import { TransacaoException } from './transacao.exception';
 import { Transacao } from './transacao.model';
 import { EnumUtils } from '../utils/enum.utils';
-import { Injectable } from '@nestjs/common';
 import { ContaService } from '../conta/conta.service';
 import { StatusConta } from '../conta/status-conta.enum';
 import { StatusParcela } from '../conta/status-parcela.enum';
+import { Parcela } from '../conta/parcela.model';
 
 @Injectable()
 export class TransacaoNegocio {
@@ -64,6 +65,18 @@ export class TransacaoNegocio {
             } else if (transacao.parcela.valor !== parcela.valor) {
                 throw new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_PARCELA);
             }
+
+            await this.verificarLiquidacaoContaUltimaParcela(parcela);
+        }
+    }
+
+    private async verificarLiquidacaoContaUltimaParcela(parcela: Parcela) {
+        const contaParcela = parcela.conta;
+        const parcelasAposData = await this.contaService.obterParcelasAposData(contaParcela.id, parcela.vencimento);
+        const naoExisteParcelasFuturas = parcelasAposData.length === 0;
+        if (naoExisteParcelasFuturas) {
+            contaParcela.status = StatusConta.LIQUIDADA;
+            await this.contaService.salvar(contaParcela);
         }
     }
 

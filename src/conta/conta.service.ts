@@ -25,4 +25,8 @@ export class ContaService {
         throw new Error('Implementar método');
     }
 
+    async obterParcelasAposData(idConta: number, dataParcelas: Date): Promise<Parcela[]> {
+        throw new Error('Implementar método');
+    }
+
 }
