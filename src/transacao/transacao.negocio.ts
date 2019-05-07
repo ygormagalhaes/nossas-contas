@@ -3,13 +3,25 @@ import { TransacaoException } from './transacao.exception';
 import { Transacao } from './transacao.model';
 import { EnumUtils } from '../utils/enum.utils';
 import { Injectable } from '@nestjs/common';
+import { ContaService } from '../conta/conta.service';
+import { StatusConta } from '../conta/status-conta.enum';
+
 @Injectable()
 export class TransacaoNegocio {
 
-    criar(transacao: Transacao) {
+    constructor(private readonly contaService: ContaService) {}
+
+    async criar(transacao: Transacao) {
         this.validarObjeto(transacao);
         this.validarValor(transacao);
         this.validarTipo(transacao);
+        if (transacao.conta) {
+            const conta = await this.contaService.detalhar(transacao.conta.id);
+            if (!conta.parcelas && conta.valor === transacao.valor) {
+                conta.status = StatusConta.LIQUIDADA;
+                await this.contaService.salvar(conta);
+            }
+        }
         return transacao;
     }
 

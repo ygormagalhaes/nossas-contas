@@ -3,6 +3,7 @@ import { TransacaoService } from './../transacao/transacao.service';
 import { SaldoNegocio } from './saldo.negocio';
 import { TipoTransacao } from '../transacao/tipo-transacao.enum';
 import { ContaService } from '../conta/conta.service';
+import { TransacaoNegocio } from '../transacao/transacao.negocio';
 
 describe('Ao solicitar o saldo mensal, SaldoNegocio', () => {
     let saldoNegocio: SaldoNegocio;
@@ -13,7 +14,7 @@ describe('Ao solicitar o saldo mensal, SaldoNegocio', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [SaldoNegocio, TransacaoService, ContaService],
+            providers: [SaldoNegocio, TransacaoService, TransacaoNegocio, ContaService],
         }).compile();
 
         saldoNegocio = module.get<SaldoNegocio>(SaldoNegocio);
