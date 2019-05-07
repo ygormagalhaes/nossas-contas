@@ -1,13 +1,11 @@
-### Projeto pessoal para controle de finaças domésticas
-
-<p align="center">
+<p align="right">
 <a href="https://travis-ci.org/ygormagalhaes/nossas-contas"><img src="https://travis-ci.org/ygormagalhaes/nossas-contas.svg?branch=master" alt="Travis" /></a>
 <a href="https://codecov.io/gh/ygormagalhaes/nossas-contas"><img src="https://codecov.io/gh/ygormagalhaes/nossas-contas/branch/master/graph/badge.svg" alt="Code Coverage" /></a>
 </p>
- 
+
 ## Descrição
 
-Projeto pessoal como POC de futuro app utilizando NestJS e tecnologias correlatas.
+Projeto pessoal para gerência de gastos domésticos desenvolvido como POC para estudo do framework NestJS e frameworks correlatos do ambiente Node.
 
 ## Instalação
 
