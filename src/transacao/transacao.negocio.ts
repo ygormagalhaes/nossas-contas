@@ -18,6 +18,7 @@ export class TransacaoNegocio {
         this.validarTipo(transacao);
         await this.verificarLiquidacaoConta(transacao);
         await this.verificarPagamentoParcela(transacao);
+        this.setarData(transacao);
         return transacao;
     }
 
@@ -66,5 +67,9 @@ export class TransacaoNegocio {
                 throw new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_PARCELA);
             }
         }
+    }
+
+    private setarData(transacao: Transacao) {
+        transacao.data = new Date();
     }
 }

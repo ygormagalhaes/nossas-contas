@@ -114,5 +114,8 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
 
     });
 
-    xit('deve validar a data da transação', () => {});
+    it('deve setar a data da transação como a data do sistema caso ela não tenha sido informada', async () => {
+        const novaTransacao = await transacaoNegocio.criar(transacao);
+        expect(novaTransacao.data).toBeDefined();
+    });
 });
