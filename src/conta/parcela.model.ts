@@ -6,5 +6,5 @@ export class Parcela {
     conta: Conta;
     valor: number;
     vencimento: Date;
-    status: StatusParcela; // TODO: Confeccionar testes
+    status: StatusParcela;
 }

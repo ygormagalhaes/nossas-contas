@@ -9,7 +9,7 @@ export class Transacao {
     usuario: Usuario;
     data: Date;
     descricao: string;
-    conta?: Conta; // TODO: Confeccionar testes
-    parcela?: Parcela; // TODO: Confeccionar testes
-    mensal?: boolean; // TODO: Implementar teste para verificar a repetição (salário, conta net, etc)
+    conta?: Conta;
+    parcela?: Parcela;
+    mensal?: boolean;
 }

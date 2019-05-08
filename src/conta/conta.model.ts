@@ -13,7 +13,7 @@ export class Conta {
     usuario: Usuario;
     numeroParcelas?: number;
     parcelas?: Parcela[];
-    status: StatusConta; // TODO: Confeccionar testes
+    status: StatusConta;
     transacoes: Transacao[];
     descricao: string;
 }
