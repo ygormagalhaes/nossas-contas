@@ -114,11 +114,6 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
         expect(novaTransacao.data).toBeDefined();
     });
 
-    /**
-     * 1. Tentar buscar parcelas com vencimentos posteriores à parcela a ser paga
-     * 2. Caso não venha nenhuma o status da parcela e da conta deverá ser atualizado
-     * 3. Caso tenha mais parcelas apenas o status da parcela é atualizado.
-     */
     it('deve atualizar o status de uma parcela e da conta após o pagamento da última parcela', async () => {
         transacao.parcela = {id: 1};
         const mockParcela = {
@@ -155,5 +150,10 @@ describe('Ao adicionar uma transação, TransacaoNegocio', () => {
         expect(contaService.salvar).not.toBeCalled();
     });
 
-    xit('lançar um erro caso seja informado uma conta e uma parcela ao mesmo tempo', () => {});
+    it('lançar um erro caso seja informado uma conta e uma parcela ao mesmo tempo', async () => {
+        transacao.parcela = {id: 1};
+        transacao.conta = {id: 1};
+        await expect(transacaoNegocio.criar(transacao))
+            .rejects.toThrow(new TransacaoException(TransacaoException.CONTA_E_PARCELA_INFORMADAS));
+    });
 });

@@ -33,6 +33,10 @@ export class TransacaoNegocio {
         if (!transacao) {
             throw new TransacaoException(TransacaoException.TRANSACAO_NULA);
         }
+
+        if (transacao.parcela && transacao.conta) {
+            throw new TransacaoException(TransacaoException.CONTA_E_PARCELA_INFORMADAS);
+        }
     }
 
     private validarValor(transacao: Transacao) {
