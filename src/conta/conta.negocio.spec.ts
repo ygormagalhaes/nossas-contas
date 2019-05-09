@@ -29,10 +29,6 @@ describe('ContaNegocio', () => {
 
         });
 
-        it('deve estar definido pelo Nest', () => {
-            expect(contaNegocio).toBeDefined();
-        });
-
         it('deve lançar um erro com uma data de vencimento inválida', () => {
             conta.dataVencimento = 'blabla';
             expect(() => {
@@ -145,6 +141,21 @@ describe('ContaNegocio', () => {
             conta = contaNegocio.criar(conta);
             expect(conta.status === StatusConta.EM_ABERTO);
         });
+
+    });
+
+    describe('ao alterar uma conta', () => {
+
+        xit('deve lançar um erro com uma data de vencimento inválida', () => {});
+        xit('deve lançar um erro com um valor inferior a zero', () => {});
+        xit('deve lançar um erro caso o tipo da conta não for informado', () => {});
+        xit('deve lançar um erro caso o tipo informado seja inválido', () => {});
+        xit('deve lançar um erro caso a data de vencimento não seja informada', () => {});
+        xit('deve lançar um erro caso o valor não seja informado', () => {});
+        xit('caso a conta tenha parcelas deve atualizar o valor de cada parcela corretamente', () => {});
+        xit('deve lançar um erro caso o número de parcelas seja informado e o tipo seja diferente de CŔEDITO', () => {});
+        xit('inserindo uma nova data de vencimento inicial calcular corretamente os vencimentos de parcelas', () => {});
+
     });
 
 });
