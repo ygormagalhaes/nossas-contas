@@ -108,6 +108,7 @@ export class ContaNegocio {
         this.validarId(id);
         this.validarDataVencimento(payload);
         this.validarValor(payload);
+        this.validarTipo(payload);
     }
 
     private validarId(id) {

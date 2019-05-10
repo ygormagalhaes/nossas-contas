@@ -161,8 +161,16 @@ describe('ContaNegocio', () => {
             await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.VALOR_INVALIDO));
         });
 
-        xit('deve lançar um erro caso o tipo da conta não for informado', () => {});
-        xit('deve lançar um erro caso o tipo informado seja inválido', () => {});
+        it('deve lançar um erro caso o tipo da conta não for informado', async () => {
+            conta.tipo = null;
+            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.TIPO_INVALIDO));
+        });
+
+        it('deve lançar um erro caso o tipo informado seja inválido', async () => {
+            delete conta.tipo;
+            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.TIPO_INVALIDO));
+        });
+
         xit('deve lançar um erro caso a data de vencimento não seja informada', () => {});
         xit('deve lançar um erro caso o valor não seja informado', () => {});
         xit('caso a conta tenha parcelas deve atualizar o valor de cada parcela corretamente', () => {});
