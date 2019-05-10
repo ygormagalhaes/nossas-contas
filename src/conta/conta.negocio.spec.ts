@@ -8,7 +8,7 @@ import { UsuarioService } from '../usuario/usuario.service';
 
 describe('ContaNegocio', () => {
 
-    describe('ao adicionar uma conta', () => {
+    describe('ao criar uma conta', () => {
         let contaNegocio: ContaNegocio;
         let usuarioService: UsuarioService;
         let conta: any;
@@ -157,5 +157,7 @@ describe('ContaNegocio', () => {
         xit('inserindo uma nova data de vencimento inicial calcular corretamente os vencimentos de parcelas', () => {});
 
     });
+
+    xdescribe('ao excluir uma conta', () => {});
 
 });
