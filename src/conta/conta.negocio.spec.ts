@@ -148,10 +148,13 @@ describe('ContaNegocio', () => {
     describe('ao alterar uma conta', () => {
 
         it('deve lançar um erro caso o id não seja fornecido', async () => {
-            await expect(contaNegocio.alterar(conta)).rejects.toThrow(new ContaException(ContaException.ID_OBRIGATORIO));
+            await expect(contaNegocio.alterar(null, conta)).rejects.toThrow(new ContaException(ContaException.ID_OBRIGATORIO));
         });
 
-        it('deve lançar um erro com uma data de vencimento inválida', () => {});
+        it('deve lançar um erro com uma data de vencimento inválida', async () => {
+            conta.dataVencimento = null;
+            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
+        });
         xit('deve lançar um erro com um valor inferior a zero', () => {});
         xit('deve lançar um erro caso o tipo da conta não for informado', () => {});
         xit('deve lançar um erro caso o tipo informado seja inválido', () => {});
