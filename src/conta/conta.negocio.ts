@@ -107,6 +107,7 @@ export class ContaNegocio {
     async alterar(id: number, payload: Conta) {
         this.validarId(id);
         this.validarDataVencimento(payload);
+        this.validarValor(payload);
     }
 
     private validarId(id) {

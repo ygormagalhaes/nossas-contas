@@ -155,7 +155,12 @@ describe('ContaNegocio', () => {
             conta.dataVencimento = null;
             await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
         });
-        xit('deve lançar um erro com um valor inferior a zero', () => {});
+
+        it('deve lançar um erro com um valor igual ou inferior a zero', async () => {
+            conta.valor = 0;
+            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.VALOR_INVALIDO));
+        });
+
         xit('deve lançar um erro caso o tipo da conta não for informado', () => {});
         xit('deve lançar um erro caso o tipo informado seja inválido', () => {});
         xit('deve lançar um erro caso a data de vencimento não seja informada', () => {});
