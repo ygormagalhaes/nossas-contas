@@ -17,7 +17,7 @@ export class ContaNegocio {
         this.validarDataVencimento(conta);
         this.validarTipo(conta);
         this.validarValor(conta);
-        this.validarParcelado(conta);
+        this.verificarCompraParcelada(conta);
         this.setarDataLancamento(conta);
         this.setarUsuario(conta);
 
@@ -63,7 +63,7 @@ export class ContaNegocio {
         }
     }
 
-    private validarParcelado(conta: Conta) {
+    private verificarCompraParcelada(conta: Conta) {
         const parcelado = conta.numeroParcelas && conta.numeroParcelas > 0;
         const compraCartaoCredito = conta.tipo === TipoConta.CARTAO_CREDITO;
         if (parcelado && !compraCartaoCredito) {
@@ -87,7 +87,7 @@ export class ContaNegocio {
                 status: StatusParcela.EM_ABERTO,
             };
             vencimento = new Date(vencimento);
-            vencimento.setMonth(vencimento.getMonth() + 1);
+            vencimento.setUTCMonth(vencimento.getUTCMonth() + 1);
             conta.parcelas.push(parcela as Parcela);
         }
     }
@@ -109,6 +109,8 @@ export class ContaNegocio {
         this.validarDataVencimento(payload);
         this.validarValor(payload);
         this.validarTipo(payload);
+        this.verificarCompraParcelada(payload);
+        return payload;
     }
 
     private validarId(id) {

@@ -171,11 +171,57 @@ describe('ContaNegocio', () => {
             await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.TIPO_INVALIDO));
         });
 
-        xit('deve lançar um erro caso a data de vencimento não seja informada', () => {});
-        xit('deve lançar um erro caso o valor não seja informado', () => {});
-        xit('caso a conta tenha parcelas deve atualizar o valor de cada parcela corretamente', () => {});
-        xit('deve lançar um erro caso o número de parcelas seja informado e o tipo seja diferente de CŔEDITO', () => {});
-        xit('inserindo uma nova data de vencimento inicial calcular corretamente os vencimentos de parcelas', () => {});
+        it('deve lançar um erro caso a data de vencimento não seja informada', async () => {
+            delete conta.dataVencimento;
+            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
+        });
+
+        it('deve lançar um erro caso o valor não seja informado', async () => {
+            delete conta.valor;
+            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.VALOR_INVALIDO));
+        });
+
+        it('caso a conta tenha parcelas deve atualizar o valor de cada parcela corretamente ao atualizar um valor', async () => {
+            conta.numeroParcelas = 3;
+            conta.valor = 478;
+            conta = await contaNegocio.alterar(1, conta);
+            conta.parcelas.forEach(parcela => {
+                expect(parcela.valor).toBeCloseTo(159.33, 2);
+            });
+        });
+
+        it('deve lançar um erro caso o número de parcelas seja informado e o tipo seja diferente de CŔEDITO', async () => {
+            conta.numeroParcelas = 2;
+            conta.tipo = TipoConta.DINHEIRO;
+            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.TIPO_INVALIDO_PARCELAS));
+        });
+
+        it('inserindo uma nova data de vencimento inicial calcular corretamente os vencimentos de parcelas', async () => {
+            conta.dataVencimento = new Date('2019-04-09');
+            conta.numeroParcelas = 3;
+            conta = await contaNegocio.alterar(1, conta);
+            const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.vencimento);
+            const vencimentosEsperados = [new Date('2019-04-09'), new Date('2019-05-09'), new Date('2019-06-09')];
+            expect(vencimentos).toEqual(vencimentosEsperados);
+        });
+
+        it('validar data de vencimento de parcelas com uma nova data de vencimento em finais de meses \'irregulares\'', async () => {
+            conta.dataVencimento = new Date('2019-02-28');
+            conta.numeroParcelas = 3;
+            conta = await contaNegocio.alterar(1, conta);
+            const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.vencimento);
+            const vencimentosEsperados = [new Date('2019-02-28'), new Date('2019-03-28'), new Date('2019-04-28')];
+            expect(vencimentos).toEqual(vencimentosEsperados);
+        });
+
+        it('validar data de vencimento de parcelas com uma nova data de vencimento em inícios de meses', async () => {
+            conta.dataVencimento = new Date('2019-02-01');
+            conta.numeroParcelas = 3;
+            conta = await contaNegocio.alterar(1, conta);
+            const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.vencimento);
+            const vencimentosEsperados = [new Date('2019-02-01'), new Date('2019-03-01'), new Date('2019-04-01')];
+            expect(vencimentos).toEqual(vencimentosEsperados);
+        });
 
     });
 
