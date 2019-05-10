@@ -1,11 +1,14 @@
 language: node_js
 node_js:
-  - "node"
+- node
 script:
-  - npm run test:cov
+- npm run test:cov
 before_install:
-  - pip install --user codecov
+- pip install --user codecov
 after_success:
-  - codecov --file coverage/lcov.info --disable search
+- codecov --file coverage/lcov.info --disable search
 env:
-  - CODECOV_TOKEN="fafd8820-4682-4407-b867-08be54ebf420"
+- CODECOV_TOKEN="fafd8820-4682-4407-b867-08be54ebf420"
+notifications:
+  slack:
+    secure: KbTYQlGqaueWBoaPpuLMYeTlaFlpArriO/06Kr77kKMq9QdcHjYJZFijApPGzyA6iGmt7C97OZjfKwgbMaTuBgyWY4l0lKY7Hy7OI7E8jGc4zzcj6HHFQjU453w/SairZrBIBCjsmSSrArwjEMnFUAr0QdMZG30DZvQ+9kbZ/bC/lMCR7M60iZOnjmyEru9owg67hyluExjjoWQv+k6LhuMc+CNSVqTfQTDEEqJJO3RrsBJ1mpKxk+Sk7etD+0oRmIwUPybRTwnnMXwOXveLULmrpatBnpjMqfywylbDwcJoLa8bWGgDESc6HaSnlDfbEIUTeZ8BOpEjVXGKxItKDra6+S2h5csrzh2TxGufo/uBeu2n+tnow6T7/x5rhnwrh344iCqR34VP2NatnCUX6gYExJMMU/fYKHR6lCTQ3bYd+eow1/Vf+VfVETuxSBHtbOVJMxZroONRerbcz2Zs/t6Ugzun6x51e4Gi60KNPiuaSQl5C8KC5dODHYzN+TsOBp720C7bOmG/XXoemULRJQ9wOz91ivyc//4h9mp+sTYVsT2Ti69KZsmC+yzK1OKenXJbuI5YZEM6F7LPu2kbnkf3CRUVSDFXwKgAvxoek20OKWAQQf98u4IXuAjphvqcu6I8ZW3q/lTMQ+QgEtqmvlCJq1u88TF9ooYdUaWceqo=
