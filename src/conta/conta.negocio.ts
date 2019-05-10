@@ -104,4 +104,14 @@ export class ContaNegocio {
         conta.usuario = usuarioLogado;
     }
 
+    async alterar(conta: Conta) {
+        this.validarId(conta);
+    }
+
+    private validarId(conta: Conta) {
+        if (!conta.id) {
+            throw new ContaException(ContaException.ID_OBRIGATORIO);
+        }
+    }
+
 }

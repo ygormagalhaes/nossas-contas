@@ -8,26 +8,27 @@ import { UsuarioService } from '../usuario/usuario.service';
 
 describe('ContaNegocio', () => {
 
+    let contaNegocio: ContaNegocio;
+    let usuarioService: UsuarioService;
+    let conta: any;
+
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            providers: [ContaNegocio, UsuarioService],
+        }).compile();
+
+        contaNegocio = module.get<ContaNegocio>(ContaNegocio);
+        usuarioService = module.get<UsuarioService>(UsuarioService);
+
+        conta = {
+            dataVencimento: new Date('2019-05-01'),
+            valor: 100.50,
+            tipo: TipoConta.CARTAO_CREDITO,
+        };
+
+    });
+
     describe('ao criar uma conta', () => {
-        let contaNegocio: ContaNegocio;
-        let usuarioService: UsuarioService;
-        let conta: any;
-
-        beforeEach(async () => {
-            const module: TestingModule = await Test.createTestingModule({
-                providers: [ContaNegocio, UsuarioService],
-            }).compile();
-
-            contaNegocio = module.get<ContaNegocio>(ContaNegocio);
-            usuarioService = module.get<UsuarioService>(UsuarioService);
-
-            conta = {
-                dataVencimento: new Date('2019-05-01'),
-                valor: 100.50,
-                tipo: TipoConta.CARTAO_CREDITO,
-            };
-
-        });
 
         it('deve lançar um erro com uma data de vencimento inválida', () => {
             conta.dataVencimento = 'blabla';
@@ -146,7 +147,11 @@ describe('ContaNegocio', () => {
 
     describe('ao alterar uma conta', () => {
 
-        xit('deve lançar um erro com uma data de vencimento inválida', () => {});
+        it('deve lançar um erro caso o id não seja fornecido', async () => {
+            await expect(contaNegocio.alterar(conta)).rejects.toThrow(new ContaException(ContaException.ID_OBRIGATORIO));
+        });
+
+        it('deve lançar um erro com uma data de vencimento inválida', () => {});
         xit('deve lançar um erro com um valor inferior a zero', () => {});
         xit('deve lançar um erro caso o tipo da conta não for informado', () => {});
         xit('deve lançar um erro caso o tipo informado seja inválido', () => {});

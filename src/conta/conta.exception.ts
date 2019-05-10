@@ -6,4 +6,5 @@ export class ContaException extends NegocioException {
   static readonly TIPO_INVALIDO = 'Tipo de conta inválido!';
   static readonly USUARIO_NAO_LOGADO = 'Usuário deve estar logado para interagir com contas!';
   static readonly TIPO_INVALIDO_PARCELAS = 'Para contas parceladas o tipo deverá ser como cartão de cŕedito!';
+  static readonly ID_OBRIGATORIO = 'Id da conta é obrigatório!';
 }
