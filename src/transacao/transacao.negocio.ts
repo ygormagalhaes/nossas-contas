@@ -76,7 +76,7 @@ export class TransacaoNegocio {
 
     private async verificarLiquidacaoContaUltimaParcela(parcela: Parcela) {
         const contaParcela = parcela.conta;
-        const parcelasAposData = await this.contaService.obterParcelasAposData(contaParcela.id, parcela.vencimento);
+        const parcelasAposData = await this.contaService.obterParcelasAposData(contaParcela.id, parcela.dataVencimento);
         const naoExisteParcelasFuturas = parcelasAposData.length === 0;
         if (naoExisteParcelasFuturas) {
             contaParcela.status = StatusConta.LIQUIDADA;

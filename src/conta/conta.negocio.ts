@@ -57,8 +57,7 @@ export class ContaNegocio {
                 descricao: `Pagamento da conta: ${conta.descricao}`,
             };
 
-            conta.transacoes = [];
-            conta.transacoes.push(transacao as Transacao);
+            conta.transacao = transacao as any;
         }
     }
 
@@ -88,7 +87,7 @@ export class ContaNegocio {
             const parcela = {
                 conta,
                 valor: valorParcela,
-                vencimento,
+                dataVencimento: vencimento,
                 status: StatusParcela.EM_ABERTO,
             };
             vencimento = new Date(vencimento);

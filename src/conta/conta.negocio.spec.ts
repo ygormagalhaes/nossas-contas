@@ -130,7 +130,7 @@ describe('ContaNegocio', () => {
                 conta.numeroParcelas = 3;
                 conta.dataVencimento = new Date('2019-12-15');
                 conta = contaNegocio.criar(conta);
-                const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.vencimento);
+                const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.dataVencimento);
                 const vencimentosEsperados = [new Date('2019-12-15'), new Date('2020-01-15'), new Date('2020-02-15')];
                 expect(vencimentosEsperados).toEqual(vencimentos);
             });
@@ -138,7 +138,7 @@ describe('ContaNegocio', () => {
         it('deve gerar uma transação caso a conta seja do tipo DINHEIRO', () => {
             conta.tipo = TipoConta.DINHEIRO;
             conta = contaNegocio.criar(conta);
-            expect(conta.transacoes.length === 1);
+            expect(conta.transacao).toBeDefined();
         });
 
         it('deve setar o status inicial da conta como em aberto', () => {
@@ -203,7 +203,7 @@ describe('ContaNegocio', () => {
             conta.dataVencimento = new Date('2019-04-09');
             conta.numeroParcelas = 3;
             conta = await contaNegocio.alterar(1, conta);
-            const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.vencimento);
+            const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.dataVencimento);
             const vencimentosEsperados = [new Date('2019-04-09'), new Date('2019-05-09'), new Date('2019-06-09')];
             expect(vencimentos).toEqual(vencimentosEsperados);
         });
@@ -212,7 +212,7 @@ describe('ContaNegocio', () => {
             conta.dataVencimento = new Date('2019-02-28');
             conta.numeroParcelas = 3;
             conta = await contaNegocio.alterar(1, conta);
-            const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.vencimento);
+            const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.dataVencimento);
             const vencimentosEsperados = [new Date('2019-02-28'), new Date('2019-03-28'), new Date('2019-04-28')];
             expect(vencimentos).toEqual(vencimentosEsperados);
         });
@@ -221,7 +221,7 @@ describe('ContaNegocio', () => {
             conta.dataVencimento = new Date('2019-02-01');
             conta.numeroParcelas = 3;
             conta = await contaNegocio.alterar(1, conta);
-            const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.vencimento);
+            const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.dataVencimento);
             const vencimentosEsperados = [new Date('2019-02-01'), new Date('2019-03-01'), new Date('2019-04-01')];
             expect(vencimentos).toEqual(vencimentosEsperados);
         });
