@@ -30,7 +30,7 @@ export class ContaService {
         throw new Error('Implementar método');
     }
 
-    async exluir(id: number): Promise<void> {
+    async excluir(id: number): Promise<void> {
         throw new Error('Implementar método');
     }
 

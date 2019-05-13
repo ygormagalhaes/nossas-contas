@@ -248,6 +248,15 @@ describe('ContaNegocio', () => {
             await expect(contaNegocio.excluir(1)).rejects.toThrow(new ContaException(ContaException.CONTA_LIQUIDADA));
         });
 
+        it('deve excluir a conta caso não exista nenhuma restrição', async () => {
+            spyOn(contaService, 'obterTransacaoConta').and.stub();
+            spyOn(contaService, 'obterParcelasPagas').and.stub();
+            spyOn(contaService, 'detalhar').and.returnValue({status: StatusConta.EM_ABERTO});
+            spyOn(contaService, 'excluir').and.stub();
+            await contaNegocio.excluir(1);
+            expect(contaService.excluir).toHaveBeenCalledWith(1);
+        });
+
     });
 
 });

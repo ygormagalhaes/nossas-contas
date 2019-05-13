@@ -128,7 +128,7 @@ export class ContaNegocio {
         await this.verificarSeExisteTransacao(id);
         await this.verificarParcelasPagas(id);
         await this.verificarContaLiquidada(id);
-        await this.contaService.exluir(id);
+        await this.contaService.excluir(id);
     }
 
     private async verificarSeExisteTransacao(id: number) {
