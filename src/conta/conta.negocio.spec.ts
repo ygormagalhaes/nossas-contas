@@ -5,20 +5,23 @@ import { ContaNegocio } from './conta.negocio';
 import { ContaException } from './conta.exception';
 import { TipoConta } from './tipo-conta.enum';
 import { UsuarioService } from '../usuario/usuario.service';
+import { ContaService } from './conta.service';
 
 describe('ContaNegocio', () => {
 
     let contaNegocio: ContaNegocio;
+    let contaService: ContaService;
     let usuarioService: UsuarioService;
     let conta: any;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [ContaNegocio, UsuarioService],
+            providers: [ContaNegocio, UsuarioService, ContaService],
         }).compile();
 
         contaNegocio = module.get<ContaNegocio>(ContaNegocio);
         usuarioService = module.get<UsuarioService>(UsuarioService);
+        contaService = module.get<ContaService>(ContaService);
 
         conta = {
             dataVencimento: new Date('2019-05-01'),
@@ -225,6 +228,26 @@ describe('ContaNegocio', () => {
 
     });
 
-    xdescribe('ao excluir uma conta', () => {});
+    describe('ao excluir uma conta', () => {
+
+        it('deve lançar um erro caso a conta já tenha uma transação vinculada a ela', async () => {
+            spyOn(contaService, 'obterTransacaoConta').and.returnValue({id: 1});
+            await expect(contaNegocio.excluir(1)).rejects.toThrow(new ContaException(ContaException.VINCULO_TRANSACAO));
+        });
+
+        it('deve lançar um erro caso já existam parcelas com status PAGA', async () => {
+            spyOn(contaService, 'obterTransacaoConta').and.stub();
+            spyOn(contaService, 'obterParcelasPagas').and.returnValue([{id: 1}]);
+            await expect(contaNegocio.excluir(1)).rejects.toThrow(new ContaException(ContaException.PARCELAS_PAGAS));
+        });
+
+        it('deve lançar um erro caso a conta já esteja liquidada', async () => {
+            spyOn(contaService, 'obterTransacaoConta').and.stub();
+            spyOn(contaService, 'obterParcelasPagas').and.stub();
+            spyOn(contaService, 'detalhar').and.returnValue({status: StatusConta.LIQUIDADA});
+            await expect(contaNegocio.excluir(1)).rejects.toThrow(new ContaException(ContaException.CONTA_LIQUIDADA));
+        });
+
+    });
 
 });

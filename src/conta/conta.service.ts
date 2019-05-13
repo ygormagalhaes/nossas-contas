@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Conta } from './conta.model';
 import { Parcela } from './parcela.model';
+import { Transacao } from 'src/transacao/transacao.model';
 
 @Injectable()
 export class ContaService {
@@ -26,6 +27,18 @@ export class ContaService {
     }
 
     async obterParcelasAposData(idConta: number, dataParcelas: Date): Promise<Parcela[]> {
+        throw new Error('Implementar método');
+    }
+
+    async exluir(id: number): Promise<void> {
+        throw new Error('Implementar método');
+    }
+
+    async obterTransacaoConta(idConta: number): Promise<Transacao> {
+        throw new Error('Implementar método');
+    }
+
+    async obterParcelasPagas(idConta: number): Promise<Parcela[]> {
         throw new Error('Implementar método');
     }
 

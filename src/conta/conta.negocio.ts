@@ -1,17 +1,22 @@
+import { Injectable } from '@nestjs/common';
 import { Transacao } from './../transacao/transacao.model';
 import { Parcela } from './parcela.model';
-import { Injectable } from '@nestjs/common';
 import { Conta } from './conta.model';
 import { ContaException } from './conta.exception';
 import { TipoConta } from './tipo-conta.enum';
 import { UsuarioService } from '../usuario/usuario.service';
 import { EnumUtils } from '../utils/enum.utils';
 import { StatusParcela } from './status-parcela.enum';
+import { ContaService } from './conta.service';
+import { StatusConta } from './status-conta.enum';
 
 @Injectable()
 export class ContaNegocio {
 
-    constructor(private readonly usuarioService: UsuarioService) { }
+    constructor(
+        private readonly usuarioService: UsuarioService,
+        private readonly contaService: ContaService,
+    ) { }
 
     criar(conta: Conta) {
         this.validarDataVencimento(conta);
@@ -119,4 +124,31 @@ export class ContaNegocio {
         }
     }
 
+    async excluir(id: number): Promise<void> {
+        await this.verificarSeExisteTransacao(id);
+        await this.verificarParcelasPagas(id);
+        await this.verificarContaLiquidada(id);
+        await this.contaService.exluir(id);
+    }
+
+    private async verificarSeExisteTransacao(id: number) {
+        const transacao = await this.contaService.obterTransacaoConta(id);
+        if (transacao) {
+            throw new ContaException(ContaException.VINCULO_TRANSACAO);
+        }
+    }
+
+    private async verificarParcelasPagas(id: number) {
+        const parcelasPagas = await this.contaService.obterParcelasPagas(id);
+        if (parcelasPagas && parcelasPagas.length > 0) {
+            throw new ContaException(ContaException.PARCELAS_PAGAS);
+        }
+    }
+
+    private async verificarContaLiquidada(id: number) {
+        const conta = await this.contaService.detalhar(id);
+        if (conta.status === StatusConta.LIQUIDADA) {
+            throw new ContaException(ContaException.CONTA_LIQUIDADA);
+        }
+    }
 }
