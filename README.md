@@ -7,6 +7,22 @@
 
 Projeto pessoal para gerência de gastos domésticos desenvolvido como POC para estudo do framework NestJS e frameworks correlatos do ambiente Node.
 
+## Mnemônicos da base de dados
+- TB - Tabela
+- ID - Id
+- CNT - Conta
+- DAT - Data
+- LCT - Lançamento
+- VCT - Vencimento
+- TIP - Tipo
+- QTD - Quantidade
+- PCL - Parcela
+- STA - Status
+- DSC - Descrição
+- VLR - Valor
+- TRS - Transação
+- MSL - Mensal
+
 ## Instalação
 
 ```bash
@@ -35,7 +51,7 @@ $ npm run test
 # e2e tests
 $ npm run test:e2e
 
-# test 
+# test
 erage
 $ npm run test:cov
 ```
