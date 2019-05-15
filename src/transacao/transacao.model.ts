@@ -5,17 +5,17 @@ import { Conta } from '../conta/conta.model';
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
 
 @Entity({
-    name: 'TB_TRS', // TODO: Atualizar README com mnemonicos da nomenclatura do BD.
+    name: 'Transacoes',
 })
 export class Transacao {
 
     @PrimaryGeneratedColumn({
-        name: 'ID',
+        name: 'TransacaoID',
     })
     id: number;
 
     @Column({
-        name: 'VLR_TRS',
+        name: 'Valor',
         type: 'decimal',
         precision: 9,
         scale: 2,
@@ -23,7 +23,7 @@ export class Transacao {
     valor: number;
 
     @Column({
-        name: 'TIP_TRS',
+        name: 'Tipo',
         type: 'enum',
         enum: TipoTransacao,
     })
@@ -32,13 +32,13 @@ export class Transacao {
     usuario: Usuario; // TODO: Implementar
 
     @Column({
-        name: 'DAT_TRS',
+        name: 'Data',
         type: 'date',
     })
     data: Date;
 
     @Column({
-        name: 'DSC_TRS',
+        name: 'Descricao',
         type: 'varchar',
         length: 255,
     })
@@ -48,7 +48,7 @@ export class Transacao {
         nullable: true,
     })
     @JoinColumn({
-        name: 'CNT_ID',
+        name: 'ContaID',
     })
     conta?: Conta;
 
@@ -56,12 +56,12 @@ export class Transacao {
         nullable: true,
     })
     @JoinColumn({
-        name: 'PCL_ID',
+        name: 'ParcelaID',
     })
     parcela?: Parcela;
 
     @Column({
-        name: 'TRS_MSL',
+        name: 'Mensal',
         type: 'boolean',
         nullable: true,
     })

@@ -4,6 +4,6 @@ import { Injectable } from '@nestjs/common';
 export class UsuarioService {
 
   getUsuarioLogado() {
-    return {}; // TODO: Implementar método.
+    return { }; // TODO: Implementar método.
   }
 }

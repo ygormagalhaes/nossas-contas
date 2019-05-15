@@ -11,7 +11,7 @@ import { Parcela } from '../conta/parcela.model';
 @Injectable()
 export class TransacaoNegocio {
 
-    constructor(private readonly contaService: ContaService) {}
+    constructor(private readonly contaService: ContaService) { }
 
     async criar(transacao: Transacao) {
         this.validarObjeto(transacao);

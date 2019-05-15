@@ -4,23 +4,23 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne
 import { Transacao } from '../transacao/transacao.model';
 
 @Entity({
-    name: 'TB_PCL',
+    name: 'Parcelas',
 })
 export class Parcela {
 
     @PrimaryGeneratedColumn({
-        name: 'ID',
+        name: 'ParcelaID',
     })
     id: number;
 
     @ManyToOne(type => Conta, conta => conta.parcelas)
     @JoinColumn({
-        name: 'CNT_ID',
+        name: 'ContaID',
     })
     conta: Conta;
 
     @Column({
-        name: 'VLR_CNT',
+        name: 'Valor',
         type: 'decimal',
         precision: 9,
         scale: 2,
@@ -28,13 +28,13 @@ export class Parcela {
     valor: number;
 
     @Column({
-        name: 'DAT_VCT',
+        name: 'DataVencimento',
         type: 'date',
     })
     dataVencimento: Date;
 
     @Column({
-        name: 'TIP_CNT',
+        name: 'Status',
         type: 'enum',
         enum: StatusParcela,
     })

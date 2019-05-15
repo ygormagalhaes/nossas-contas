@@ -5,4 +5,4 @@ import { Module } from '@nestjs/common';
 @Module({
     imports: [TransacaoModule, ContaModule],
 })
-export class SaldoModule {}
+export class SaldoModule { }

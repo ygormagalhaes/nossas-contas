@@ -1,7 +1,7 @@
 import { UtilsModule } from './../utils/utils.module';
 import { Module } from '@nestjs/common';
 import { TransacaoService } from './transacao.service';
-import { ContaModule } from 'src/conta/conta.module';
+import { ContaModule } from '../conta/conta.module';
 import { TransacaoNegocio } from './transacao.negocio';
 
 @Module({
@@ -9,4 +9,4 @@ import { TransacaoNegocio } from './transacao.negocio';
     providers: [TransacaoService, TransacaoNegocio],
     exports: [TransacaoService],
 })
-export class TransacaoModule {}
+export class TransacaoModule { }

@@ -68,7 +68,7 @@ export class ContaNegocio {
     }
 
     private verificarCompraParcelada(conta: Conta) {
-        const parcelado = conta.numeroParcelas && conta.numeroParcelas > 0;
+        const parcelado = conta.quantidadeParcelas && conta.quantidadeParcelas > 0;
         const compraCartaoCredito = conta.tipo === TipoConta.CARTAO_CREDITO;
         if (parcelado && !compraCartaoCredito) {
             throw new ContaException(ContaException.TIPO_INVALIDO_PARCELAS);
@@ -82,8 +82,8 @@ export class ContaNegocio {
     private calcularParcelas(conta: Conta) {
         let vencimento = conta.dataVencimento;
         conta.parcelas = [];
-        for (let i = 0; i < conta.numeroParcelas; i++) {
-            const valorParcela = conta.valor / conta.numeroParcelas;
+        for (let i = 0; i < conta.quantidadeParcelas; i++) {
+            const valorParcela = conta.valor / conta.quantidadeParcelas;
             const parcela = {
                 conta,
                 valor: valorParcela,

@@ -1,3 +1,4 @@
+import { ContaRepository } from './conta.repository';
 import { StatusConta } from './status-conta.enum';
 import { Parcela } from './parcela.model';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -16,7 +17,7 @@ describe('ContaNegocio', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [ContaNegocio, UsuarioService, ContaService],
+            providers: [ContaNegocio, UsuarioService, ContaService, ContaRepository],
         }).compile();
 
         contaNegocio = module.get<ContaNegocio>(ContaNegocio);
@@ -28,7 +29,6 @@ describe('ContaNegocio', () => {
             valor: 100.50,
             tipo: TipoConta.CARTAO_CREDITO,
         };
-
     });
 
     describe('ao criar uma conta', () => {
@@ -93,7 +93,7 @@ describe('ContaNegocio', () => {
         });
 
         it('deve lançar um erro caso o número de parcelas seja informado e o tipo seja diferente de CŔEDITO', () => {
-            conta.numeroParcelas = 2;
+            conta.quantidadeParcelas = 2;
             conta.tipo = TipoConta.CARTAO_DEBITO;
             expect(() => {
                 contaNegocio.criar(conta);
@@ -101,14 +101,14 @@ describe('ContaNegocio', () => {
         });
 
         it('tendo o tipo correto para conta parcelada, retornar o número correto de parcelas', () => {
-            conta.numeroParcelas = 2;
+            conta.quantidadeParcelas = 2;
             conta.valor = 150;
             conta = contaNegocio.criar(conta);
             expect(conta.parcelas.length).toEqual(2);
         });
 
         it('sendo uma conta parcelada com valor PAR retornar a lista de parcelas com cada valor correto', () => {
-            conta.numeroParcelas = 2;
+            conta.quantidadeParcelas = 2;
             conta.valor = 150;
             conta = contaNegocio.criar(conta);
             conta.parcelas.forEach(parcela => {
@@ -117,7 +117,7 @@ describe('ContaNegocio', () => {
         });
 
         it('sendo uma conta parcelada com valor IMPAR retornar a lista de parcelas com cada valor correto', () => {
-            conta.numeroParcelas = 3;
+            conta.quantidadeParcelas = 3;
             conta.valor = 97;
             conta = contaNegocio.criar(conta);
             conta.parcelas.forEach(parcela => {
@@ -127,7 +127,7 @@ describe('ContaNegocio', () => {
 
         it('com uma conta parcelada com a primeira data de vencimento setada retornar corretamente o '
             + 'vencimento das proximas parcelas', () => {
-                conta.numeroParcelas = 3;
+                conta.quantidadeParcelas = 3;
                 conta.dataVencimento = new Date('2019-12-15');
                 conta = contaNegocio.criar(conta);
                 const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.dataVencimento);
@@ -185,7 +185,7 @@ describe('ContaNegocio', () => {
         });
 
         it('caso a conta tenha parcelas deve atualizar o valor de cada parcela corretamente ao atualizar um valor', async () => {
-            conta.numeroParcelas = 3;
+            conta.quantidadeParcelas = 3;
             conta.valor = 478;
             conta = await contaNegocio.alterar(1, conta);
             conta.parcelas.forEach(parcela => {
@@ -194,14 +194,14 @@ describe('ContaNegocio', () => {
         });
 
         it('deve lançar um erro caso o número de parcelas seja informado e o tipo seja diferente de CŔEDITO', async () => {
-            conta.numeroParcelas = 2;
+            conta.quantidadeParcelas = 2;
             conta.tipo = TipoConta.DINHEIRO;
             await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.TIPO_INVALIDO_PARCELAS));
         });
 
         it('inserindo uma nova data de vencimento inicial calcular corretamente os vencimentos de parcelas', async () => {
             conta.dataVencimento = new Date('2019-04-09');
-            conta.numeroParcelas = 3;
+            conta.quantidadeParcelas = 3;
             conta = await contaNegocio.alterar(1, conta);
             const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.dataVencimento);
             const vencimentosEsperados = [new Date('2019-04-09'), new Date('2019-05-09'), new Date('2019-06-09')];
@@ -210,7 +210,7 @@ describe('ContaNegocio', () => {
 
         it('validar data de vencimento de parcelas com uma nova data de vencimento em finais de meses \'irregulares\'', async () => {
             conta.dataVencimento = new Date('2019-02-28');
-            conta.numeroParcelas = 3;
+            conta.quantidadeParcelas = 3;
             conta = await contaNegocio.alterar(1, conta);
             const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.dataVencimento);
             const vencimentosEsperados = [new Date('2019-02-28'), new Date('2019-03-28'), new Date('2019-04-28')];
@@ -219,7 +219,7 @@ describe('ContaNegocio', () => {
 
         it('validar data de vencimento de parcelas com uma nova data de vencimento em inícios de meses', async () => {
             conta.dataVencimento = new Date('2019-02-01');
-            conta.numeroParcelas = 3;
+            conta.quantidadeParcelas = 3;
             conta = await contaNegocio.alterar(1, conta);
             const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.dataVencimento);
             const vencimentosEsperados = [new Date('2019-02-01'), new Date('2019-03-01'), new Date('2019-04-01')];

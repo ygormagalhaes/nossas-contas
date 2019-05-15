@@ -6,29 +6,29 @@ import { StatusConta } from './status-conta.enum';
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany, OneToOne } from 'typeorm';
 
 @Entity({
-    name: 'TB_CNT',
+    name: 'Contas',
 })
 export class Conta {
 
     @PrimaryGeneratedColumn({
-        name: 'ID',
+        name: 'ContaID',
     })
     id: number;
 
     @Column({
-        name: 'DAT_LCT',
+        name: 'DataLancamento',
         type: 'date',
     })
     dataLancamento: Date;
 
     @Column({
-        name: 'DAT_VCT',
+        name: 'DataVencimento',
         type: 'date',
     })
     dataVencimento: Date;
 
     @Column({
-        name: 'VLR_CNT',
+        name: 'Valor',
         type: 'decimal',
         precision: 9,
         scale: 2,
@@ -36,7 +36,7 @@ export class Conta {
     valor: number;
 
     @Column({
-        name: 'TIP_CNT',
+        name: 'Tipo',
         type: 'enum',
         enum: TipoConta,
     })
@@ -45,17 +45,17 @@ export class Conta {
     usuario: Usuario; // TODO: Implementar entidade
 
     @Column({
-        name: 'QTD_PCL',
+        name: 'QuantidadeParcelas',
         type: 'tinyint',
         nullable: true,
     })
-    numeroParcelas?: number;
+    quantidadeParcelas?: number;
 
     @OneToMany(type => Parcela, parcela => parcela.conta)
     parcelas?: Parcela[];
 
     @Column({
-        name: 'STA_CNT',
+        name: 'Status',
         type: 'enum',
         enum: StatusConta,
     })
@@ -66,7 +66,7 @@ export class Conta {
     transacao?: Transacao;
 
     @Column({
-        name: 'DSC_CNT',
+        name: 'Descricao',
         type: 'varchar',
         length: 255,
     })

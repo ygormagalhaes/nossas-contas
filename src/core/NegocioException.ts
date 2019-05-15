@@ -1,1 +1,1 @@
-export class NegocioException extends Error {}
+export class NegocioException extends Error { }

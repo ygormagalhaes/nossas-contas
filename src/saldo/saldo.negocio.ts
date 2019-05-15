@@ -3,13 +3,13 @@ import { Transacao } from './../transacao/transacao.model';
 import { TransacaoService } from './../transacao/transacao.service';
 import { TipoTransacao } from '../transacao/tipo-transacao.enum';
 import { ContaService } from '../conta/conta.service';
-import { Conta } from 'src/conta/conta.model';
+import { Conta } from '../conta/conta.model';
 
 @Injectable()
 export class SaldoNegocio {
 
     constructor(private readonly transacaoService: TransacaoService,
-                private readonly contaService: ContaService) {}
+                private readonly contaService: ContaService) { }
 
     async obter(data: Date): Promise<number> {
         let saldoFinal = 0;

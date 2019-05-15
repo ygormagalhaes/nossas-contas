@@ -4,7 +4,7 @@ import { ContaService } from './conta.service';
 @Controller('conta')
 export class ContaController {
 
-    constructor(private readonly contaService: ContaService) {}
+    constructor(private readonly contaService: ContaService) { }
 
     @Get()
     async listarContas() {

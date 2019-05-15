@@ -1,3 +1,4 @@
+import { ContaRepository } from '../conta/conta.repository';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TipoTransacao } from './tipo-transacao.enum';
 import { TransacaoException } from './transacao.exception';
@@ -17,7 +18,7 @@ describe('TransacaoNegocio', () => {
 
         beforeEach(async () => {
             const module: TestingModule = await Test.createTestingModule({
-                providers: [TransacaoNegocio, TransacaoService, UsuarioService, ContaService],
+                providers: [TransacaoNegocio, TransacaoService, UsuarioService, ContaService, ContaRepository],
             }).compile();
 
             transacaoNegocio = module.get<TransacaoNegocio>(TransacaoNegocio);

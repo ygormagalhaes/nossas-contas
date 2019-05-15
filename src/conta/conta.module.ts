@@ -1,15 +1,14 @@
-import { UtilsModule } from './../utils/utils.module';
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UtilsModule } from './../utils/utils.module';
 import { ContaService } from './conta.service';
 import { UsuarioModule } from '../usuario/usuario.module';
 import { ContaController } from './conta.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Conta } from './conta.model';
-import { ContaDAO } from './conta.dao';
+import { ContaRepository } from './conta.repository';
 
 @Module({
-    imports: [UsuarioModule, UtilsModule, TypeOrmModule.forFeature([Conta])],
-    providers: [ContaService, ContaDAO],
+    imports: [UsuarioModule, UtilsModule, TypeOrmModule.forFeature([ContaRepository])],
+    providers: [ContaService],
     exports: [ContaService],
     controllers: [ContaController],
 })

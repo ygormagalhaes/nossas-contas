@@ -4,6 +4,7 @@ import { SaldoNegocio } from './saldo.negocio';
 import { TipoTransacao } from '../transacao/tipo-transacao.enum';
 import { ContaService } from '../conta/conta.service';
 import { TransacaoNegocio } from '../transacao/transacao.negocio';
+import { ContaRepository } from '../conta/conta.repository';
 
 describe('SaldoNegocio', () => {
 
@@ -16,7 +17,7 @@ describe('SaldoNegocio', () => {
 
         beforeEach(async () => {
             const module: TestingModule = await Test.createTestingModule({
-                providers: [SaldoNegocio, TransacaoService, TransacaoNegocio, ContaService],
+                providers: [SaldoNegocio, TransacaoService, TransacaoNegocio, ContaService, ContaRepository],
             }).compile();
 
             saldoNegocio = module.get<SaldoNegocio>(SaldoNegocio);
