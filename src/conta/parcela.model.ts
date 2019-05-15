@@ -1,7 +1,7 @@
 import { Conta } from './conta.model';
 import { StatusParcela } from './status-parcela.enum';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
-import { Transacao } from 'src/transacao/transacao.model';
+import { Transacao } from '../transacao/transacao.model';
 
 @Entity({
     name: 'TB_PCL',
