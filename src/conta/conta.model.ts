@@ -11,7 +11,7 @@ import { PrimaryGeneratedColumn, Column, Entity, OneToMany, OneToOne } from 'typ
 export class Conta {
 
     @PrimaryGeneratedColumn({
-        name: 'ContaID',
+        name: 'ID',
     })
     id: number;
 

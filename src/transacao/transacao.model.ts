@@ -10,7 +10,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'ty
 export class Transacao {
 
     @PrimaryGeneratedColumn({
-        name: 'TransacaoID',
+        name: 'ID',
     })
     id: number;
 
