@@ -5,7 +5,7 @@
 
 ## Descrição
 
-Projeto pessoal para gerência de gastos domésticos desenvolvido como POC para estudo do framework NestJS e frameworks correlatos do ambiente Node.
+Projeto pessoal para gerência de gastos domésticos desenvolvido como estudo do framework NestJS e frameworks correlatos do ambiente Node.
 
 ## Instalação
 
@@ -13,7 +13,7 @@ Projeto pessoal para gerência de gastos domésticos desenvolvido como POC para 
 $ npm install
 ```
 
-## Running
+## Executando
 
 ```bash
 # development
@@ -36,6 +36,5 @@ $ npm run test
 $ npm run test:e2e
 
 # test
-erage
 $ npm run test:cov
 ```
