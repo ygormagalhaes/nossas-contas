@@ -2,7 +2,7 @@ import { Parcela } from './../conta/parcela.model';
 import { Usuario as Usuario } from './../usuario/usuario.model';
 import { TipoTransacao } from './tipo-transacao.enum';
 import { Conta } from '../conta/conta.model';
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity({
     name: 'Transacoes',
@@ -29,7 +29,11 @@ export class Transacao {
     })
     tipo: TipoTransacao;
 
-    usuario: Usuario; // TODO: Implementar
+    @ManyToOne(type => Usuario)
+    @JoinColumn({
+        name: 'UsuarioID',
+    })
+    usuario: Usuario;
 
     @Column({
         name: 'Data',
