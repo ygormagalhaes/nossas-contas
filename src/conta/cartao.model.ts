@@ -1,3 +1,4 @@
+import { Usuario } from './../usuario/usuario.model';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity({
@@ -16,4 +17,7 @@ export class Cartao {
         length: 255,
     })
     descricao: string;
+
+    // TODO: Implementar relacionamento.
+    usuario: Usuario;
 }
