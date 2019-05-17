@@ -134,7 +134,7 @@ export class ContaNegocio {
         await this.verificarSeExisteTransacao(id);
         await this.verificarParcelasPagas(id);
         await this.verificarContaLiquidada(id);
-        await this.contaService.excluir(id);
+        await this.contaService.excluir(id); // FIXME: Remover referencia circular com ContaService.
     }
 
     private async verificarSeExisteTransacao(id: number) {
