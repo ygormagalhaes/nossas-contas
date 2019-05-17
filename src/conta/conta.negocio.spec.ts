@@ -269,4 +269,23 @@ describe('ContaNegocio', () => {
 
     });
 
+    describe('ao criar um cartão', () => {
+
+        let cartao;
+
+        beforeAll(() => {
+            cartao = {
+                descricao: 'Nu Bank',
+            };
+        });
+
+        it('deve lançar um erro caso a descrição não seja informada', () => {
+            delete cartao.descricao;
+            expect(() => {
+                contaNegocio.criarCartao(cartao);
+            }).toThrow(new ContaException(ContaException.CARTAO_DESCRICAO));
+        });
+
+    });
+
 });

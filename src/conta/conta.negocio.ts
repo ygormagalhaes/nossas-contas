@@ -1,3 +1,4 @@
+import { Cartao } from './cartao.model';
 import { Injectable } from '@nestjs/common';
 import { Transacao } from './../transacao/transacao.model';
 import { Parcela } from './parcela.model';
@@ -155,6 +156,16 @@ export class ContaNegocio {
         const conta = await this.contaService.detalhar(id);
         if (conta.status === StatusConta.LIQUIDADA) {
             throw new ContaException(ContaException.CONTA_LIQUIDADA);
+        }
+    }
+
+    criarCartao(cartao: Cartao): void {
+        if (!cartao) {
+            throw new ContaException(ContaException.CARTAO_NULO);
+        }
+
+        if (!cartao.descricao) {
+            throw new ContaException(ContaException.CARTAO_DESCRICAO);
         }
     }
 }
