@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Cartao } from './../conta/cartao.model';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity({
     name: 'Usuarios',
@@ -24,4 +25,6 @@ export class Usuario {
     })
     senha: string; // TODO: Guardar senha criptografada.
 
+    @OneToMany(type => Cartao, cartao => cartao.usuario)
+    cartoes?: Cartao[];
 }

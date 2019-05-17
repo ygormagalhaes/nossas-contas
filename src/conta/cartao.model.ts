@@ -1,5 +1,5 @@
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Usuario } from './../usuario/usuario.model';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity({
     name: 'Cartoes',
@@ -18,6 +18,9 @@ export class Cartao {
     })
     descricao: string;
 
-    // TODO: Implementar relacionamento.
+    @ManyToOne(type => Usuario)
+    @JoinColumn({
+        name: 'UsuarioID',
+    })
     usuario: Usuario;
 }
