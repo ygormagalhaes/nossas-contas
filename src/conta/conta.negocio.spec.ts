@@ -286,6 +286,12 @@ describe('ContaNegocio', () => {
             }).toThrow(new ContaException(ContaException.CARTAO_DESCRICAO));
         });
 
+        it('deve lançar um erro caso seja informado um valor undefined para o método', () => {
+            expect(() => {
+                contaNegocio.criarCartao(undefined);
+            }).toThrow(new ContaException(ContaException.CARTAO_NULO));
+        });
+
     });
 
 });
