@@ -49,16 +49,23 @@ export class ContaNegocio {
             throw new ContaException(ContaException.TIPO_INVALIDO);
         }
 
+        const compraCartao = conta.tipo === TipoConta.CARTAO_CREDITO || conta.tipo === TipoConta.CARTAO_DEBITO;
         if (conta.tipo === TipoConta.DINHEIRO) {
-            const transacao = {
-                valor: conta.valor,
-                conta,
-                data: new Date(),
-                descricao: `Pagamento da conta: ${conta.descricao}`,
-            };
-
-            conta.transacao = transacao as any;
+            this.vincularTransacaoCompraDinheiro(conta);
+        } else if (compraCartao && (!conta.cartao || !conta.cartao.id)) {
+            throw new ContaException(ContaException.CARTAO_OBRIGATORIO);
         }
+    }
+
+    private vincularTransacaoCompraDinheiro(conta: Conta): void {
+        const transacao = {
+            valor: conta.valor,
+            conta,
+            data: new Date(),
+            descricao: `Pagamento da conta: ${conta.descricao}`,
+        };
+
+        conta.transacao = transacao as any;
     }
 
     private validarValor(conta: Conta) {

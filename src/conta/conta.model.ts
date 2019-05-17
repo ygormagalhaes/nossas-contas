@@ -1,9 +1,10 @@
+import { Cartao } from './cartao.model';
 import { Transacao } from './../transacao/transacao.model';
 import { Parcela } from './parcela.model';
 import { Usuario } from './../usuario/usuario.model';
 import { TipoConta } from './tipo-conta.enum';
 import { StatusConta } from './status-conta.enum';
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany, OneToOne } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, OneToOne, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity({
     name: 'Contas',
@@ -53,6 +54,14 @@ export class Conta {
 
     @OneToMany(type => Parcela, parcela => parcela.conta)
     parcelas?: Parcela[];
+
+    @ManyToOne(type => Cartao, {
+        nullable: true,
+    })
+    @JoinColumn({
+        name: 'CartaoID',
+    })
+    cartao?: Cartao;
 
     @Column({
         name: 'Status',

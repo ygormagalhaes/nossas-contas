@@ -10,4 +10,5 @@ export class ContaException extends NegocioException {
     static readonly VINCULO_TRANSACAO = 'Não é possível excluir uma conta que tenha uma transação vinculada a ela!';
     static readonly PARCELAS_PAGAS = 'Existem uma ou mais parcelas pagas vinculadas à conta!';
     static readonly CONTA_LIQUIDADA = 'A conta já foi liquidada e não pode ser excluída!';
+    static readonly CARTAO_OBRIGATORIO = 'Para esse tipo de conta é obrigatório informar o cartão utilizado!';
 }

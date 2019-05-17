@@ -28,6 +28,9 @@ describe('ContaNegocio', () => {
             dataVencimento: new Date('2019-05-01'),
             valor: 100.50,
             tipo: TipoConta.CARTAO_CREDITO,
+            cartao: {
+                id: 1,
+            },
         };
     });
 
@@ -144,6 +147,13 @@ describe('ContaNegocio', () => {
         it('deve setar o status inicial da conta como em aberto', () => {
             conta = contaNegocio.criar(conta);
             expect(conta.status === StatusConta.EM_ABERTO);
+        });
+
+        it('sendo uma conta com tipo CREDITO ou DEBITO deve lançar um erro caso o cartão não seja informado', () => {
+            delete conta.cartao;
+            expect(() => {
+                contaNegocio.criar(conta);
+            }).toThrow(new ContaException(ContaException.CARTAO_OBRIGATORIO));
         });
 
     });
