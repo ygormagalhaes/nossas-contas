@@ -1,9 +1,13 @@
-import { ContaRepository } from '../conta/conta.repository';
+import { ContaNegocio } from './../conta/conta.negocio';
+import { UsuarioService } from './../usuario/usuario.service';
+import { CartaoRepository } from './../conta/cartao.repository';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ContaModule } from './../conta/conta.module';
+import { UsuarioModule } from './../usuario/usuario.module';
+import { ContaRepository } from '../conta/conta.repository';
 import { TipoTransacao } from './tipo-transacao.enum';
 import { TransacaoException } from './transacao.exception';
 import { TransacaoNegocio } from './transacao.negocio';
-import { UsuarioService } from '../usuario/usuario.service';
 import { ContaService } from '../conta/conta.service';
 import { TransacaoService } from './transacao.service';
 import { StatusConta } from '../conta/status-conta.enum';
@@ -18,7 +22,18 @@ describe('TransacaoNegocio', () => {
 
         beforeEach(async () => {
             const module: TestingModule = await Test.createTestingModule({
-                providers: [TransacaoNegocio, TransacaoService, UsuarioService, ContaService, ContaRepository],
+                imports: [
+                    UsuarioModule,
+                ],
+                providers: [
+                    TransacaoNegocio,
+                    TransacaoService,
+                    // Submeter issue para projeto no github. Ref: https://github.com/nestjs/nest/issues/363
+                    ContaRepository,
+                    CartaoRepository,
+                    ContaService,
+                    ContaNegocio,
+                ],
             }).compile();
 
             transacaoNegocio = module.get<TransacaoNegocio>(TransacaoNegocio);

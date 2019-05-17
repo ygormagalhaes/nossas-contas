@@ -1,7 +1,9 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { UsuarioModule } from './../usuario/usuario.module';
+import { CartaoRepository } from './cartao.repository';
 import { ContaRepository } from './conta.repository';
 import { StatusConta } from './status-conta.enum';
 import { Parcela } from './parcela.model';
-import { Test, TestingModule } from '@nestjs/testing';
 import { ContaNegocio } from './conta.negocio';
 import { ContaException } from './conta.exception';
 import { TipoConta } from './tipo-conta.enum';
@@ -17,7 +19,13 @@ describe('ContaNegocio', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [ContaNegocio, UsuarioService, ContaService, ContaRepository],
+            imports: [UsuarioModule],
+            providers: [
+                CartaoRepository,
+                ContaNegocio,
+                ContaRepository,
+                ContaService,
+            ],
         }).compile();
 
         contaNegocio = module.get<ContaNegocio>(ContaNegocio);
@@ -282,13 +290,13 @@ describe('ContaNegocio', () => {
         it('deve lançar um erro caso a descrição não seja informada', () => {
             delete cartao.descricao;
             expect(() => {
-                contaNegocio.criarCartao(cartao);
+                contaNegocio.validarCartao(cartao);
             }).toThrow(new ContaException(ContaException.CARTAO_DESCRICAO));
         });
 
         it('deve lançar um erro caso seja informado um valor undefined para o método', () => {
             expect(() => {
-                contaNegocio.criarCartao(undefined);
+                contaNegocio.validarCartao(undefined);
             }).toThrow(new ContaException(ContaException.CARTAO_NULO));
         });
 

@@ -1,6 +1,5 @@
 import { Cartao } from './cartao.model';
 import { Injectable } from '@nestjs/common';
-import { Transacao } from './../transacao/transacao.model';
 import { Parcela } from './parcela.model';
 import { Conta } from './conta.model';
 import { ContaException } from './conta.exception';
@@ -159,7 +158,7 @@ export class ContaNegocio {
         }
     }
 
-    criarCartao(cartao: Cartao): void {
+    validarCartao(cartao: Cartao): void {
         if (!cartao) {
             throw new ContaException(ContaException.CARTAO_NULO);
         }
