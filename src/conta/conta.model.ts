@@ -43,7 +43,11 @@ export class Conta {
     })
     tipo: TipoConta;
 
-    usuario: Usuario; // TODO: Implementar entidade
+    @ManyToOne(type => Usuario)
+    @JoinColumn({
+        name: 'UsuarioID',
+    })
+    usuario: Usuario;
 
     @Column({
         name: 'QuantidadeParcelas',
