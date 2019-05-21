@@ -1,4 +1,4 @@
-import { NegocioException } from '../core/NegocioException';
+import { NegocioException } from '../core/negocio-exception';
 
 export class ContaException extends NegocioException {
     static readonly DATA_VENCIMENTO_INVALIDA = 'Data de vencimento inválida!';

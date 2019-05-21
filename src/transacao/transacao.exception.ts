@@ -1,4 +1,4 @@
-import { NegocioException } from '../core/NegocioException';
+import { NegocioException } from '../core/negocio-exception';
 
 export class TransacaoException extends NegocioException {
     static readonly TRANSACAO_NULA = 'Objeto transação vazio!';

@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body } from '@nestjs/common';
 import { ContaService } from './conta.service';
 import { Cartao } from './cartao.model';
 import { Conta } from './conta.model';
+import { ParseContaPipe } from '../pipes/parse-conta.pipe';
 
 @Controller('conta')
 export class ContaController {
@@ -16,7 +17,7 @@ export class ContaController {
 
     // TODO: Criar pipe para validação do body?
     @Post()
-    async criarConta(@Body() conta: Conta) {
+    async criarConta(@Body(new ParseContaPipe()) conta: Conta) {
         return await this.contaService.criar(conta);
     }
 

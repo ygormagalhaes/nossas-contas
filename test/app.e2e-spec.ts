@@ -1,27 +1,42 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { Connection } from 'typeorm';
+import { NegocioExceptionFilter } from '../src/core/negocio-exception.filter';
+import { TipoConta } from './../src/conta/tipo-conta.enum';
 
-describe('AppController (e2e)', () => {
-  let app;
+describe('ContaController (e2e)', () => {
+    let app;
+    let connection: Connection;
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+    beforeEach(async () => {
+        const moduleFixture: TestingModule = await Test.createTestingModule({
+            imports: [AppModule],
+        }).compile();
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
+        connection = moduleFixture.get<Connection>(Connection);
+        app = moduleFixture.createNestApplication();
+        app.useGlobalFilters(new NegocioExceptionFilter());
+        await app.init();
+    });
 
-  it('app deve não deve ser undefined', () => {
-    expect(app).toBeDefined();
-  });
+    afterEach(async () => {
+        await connection.close();
+    });
 
-  xit('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-  });
+    it('/ (POST)', async done => {
+        const conta = {
+            dataVencimento: '2019-05-20',
+            valor: 125.99,
+            tipo: TipoConta.DINHEIRO,
+            descricao: 'Camiseta Volcom',
+        };
+
+        await request(app.getHttpServer())
+            .post('/conta')
+            .send(conta)
+            .expect(200);
+
+        done();
+    });
 });
