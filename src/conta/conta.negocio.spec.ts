@@ -246,37 +246,6 @@ describe('ContaNegocio', () => {
 
     });
 
-    describe('ao excluir uma conta', () => {
-
-        it('deve lançar um erro caso a conta já tenha uma transação vinculada a ela', async () => {
-            spyOn(contaService, 'obterTransacaoConta').and.returnValue({id: 1});
-            await expect(contaNegocio.excluir(1)).rejects.toThrow(new ContaException(ContaException.VINCULO_TRANSACAO));
-        });
-
-        it('deve lançar um erro caso já existam parcelas com status PAGA', async () => {
-            spyOn(contaService, 'obterTransacaoConta').and.stub();
-            spyOn(contaService, 'obterParcelasPagas').and.returnValue([{id: 1}]);
-            await expect(contaNegocio.excluir(1)).rejects.toThrow(new ContaException(ContaException.PARCELAS_PAGAS));
-        });
-
-        it('deve lançar um erro caso a conta já esteja liquidada', async () => {
-            spyOn(contaService, 'obterTransacaoConta').and.stub();
-            spyOn(contaService, 'obterParcelasPagas').and.stub();
-            spyOn(contaService, 'detalhar').and.returnValue({status: StatusConta.LIQUIDADA});
-            await expect(contaNegocio.excluir(1)).rejects.toThrow(new ContaException(ContaException.CONTA_LIQUIDADA));
-        });
-
-        it('deve excluir a conta caso não exista nenhuma restrição', async () => {
-            spyOn(contaService, 'obterTransacaoConta').and.stub();
-            spyOn(contaService, 'obterParcelasPagas').and.stub();
-            spyOn(contaService, 'detalhar').and.returnValue({status: StatusConta.EM_ABERTO});
-            spyOn(contaService, 'excluir').and.stub();
-            await contaNegocio.excluir(1);
-            expect(contaService.excluir).toHaveBeenCalledWith(1);
-        });
-
-    });
-
     describe('ao criar um cartão', () => {
 
         let cartao;

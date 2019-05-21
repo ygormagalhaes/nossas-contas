@@ -9,4 +9,8 @@ export class ContaRepository extends AbstractRepository<Conta> {
         return contas;
     }
 
+    async excluir(id: number) {
+        await super.repository.delete({ id });
+    }
+
 }

@@ -5,13 +5,15 @@ import { Conta } from './conta.model';
 import { Parcela } from './parcela.model';
 import { Transacao } from '../transacao/transacao.model';
 import { ContaRepository } from './conta.repository';
+import { ContaNegocio } from './conta.negocio';
 
 @Injectable()
 export class ContaService {
 
     constructor(
         private readonly contaRepository: ContaRepository,
-        private readonly cartaoRepository: CartaoRepository) { }
+        private readonly cartaoRepository: CartaoRepository,
+        private readonly contaNegocio: ContaNegocio) { }
 
     async detalhar(id: number): Promise<Conta> {
         throw new Error('Implementar método');
@@ -37,8 +39,8 @@ export class ContaService {
         throw new Error('Implementar método');
     }
 
-    async excluir(id: number): Promise<void> {
-        throw new Error('Implementar método');
+    async excluir(id: number): Promise<void> { // TODO: Verificar erro e traduzir mensagem.
+        this.contaRepository.excluir(id);
     }
 
     async obterTransacaoConta(idConta: number): Promise<Transacao> {
