@@ -77,9 +77,9 @@ describe('TransacaoNegocio', () => {
                 status: StatusConta.EM_ABERTO,
             };
             spyOn(contaService, 'detalhar').and.returnValue(mockConta);
-            spyOn(contaService, 'salvar').and.stub();
+            spyOn(contaService, 'criar').and.stub();
             await transacaoNegocio.criar(transacao);
-            expect(contaService.salvar).toBeCalledWith(expect.objectContaining({ status: StatusConta.LIQUIDADA }));
+            expect(contaService.criar).toBeCalledWith(expect.objectContaining({ status: StatusConta.LIQUIDADA }));
         });
 
         it('deve retornar um erro caso o valor da transação não seja compatível com valor de conta', async () => {
@@ -90,7 +90,7 @@ describe('TransacaoNegocio', () => {
                 status: StatusConta.EM_ABERTO,
             };
             spyOn(contaService, 'detalhar').and.returnValue(mockConta);
-            spyOn(contaService, 'salvar').and.stub();
+            spyOn(contaService, 'criar').and.stub();
             await expect(transacaoNegocio.criar(transacao))
                 .rejects.toThrow(new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_CONTA));
         });
@@ -107,7 +107,7 @@ describe('TransacaoNegocio', () => {
             };
             spyOn(contaService, 'detalharParcela').and.returnValue(mockParcela);
             spyOn(contaService, 'salvarParcela').and.stub();
-            spyOn(contaService, 'salvar').and.stub();
+            spyOn(contaService, 'criar').and.stub();
             spyOn(contaService, 'obterParcelasAposData').and.returnValue([]);
             await transacaoNegocio.criar(transacao);
             expect(contaService.salvarParcela).toBeCalledWith(expect.objectContaining({ status: StatusParcela.PAGA }));
@@ -142,11 +142,11 @@ describe('TransacaoNegocio', () => {
             };
             spyOn(contaService, 'detalharParcela').and.returnValue(mockParcela);
             spyOn(contaService, 'salvarParcela').and.stub();
-            spyOn(contaService, 'salvar').and.stub();
+            spyOn(contaService, 'criar').and.stub();
             spyOn(contaService, 'obterParcelasAposData').and.returnValue([]);
             await transacaoNegocio.criar(transacao);
             expect(contaService.salvarParcela).toBeCalledWith(expect.objectContaining({ status: StatusParcela.PAGA }));
-            expect(contaService.salvar).toBeCalledWith(expect.objectContaining({ status: StatusConta.LIQUIDADA }));
+            expect(contaService.criar).toBeCalledWith(expect.objectContaining({ status: StatusConta.LIQUIDADA }));
         });
 
         it('deve atualizar o status de uma parcela e não da conta após o pagamento de uma parcela que não seja a última', async () => {
@@ -160,11 +160,11 @@ describe('TransacaoNegocio', () => {
             };
             spyOn(contaService, 'detalharParcela').and.returnValue(mockParcela);
             spyOn(contaService, 'salvarParcela').and.stub();
-            spyOn(contaService, 'salvar').and.stub();
+            spyOn(contaService, 'criar').and.stub();
             spyOn(contaService, 'obterParcelasAposData').and.returnValue([{ id: 2 }]);
             await transacaoNegocio.criar(transacao);
             expect(contaService.salvarParcela).toBeCalledWith(expect.objectContaining({ status: StatusParcela.PAGA }));
-            expect(contaService.salvar).not.toBeCalled();
+            expect(contaService.criar).not.toBeCalled();
         });
 
         it('lançar um erro caso seja informado uma conta e uma parcela ao mesmo tempo', async () => {

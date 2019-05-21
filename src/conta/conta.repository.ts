@@ -13,4 +13,8 @@ export class ContaRepository extends AbstractRepository<Conta> {
         await super.repository.delete({ id });
     }
 
+    async salvar(conta: Conta) {
+        return await super.repository.save(conta);
+    }
+
 }

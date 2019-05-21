@@ -23,8 +23,9 @@ export class ContaService {
         throw new Error('Implementar método');
     }
 
-    async salvar(conta: Conta): Promise<Conta> {
-        throw new Error('Implementar método');
+    async criar(conta: Conta): Promise<Conta> {
+        conta = this.contaNegocio.criar(conta);
+        return await this.contaRepository.salvar(conta);
     }
 
     async salvarParcela(parcela: Parcela): Promise<Parcela> {
