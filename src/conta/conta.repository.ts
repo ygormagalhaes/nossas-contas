@@ -14,7 +14,7 @@ export class ContaRepository extends AbstractRepository<Conta> {
     }
 
     async salvar(conta: Conta) {
-        return await this.manager.create(Conta, conta);
+        return await super.repository.create(conta);
     }
 
 }
