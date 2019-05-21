@@ -57,7 +57,7 @@ export class ContaNegocio {
     private vincularTransacaoCompraDinheiro(conta: Conta): void {
         const transacao = {
             valor: conta.valor,
-            conta,
+            conta, // FIXME: Resolver problema com referência circular.
             data: new Date(),
             descricao: `Pagamento da conta: ${conta.descricao}`,
         };
