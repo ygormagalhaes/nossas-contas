@@ -24,7 +24,7 @@ describe('ContaController (e2e)', () => {
         await connection.close();
     });
 
-    it('/ (POST)', async done => {
+    it('/conta (POST)', async done => {
         const conta = {
             dataVencimento: '2019-05-20',
             valor: 125.99,
