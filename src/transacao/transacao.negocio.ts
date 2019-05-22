@@ -53,7 +53,7 @@ export class TransacaoNegocio {
             const conta = await this.contaService.detalhar(transacao.conta.id);
             if (!conta.parcelas && conta.valor === transacao.valor) {
                 conta.status = StatusConta.LIQUIDADA;
-                await this.contaService.salvar(conta);
+                await this.contaService.criar(conta);
             } else if (!conta.parcelas && conta.valor !== transacao.valor) {
                 throw new TransacaoException(TransacaoException.VALOR_INCOMPATIVEL_COM_CONTA);
             }
@@ -80,7 +80,7 @@ export class TransacaoNegocio {
         const naoExisteParcelasFuturas = parcelasAposData.length === 0;
         if (naoExisteParcelasFuturas) {
             contaParcela.status = StatusConta.LIQUIDADA;
-            await this.contaService.salvar(contaParcela);
+            await this.contaService.criar(contaParcela);
         }
     }
 

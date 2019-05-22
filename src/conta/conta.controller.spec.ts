@@ -1,3 +1,6 @@
+import { UsuarioModule } from './../usuario/usuario.module';
+import { ContaNegocio } from './conta.negocio';
+import { CartaoRepository } from './cartao.repository';
 import { ContaService } from './conta.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContaController } from './conta.controller';
@@ -9,8 +12,14 @@ describe('Conta Controller', () => { // TODO: Testar os futuros pipes para cada 
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
+            imports: [UsuarioModule],
             controllers: [ContaController],
-            providers: [ContaRepository, ContaService],
+            providers: [
+                ContaService,
+                ContaRepository,
+                ContaNegocio,
+                CartaoRepository,
+            ],
         }).compile();
 
         controller = module.get<ContaController>(ContaController);

@@ -1,7 +1,9 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { UsuarioModule } from './../usuario/usuario.module';
+import { CartaoRepository } from './cartao.repository';
 import { ContaRepository } from './conta.repository';
 import { StatusConta } from './status-conta.enum';
 import { Parcela } from './parcela.model';
-import { Test, TestingModule } from '@nestjs/testing';
 import { ContaNegocio } from './conta.negocio';
 import { ContaException } from './conta.exception';
 import { TipoConta } from './tipo-conta.enum';
@@ -17,7 +19,13 @@ describe('ContaNegocio', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [ContaNegocio, UsuarioService, ContaService, ContaRepository],
+            imports: [UsuarioModule],
+            providers: [
+                CartaoRepository,
+                ContaNegocio,
+                ContaRepository,
+                ContaService,
+            ],
         }).compile();
 
         contaNegocio = module.get<ContaNegocio>(ContaNegocio);
@@ -28,6 +36,9 @@ describe('ContaNegocio', () => {
             dataVencimento: new Date('2019-05-01'),
             valor: 100.50,
             tipo: TipoConta.CARTAO_CREDITO,
+            cartao: {
+                id: 1,
+            },
         };
     });
 
@@ -146,6 +157,13 @@ describe('ContaNegocio', () => {
             expect(conta.status === StatusConta.EM_ABERTO);
         });
 
+        it('sendo uma conta com tipo CREDITO ou DEBITO deve lançar um erro caso o cartão não seja informado', () => {
+            delete conta.cartao;
+            expect(() => {
+                contaNegocio.criar(conta);
+            }).toThrow(new ContaException(ContaException.CARTAO_OBRIGATORIO));
+        });
+
     });
 
     describe('ao alterar uma conta', () => {
@@ -228,33 +246,27 @@ describe('ContaNegocio', () => {
 
     });
 
-    describe('ao excluir uma conta', () => {
+    describe('ao criar um cartão', () => {
 
-        it('deve lançar um erro caso a conta já tenha uma transação vinculada a ela', async () => {
-            spyOn(contaService, 'obterTransacaoConta').and.returnValue({id: 1});
-            await expect(contaNegocio.excluir(1)).rejects.toThrow(new ContaException(ContaException.VINCULO_TRANSACAO));
+        let cartao;
+
+        beforeAll(() => {
+            cartao = {
+                descricao: 'Nu Bank',
+            };
         });
 
-        it('deve lançar um erro caso já existam parcelas com status PAGA', async () => {
-            spyOn(contaService, 'obterTransacaoConta').and.stub();
-            spyOn(contaService, 'obterParcelasPagas').and.returnValue([{id: 1}]);
-            await expect(contaNegocio.excluir(1)).rejects.toThrow(new ContaException(ContaException.PARCELAS_PAGAS));
+        it('deve lançar um erro caso a descrição não seja informada', () => {
+            delete cartao.descricao;
+            expect(() => {
+                contaNegocio.validarCartao(cartao);
+            }).toThrow(new ContaException(ContaException.CARTAO_DESCRICAO));
         });
 
-        it('deve lançar um erro caso a conta já esteja liquidada', async () => {
-            spyOn(contaService, 'obterTransacaoConta').and.stub();
-            spyOn(contaService, 'obterParcelasPagas').and.stub();
-            spyOn(contaService, 'detalhar').and.returnValue({status: StatusConta.LIQUIDADA});
-            await expect(contaNegocio.excluir(1)).rejects.toThrow(new ContaException(ContaException.CONTA_LIQUIDADA));
-        });
-
-        it('deve excluir a conta caso não exista nenhuma restrição', async () => {
-            spyOn(contaService, 'obterTransacaoConta').and.stub();
-            spyOn(contaService, 'obterParcelasPagas').and.stub();
-            spyOn(contaService, 'detalhar').and.returnValue({status: StatusConta.EM_ABERTO});
-            spyOn(contaService, 'excluir').and.stub();
-            await contaNegocio.excluir(1);
-            expect(contaService.excluir).toHaveBeenCalledWith(1);
+        it('deve lançar um erro caso seja informado um valor undefined para o método', () => {
+            expect(() => {
+                contaNegocio.validarCartao(undefined);
+            }).toThrow(new ContaException(ContaException.CARTAO_NULO));
         });
 
     });

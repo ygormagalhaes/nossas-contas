@@ -9,7 +9,7 @@ import { Transacao } from '../transacao/transacao.model';
 export class Parcela {
 
     @PrimaryGeneratedColumn({
-        name: 'ParcelaID',
+        name: 'ID',
     })
     id: number;
 
