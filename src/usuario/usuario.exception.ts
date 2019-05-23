@@ -1,5 +1,6 @@
 import { NegocioException } from '../core/negocio-exception';
 
 export class UsuarioException extends NegocioException {
+    static readonly EMAIL_INVALIDO = 'Email inválido!';
     static readonly USUARIO_NAO_LOGADO = 'Usuário não está logado!';
 }
