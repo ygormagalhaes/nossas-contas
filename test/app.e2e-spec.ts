@@ -14,9 +14,9 @@ describe('ContaController (e2e)', () => {
             imports: [AppModule],
         }).compile();
 
-        connection = moduleFixture.get<Connection>(Connection);
         app = moduleFixture.createNestApplication();
         app.useGlobalFilters(new NegocioExceptionFilter());
+        connection = moduleFixture.get<Connection>(Connection);
         await app.init();
     });
 
@@ -35,7 +35,7 @@ describe('ContaController (e2e)', () => {
         await request(app.getHttpServer())
             .post('/conta')
             .send(conta)
-            .expect(200);
+            .expect(201);
 
         done();
     });

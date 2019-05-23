@@ -7,6 +7,7 @@ import { TipoConta } from './tipo-conta.enum';
 import { UsuarioService } from '../usuario/usuario.service';
 import { EnumUtils } from '../utils/enum.utils';
 import { StatusParcela } from './status-parcela.enum';
+import { Transacao } from 'src/transacao/transacao.model';
 
 @Injectable()
 export class ContaNegocio {
@@ -47,22 +48,23 @@ export class ContaNegocio {
         }
 
         const compraCartao = conta.tipo === TipoConta.CARTAO_CREDITO || conta.tipo === TipoConta.CARTAO_DEBITO;
-        if (conta.tipo === TipoConta.DINHEIRO) {
-            this.vincularTransacaoCompraDinheiro(conta);
-        } else if (compraCartao && (!conta.cartao || !conta.cartao.id)) {
+        if (compraCartao && (!conta.cartao || !conta.cartao.id)) {
             throw new ContaException(ContaException.CARTAO_OBRIGATORIO);
         }
     }
 
-    private vincularTransacaoCompraDinheiro(conta: Conta): void {
-        const transacao = {
-            valor: conta.valor,
-            conta, // FIXME: Resolver problema com referência circular.
-            data: new Date(),
-            descricao: `Pagamento da conta: ${conta.descricao}`,
-        };
-
-        conta.transacao = transacao as any;
+    // TODO: Implementar teste para o método.
+    vincularTransacaoCompraDinheiro(conta: Conta): Transacao {
+        let transacao;
+        if (conta.tipo === TipoConta.DINHEIRO) {
+            transacao = {
+                valor: conta.valor,
+                conta,
+                data: new Date(),
+                descricao: `Pagamento da conta: ${conta.descricao}`,
+            };
+        }
+        return transacao;
     }
 
     private validarValor(conta: Conta) {
@@ -109,7 +111,7 @@ export class ContaNegocio {
         if (!usuarioLogado) {
             throw new ContaException(ContaException.USUARIO_NAO_LOGADO);
         }
-        conta.usuario = usuarioLogado;
+        // conta.usuario = usuarioLogado; TODO: Implementar.
     }
 
     async alterar(id: number, payload: Conta) {

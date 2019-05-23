@@ -25,6 +25,7 @@ export class ContaService {
 
     async criar(conta: Conta): Promise<Conta> {
         conta = this.contaNegocio.criar(conta);
+        // TODO: Verificar necessidade de transação.
         return await this.contaRepository.salvar(conta);
     }
 

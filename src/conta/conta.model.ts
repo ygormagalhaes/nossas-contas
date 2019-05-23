@@ -43,11 +43,13 @@ export class Conta {
     })
     tipo: TipoConta;
 
-    @ManyToOne(type => Usuario)
+    @ManyToOne(type => Usuario, {
+        nullable: true,
+    })
     @JoinColumn({
         name: 'UsuarioID',
     })
-    usuario: Usuario;
+    usuario?: Usuario;
 
     @Column({
         name: 'QuantidadeParcelas',

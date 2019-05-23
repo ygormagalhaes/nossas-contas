@@ -138,18 +138,12 @@ describe('ContaNegocio', () => {
 
         it('com uma conta parcelada com a primeira data de vencimento setada retornar corretamente o '
             + 'vencimento das proximas parcelas', () => {
-                conta.quantidadeParcelas = 3;
-                conta.dataVencimento = new Date('2019-12-15');
-                conta = contaNegocio.criar(conta);
-                const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.dataVencimento);
-                const vencimentosEsperados = [new Date('2019-12-15'), new Date('2020-01-15'), new Date('2020-02-15')];
-                expect(vencimentosEsperados).toEqual(vencimentos);
-            });
-
-        it('deve gerar uma transação caso a conta seja do tipo DINHEIRO', () => {
-            conta.tipo = TipoConta.DINHEIRO;
+            conta.quantidadeParcelas = 3;
+            conta.dataVencimento = new Date('2019-12-15');
             conta = contaNegocio.criar(conta);
-            expect(conta.transacao).toBeDefined();
+            const vencimentos: Date[] = conta.parcelas.map((parcela: Parcela) => parcela.dataVencimento);
+            const vencimentosEsperados = [new Date('2019-12-15'), new Date('2020-01-15'), new Date('2020-02-15')];
+            expect(vencimentosEsperados).toEqual(vencimentos);
         });
 
         it('deve setar o status inicial da conta como em aberto', () => {
