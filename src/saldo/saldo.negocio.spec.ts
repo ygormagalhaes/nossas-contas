@@ -9,7 +9,6 @@ import { ContaService } from '../conta/conta.service';
 import { TransacaoNegocio } from '../transacao/transacao.negocio';
 import { ContaRepository } from '../conta/conta.repository';
 import { ContaNegocio } from '../conta/conta.negocio';
-import { UsuarioModule } from '../usuario/usuario.module';
 
 describe('SaldoNegocio', () => {
 
@@ -32,7 +31,7 @@ describe('SaldoNegocio', () => {
                     CartaoRepository,
                     ContaNegocio,
                     UsuarioService,
-                    UsuarioRepository
+                    UsuarioRepository,
                 ],
             }).compile();
 
