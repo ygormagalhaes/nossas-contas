@@ -7,10 +7,9 @@ import { TipoConta } from './../src/conta/tipo-conta.enum';
 import { HttpStatus } from '@nestjs/common';
 
 describe('UsuarioController (e2e)', () => {
-
     let app;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [AppModule],
         }).compile();
@@ -20,13 +19,18 @@ describe('UsuarioController (e2e)', () => {
         await app.init();
     });
 
-    it('/usuario (POST)', async done => {
-       await request(app.getHttpServer())
+    afterAll(async () => {
+        await app.close();
+    });
+
+    it('/usuario (POST)', () => {
+       request(app.getHttpServer())
             .post('/usuario')
-            .send(undefined)
+            .send({})
             .expect(HttpStatus.BAD_REQUEST)
-            .then(res => {
-                expect(res.body).toBeDefined();
+            .end((err, res) => {
+                console.log(err);
+                expect(err).toBeDefined();
             });
     });
 
@@ -36,7 +40,7 @@ xdescribe('ContaController (e2e)', () => {
     let app;
     let connection: Connection;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [AppModule],
         }).compile();
@@ -47,7 +51,7 @@ xdescribe('ContaController (e2e)', () => {
         await app.init();
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await connection.close();
     });
 

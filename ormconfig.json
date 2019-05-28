@@ -9,5 +9,5 @@
         "src/**/*.model{.ts,.js}"
     ],
     "synchronize": true,
-    "logging": true
+    "logging": false
 }
