@@ -1,6 +1,5 @@
 import { UsuarioRepository } from './../usuario/usuario.repository';
 import { UsuarioService } from './../usuario/usuario.service';
-import { UsuarioModule } from './../usuario/usuario.module';
 import { ContaNegocio } from './conta.negocio';
 import { CartaoRepository } from './cartao.repository';
 import { ContaService } from './conta.service';
