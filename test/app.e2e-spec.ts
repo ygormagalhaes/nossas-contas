@@ -6,6 +6,7 @@ import { NegocioExceptionFilter } from '../src/core/negocio-exception.filter';
 import { TipoConta } from './../src/conta/tipo-conta.enum';
 import { HttpStatus } from '@nestjs/common';
 
+/* TODO: Implementar testes E2E
 describe('UsuarioController (e2e)', () => {
     let app;
 
@@ -71,3 +72,4 @@ xdescribe('ContaController (e2e)', () => {
         done();
     });
 });
+*/
