@@ -1,15 +1,44 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { Connection } from 'typeorm';
 import { NegocioExceptionFilter } from '../src/core/negocio-exception.filter';
-import { TipoConta } from './../src/conta/tipo-conta.enum';
 
-describe('ContaController (e2e)', () => {
+describe('UsuarioController (e2e)', () => {
+    let app;
+
+    beforeAll(async () => {
+        const moduleFixture: TestingModule = await Test.createTestingModule({
+            imports: [AppModule],
+        }).compile();
+
+        app = moduleFixture.createNestApplication();
+        app.useGlobalFilters(new NegocioExceptionFilter());
+        await app.init();
+    });
+
+    afterAll(async () => {
+        await app.close();
+    });
+
+    it('/usuario (POST)', async () => {
+       await request(app.getHttpServer())
+            .post('/usuario')
+            .send({
+                email: 'emaildoygor@gmail.com',
+                senha: '12345678',
+            })
+            .expect(HttpStatus.CREATED);
+    });
+
+});
+
+/*
+xdescribe('ContaController (e2e)', () => {
     let app;
     let connection: Connection;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [AppModule],
         }).compile();
@@ -20,7 +49,7 @@ describe('ContaController (e2e)', () => {
         await app.init();
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         await connection.close();
     });
 
@@ -40,3 +69,4 @@ describe('ContaController (e2e)', () => {
         done();
     });
 });
+*/
