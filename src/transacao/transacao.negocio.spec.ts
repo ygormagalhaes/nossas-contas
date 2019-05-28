@@ -1,3 +1,4 @@
+import { UsuarioRepository } from './../usuario/usuario.repository';
 import { ContaNegocio } from './../conta/conta.negocio';
 import { UsuarioService } from './../usuario/usuario.service';
 import { CartaoRepository } from './../conta/cartao.repository';
@@ -22,9 +23,6 @@ describe('TransacaoNegocio', () => {
 
         beforeEach(async () => {
             const module: TestingModule = await Test.createTestingModule({
-                imports: [
-                    UsuarioModule,
-                ],
                 providers: [
                     TransacaoNegocio,
                     TransacaoService,
@@ -33,6 +31,8 @@ describe('TransacaoNegocio', () => {
                     CartaoRepository,
                     ContaService,
                     ContaNegocio,
+                    UsuarioService,
+                    UsuarioRepository,
                 ],
             }).compile();
 

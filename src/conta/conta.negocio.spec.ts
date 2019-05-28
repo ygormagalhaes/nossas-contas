@@ -1,5 +1,5 @@
+import { UsuarioRepository } from './../usuario/usuario.repository';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsuarioModule } from './../usuario/usuario.module';
 import { CartaoRepository } from './cartao.repository';
 import { ContaRepository } from './conta.repository';
 import { StatusConta } from './status-conta.enum';
@@ -13,24 +13,23 @@ import { ContaService } from './conta.service';
 describe('ContaNegocio', () => {
 
     let contaNegocio: ContaNegocio;
-    let contaService: ContaService;
     let usuarioService: UsuarioService;
     let conta: any;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            imports: [UsuarioModule],
             providers: [
                 CartaoRepository,
                 ContaNegocio,
                 ContaRepository,
                 ContaService,
+                UsuarioService,
+                UsuarioRepository,
             ],
         }).compile();
 
         contaNegocio = module.get<ContaNegocio>(ContaNegocio);
         usuarioService = module.get<UsuarioService>(UsuarioService);
-        contaService = module.get<ContaService>(ContaService);
 
         conta = {
             dataVencimento: new Date('2019-05-01'),

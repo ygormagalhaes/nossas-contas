@@ -1,3 +1,5 @@
+import { UsuarioRepository } from './../usuario/usuario.repository';
+import { UsuarioService } from './../usuario/usuario.service';
 import { CartaoRepository } from './../conta/cartao.repository';
 import { TestingModule, Test } from '@nestjs/testing';
 import { TransacaoService } from './../transacao/transacao.service';
@@ -21,9 +23,6 @@ describe('SaldoNegocio', () => {
         beforeEach(async () => {
             const module: TestingModule = await Test.createTestingModule({
                 // FIXME: Problema no nestjs com injeção de repositorios durante testes.
-                imports: [
-                    UsuarioModule,
-                ],
                 providers: [
                     SaldoNegocio,
                     TransacaoService,
@@ -32,6 +31,8 @@ describe('SaldoNegocio', () => {
                     ContaRepository,
                     CartaoRepository,
                     ContaNegocio,
+                    UsuarioService,
+                    UsuarioRepository
                 ],
             }).compile();
 

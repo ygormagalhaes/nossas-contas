@@ -1,12 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { Connection } from 'typeorm';
 import { NegocioExceptionFilter } from '../src/core/negocio-exception.filter';
-import { TipoConta } from './../src/conta/tipo-conta.enum';
-import { HttpStatus } from '@nestjs/common';
 
-/* TODO: Implementar testes E2E
 describe('UsuarioController (e2e)', () => {
     let app;
 
@@ -24,19 +21,19 @@ describe('UsuarioController (e2e)', () => {
         await app.close();
     });
 
-    it('/usuario (POST)', () => {
-       request(app.getHttpServer())
+    it('/usuario (POST)', async () => {
+       await request(app.getHttpServer())
             .post('/usuario')
-            .send({})
-            .expect(HttpStatus.BAD_REQUEST)
-            .end((err, res) => {
-                console.log(err);
-                expect(err).toBeDefined();
-            });
+            .send({
+                email: 'emaildoygor@gmail.com',
+                senha: '12345678',
+            })
+            .expect(HttpStatus.CREATED);
     });
 
 });
 
+/*
 xdescribe('ContaController (e2e)', () => {
     let app;
     let connection: Connection;
