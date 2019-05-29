@@ -10,6 +10,6 @@ export class UsuarioController {
     @Post()
     async criar(@Body(new ParseUsuarioPipe()) usuarioPayload: any) {
         const usuario = await this.usuarioService.criar(usuarioPayload);
-        return 'foo';
+        return usuario;
     }
 }
