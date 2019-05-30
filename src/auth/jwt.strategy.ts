@@ -14,11 +14,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
+    // TODO: Verificar aqui o endpoint para liberar /auth?
     async validar(jwtPayload: JwtPayload) {
         const usuario = await this.authService.validarUsuario(jwtPayload);
         if (!usuario) {
             // TODO: Lançar exceção personalizada.
-            throw new ForbiddenException();
+            throw new ForbiddenException(); // TODO: Incluir mensagem
         }
         return usuario;
     }
