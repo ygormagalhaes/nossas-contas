@@ -1,9 +1,11 @@
+import { UsuarioPayload } from './../interfaces/usuario-payload.interface';
 import { ParseUsuarioPipe } from './parse-usuario.pipe';
 import { UsuarioException } from '../usuario/usuario.exception';
 import { BadRequestException } from '@nestjs/common';
 
 describe('ParseUsuarioPipe', () => {
-    let payload;
+    let payload: UsuarioPayload;
+
     beforeEach(() => {
         payload = {
             email: 'foo@bar.com',
@@ -11,20 +13,17 @@ describe('ParseUsuarioPipe', () => {
         };
     });
 
-    xit('deve lançar um erro caso o payload seja nulo', () => {
+    it('deve lançar um erro caso o payload seja nulo', () => {
         expect(() => {
             new ParseUsuarioPipe().transform(undefined, undefined);
-        }).toThrow(new BadRequestException(UsuarioException.DADOS_NULOS));
+        }).toThrowError();
     });
 
-    xit('deve lançar um erro caso o payload tenha um email nulo', () => {
-        // FIXME: Resolver problema com testes de exceptions lançadas.
+    it('deve lançar um erro caso o payload tenha um email nulo', () => {
         delete payload.email;
-        try {
+        expect(() => {
             new ParseUsuarioPipe().transform(payload, undefined);
-        } catch (error) {
-            expect(error.response.message).toEqual(UsuarioException.EMAIL_INVALIDO);
-        }
+        }).toThrow(new UsuarioException(UsuarioException.EMAIL_INVALIDO));
     });
 
     xit('deve lançar um erro caso o payload tenha um email inválido', () => {

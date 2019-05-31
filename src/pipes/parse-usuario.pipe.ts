@@ -12,5 +12,4 @@ export class ParseUsuarioPipe implements PipeTransform<any, any> {
         }
         return value;
     }
-
 }

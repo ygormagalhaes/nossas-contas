@@ -1,7 +1,7 @@
+import { Controller, Post, Body } from '@nestjs/common';
 import { ParseUsuarioPipe } from './../pipes/parse-usuario.pipe';
 import { UsuarioPayload } from './../interfaces/usuario-payload.interface';
 import { AuthService } from './auth.service';
-import { Controller, Post, Body } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
