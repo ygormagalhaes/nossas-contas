@@ -11,12 +11,12 @@ import { AuthController } from './auth.controller';
         UsuarioModule,
         PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.register({
-          secretOrPrivateKey: 'secretKey',
-          signOptions: {
-            expiresIn: 3600,
-          },
+            secretOrPrivateKey: 'secretKey',
+            signOptions: {
+                expiresIn: 3600,
+            },
         }),
-      ],
+    ],
     providers: [
         AuthService,
         JwtStrategy,

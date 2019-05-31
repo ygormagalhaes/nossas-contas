@@ -1,9 +1,10 @@
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { AuthException } from './auth.exception';
 import { UsuarioPayload } from './../interfaces/usuario-payload.interface';
 import { UsuarioService } from './../usuario/usuario.service';
 import { JwtPayload } from './../interfaces/jwt-payload.interface';
 import { Usuario } from './../usuario/usuario.model';
-import { Injectable, ForbiddenException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -13,12 +14,13 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) { }
 
-    async login(payload: UsuarioPayload): Promise<string> {
+    async login(payload: UsuarioPayload): Promise<{token: string}> {
         const usuario = await this.usuarioService.obterPorEmailSenha(payload);
         if (!usuario) {
-            throw new ForbiddenException('Credenciais inválidas!'); // TODO: Colocar mensagem em classe de constantes.
+            throw new AuthException(AuthException.CREDENCIAIS_INVALIDAS);
         }
-        return this.jwtService.sign({ id: usuario.id });
+        const token = this.jwtService.sign({ id: usuario.id });
+        return { token };
     }
 
     async validarUsuario(jwtPayload: JwtPayload): Promise<Usuario> {
