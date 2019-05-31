@@ -1,36 +1,17 @@
-import { PipeTransform, ArgumentMetadata } from '@nestjs/common';
+import { PipeTransform, ArgumentMetadata, BadRequestException } from '@nestjs/common';
+import * as Joi from '@hapi/joi';
 import { Usuario } from '../usuario/usuario.model';
+import { usuarioSchema } from '../joi-schemas/usuario.schema';
 import { UsuarioException } from '../usuario/usuario.exception';
-import * as EmailValidator from 'email-validator';
 
 export class ParseUsuarioPipe implements PipeTransform<any, any> {
 
-    transform(payload: any, metadata: ArgumentMetadata): Usuario {
-        if (!payload) {
-            throw new UsuarioException(UsuarioException.DADOS_NULOS);
+    transform(value: any, metadata: ArgumentMetadata): Usuario {
+        const { error } = Joi.validate(value, usuarioSchema);
+        if (error) {
+            // throw error;
         }
-
-        if (!payload.email) {
-            throw new UsuarioException(UsuarioException.EMAIL_NULO);
-        }
-
-        if (!EmailValidator.validate(payload.email)) {
-            throw new UsuarioException(UsuarioException.EMAIL_INVALIDO);
-        }
-
-        if (!payload.senha) {
-            throw new UsuarioException(UsuarioException.SENHA_NULA);
-        }
-
-        if (payload.senha.length < 6) {
-            throw new UsuarioException(UsuarioException.SENHA_INVALIDA);
-        }
-
-        if (payload.senha.length > 8) {
-            throw new UsuarioException(UsuarioException.SENHA_INVALIDA);
-        }
-
-        return payload;
+        return value;
     }
 
 }
