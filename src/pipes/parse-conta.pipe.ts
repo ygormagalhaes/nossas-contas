@@ -3,7 +3,7 @@ import { Conta } from 'src/conta/conta.model';
 import moment = require('moment');
 import { ContaException } from '../conta/conta.exception';
 
-export class ParseContaPipe implements PipeTransform<any, Conta> {
+export class ParseContaPipe implements PipeTransform<any, Conta> { // TODO: Implementar testes para pipe
 
     transform(value: any, metadata: ArgumentMetadata): Conta {
         if (!value.dataVencimento) {
