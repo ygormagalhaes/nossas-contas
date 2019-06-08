@@ -16,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     // TODO: Verificar aqui o endpoint para liberar /auth
-    async validar(jwtPayload: JwtPayload) {
+    async validate(jwtPayload: JwtPayload) { // FIXME: Nome obrigatório?
         const usuario = await this.authService.validarUsuario(jwtPayload);
         if (!usuario) {
             throw new AuthException(AuthException.JWT_PAYLOAD_INVALIDO);
