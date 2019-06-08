@@ -3,6 +3,7 @@ import { Injectable, ForbiddenException } from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtPayload } from './../interfaces/jwt-payload.interface';
 import { AuthService } from './auth.service';
+import { AuthException } from './auth.exception';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -10,18 +11,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(private readonly authService: AuthService) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: 'secretKey', // TODO: COnfigurar através de variáveis de ambiente
+            secretOrKey: process.env.JWT_SECRET_KEY,
         });
     }
 
-    // TODO: Verificar aqui o endpoint para liberar /auth?
+    // TODO: Verificar aqui o endpoint para liberar /auth
     async validar(jwtPayload: JwtPayload) {
         const usuario = await this.authService.validarUsuario(jwtPayload);
         if (!usuario) {
-            // TODO: Lançar exceção personalizada.
-            throw new ForbiddenException(); // TODO: Incluir mensagem
+            throw new AuthException(AuthException.JWT_PAYLOAD_INVALIDO);
         }
         return usuario;
     }
-
 }
