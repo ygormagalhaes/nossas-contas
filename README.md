@@ -1,6 +1,8 @@
 <p align="right">
 <a href="https://travis-ci.org/ygormagalhaes/nossas-contas"><img src="https://travis-ci.org/ygormagalhaes/nossas-contas.svg?branch=master" alt="Travis" /></a>
 <a href="https://codecov.io/gh/ygormagalhaes/nossas-contas"><img src="https://codecov.io/gh/ygormagalhaes/nossas-contas/branch/master/graph/badge.svg" alt="Code Coverage" /></a>
+<a href="https://david-dm.org/ygormagalhaes/nossas-contas"><img src="https://david-dm.org/ygormagalhaes/nossas-contas/status.svg"/></a>
+<a href="https://david-dm.org/ygormagalhaes/nossas-contas?type=dev"><img src="https://david-dm.org/ygormagalhaes/nossas-contas/dev-status.svg"/></a>
 </p>
 
 ## Descrição
