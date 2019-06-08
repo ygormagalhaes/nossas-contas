@@ -1,5 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtPayload } from './../interfaces/jwt-payload.interface';
 import { AuthService } from './auth.service';
@@ -15,8 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    // TODO: Verificar aqui o endpoint para liberar /auth
-    async validate(jwtPayload: JwtPayload) { // FIXME: Nome obrigatório?
+    async validate(jwtPayload: JwtPayload) { // Nome 'validate' padronizado pelo Nest.
         const usuario = await this.authService.validarUsuario(jwtPayload);
         if (!usuario) {
             throw new AuthException(AuthException.JWT_PAYLOAD_INVALIDO);
