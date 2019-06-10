@@ -8,6 +8,7 @@ describe('ParseContaPipe', () => {
         payload = {
             dataVencimento: '2019-10-10',
             tipo: TipoConta.CARTAO_CREDITO,
+            valor: 1,
         };
     });
 
@@ -43,6 +44,20 @@ describe('ParseContaPipe', () => {
         expect(() => {
             new ParseContaPipe().transform(payload, undefined);
         }).toThrow(new ContaException(ContaException.TIPO_INVALIDO));
+    });
+
+    it('deve lançar um erro caso seja informado um valor inválido', () => {
+        payload.valor = -1;
+        expect(() => {
+            new ParseContaPipe().transform(payload, undefined);
+        }).toThrow(new ContaException(ContaException.VALOR_INVALIDO));
+    });
+
+    it('deve lançar um erro caso seja informado um valor inválido', () => {
+        delete payload.valor;
+        expect(() => {
+            new ParseContaPipe().transform(payload, undefined);
+        }).toThrow(new ContaException(ContaException.VALOR_INVALIDO));
     });
 
 });

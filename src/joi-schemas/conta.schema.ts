@@ -15,4 +15,9 @@ export const contaSchema = Joi.object().keys({
             .required()
             .valid(EnumUtils.getValores<string>(TipoConta))
             .error(new ContaException(ContaException.TIPO_INVALIDO)),
+    valor:
+        Joi.number()
+            .min(0.1)
+            .required()
+            .error(new ContaException(ContaException.VALOR_INVALIDO)),
 });

@@ -19,7 +19,6 @@ export class ContaNegocio {
     criar(conta: Conta) {
         // TODO: Retirar validações após pipe ser construído.
         this.validarTipo(conta);
-        this.validarValor(conta);
         this.verificarCompraParcelada(conta);
         this.setarDataLancamento(conta);
         this.setarUsuario(conta);
