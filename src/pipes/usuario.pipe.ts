@@ -1,11 +1,10 @@
 import * as Joi from '@hapi/joi';
 import { PipeTransform, ArgumentMetadata } from '@nestjs/common';
-import { UsuarioException } from './../usuario/usuario.exception';
-import { Usuario } from '../usuario/usuario.model';
+import { UsuarioException } from '../usuario/usuario.exception';
 import { usuarioSchema } from '../joi-schemas/usuario.schema';
 import { ObjectUtils } from '../utils/object.utils';
 
-export class ParseUsuarioPipe implements PipeTransform<any, any> {
+export class UsuarioPipe implements PipeTransform<any, any> {
 
     transform(value: any, metadata: ArgumentMetadata) {
         if (ObjectUtils.isObjectEmpty(value)) {
