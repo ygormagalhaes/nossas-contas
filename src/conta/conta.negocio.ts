@@ -5,7 +5,6 @@ import { Conta } from './conta.model';
 import { ContaException } from './conta.exception';
 import { TipoConta } from './tipo-conta.enum';
 import { UsuarioService } from '../usuario/usuario.service';
-import { EnumUtils } from '../utils/enum.utils';
 import { StatusParcela } from './status-parcela.enum';
 import { Transacao } from 'src/transacao/transacao.model';
 
@@ -17,50 +16,17 @@ export class ContaNegocio {
     ) { }
 
     criar(conta: Conta) {
-        // TODO: Retirar validações após pipe ser construído.
         this.validarTipo(conta);
         this.verificarCompraParcelada(conta);
         this.setarDataLancamento(conta);
         this.setarUsuario(conta);
-
         return conta;
-    }
-
-    private validarDataVencimento(conta: Conta) {
-        if (!conta.dataVencimento) {
-            throw new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA);
-        }
-
-        const tipoValido = typeof conta.dataVencimento.getTime !== 'function';
-        if (tipoValido) {
-            throw new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA);
-        }
     }
 
     private validarTipo(conta: Conta) {
         const compraCartao = conta.tipo === TipoConta.CARTAO_CREDITO || conta.tipo === TipoConta.CARTAO_DEBITO;
         if (compraCartao && (!conta.cartao || !conta.cartao.id)) {
             throw new ContaException(ContaException.CARTAO_OBRIGATORIO);
-        }
-    }
-
-    // TODO: Implementar teste para o método.
-    vincularTransacaoCompraDinheiro(conta: Conta): Transacao {
-        let transacao;
-        if (conta.tipo === TipoConta.DINHEIRO) {
-            transacao = {
-                valor: conta.valor,
-                conta,
-                data: new Date(),
-                descricao: `Pagamento da conta: ${conta.descricao}`,
-            };
-        }
-        return transacao;
-    }
-
-    private validarValor(conta: Conta) {
-        if (!conta.valor || conta.valor <= 0) {
-            throw new ContaException(ContaException.VALOR_INVALIDO);
         }
     }
 
@@ -107,8 +73,6 @@ export class ContaNegocio {
 
     async alterar(id: number, payload: Conta) {
         this.validarId(id);
-        this.validarDataVencimento(payload);
-        this.validarValor(payload);
         this.validarTipo(payload);
         this.verificarCompraParcelada(payload);
         return payload;
