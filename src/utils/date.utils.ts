@@ -15,6 +15,8 @@ export class DateUtils {
             return false;
         } else if (typeof param.getTime !== 'function') {
             return false;
+        } else if (param.toString() === 'Invalid Date') {
+            return false;
         }
         return true;
     }

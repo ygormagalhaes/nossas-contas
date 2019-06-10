@@ -33,6 +33,13 @@ describe('ContaPipe', () => {
         }).toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
     });
 
+    it('deve lançar um erro caso o payload contenha uma data inválida', () => {
+        payload.dataVencimento = '2900-99-99';
+        expect(() => {
+            new ContaPipe().transform(payload, undefined);
+        }).toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
+    });
+
     it('deve lançar um erro caso não seja informado um tipo de conta', () => {
         delete payload.tipo;
         expect(() => {
