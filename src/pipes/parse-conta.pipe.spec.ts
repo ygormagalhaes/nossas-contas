@@ -60,4 +60,10 @@ describe('ParseContaPipe', () => {
         }).toThrow(new ContaException(ContaException.VALOR_INVALIDO));
     });
 
+    it('não deve lançar nenhum erro com um payload válido', () => {
+        expect(() => {
+            new ParseContaPipe().transform(payload, undefined);
+        }).not.toThrowError();
+    });
+
 });
