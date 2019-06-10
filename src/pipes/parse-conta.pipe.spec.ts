@@ -38,4 +38,11 @@ describe('ParseContaPipe', () => {
         }).toThrow(new ContaException(ContaException.TIPO_INVALIDO));
     });
 
+    it('deve lançar um erro caso seja informado um tipo de conta inválido', () => {
+        payload.tipo = 'bar';
+        expect(() => {
+            new ParseContaPipe().transform(payload, undefined);
+        }).toThrow(new ContaException(ContaException.TIPO_INVALIDO));
+    });
+
 });
