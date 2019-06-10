@@ -7,14 +7,21 @@ describe('ParseContaPipe', () => {
     beforeEach(() => {
         payload = {
             dataVencimento: '2019-10-10',
+            tipo: TipoConta.CARTAO_CREDITO,
         };
+    });
+
+    it('deve lançar um erro caso o dado seja nulo', () => {
+        expect(() => {
+            new ParseContaPipe().transform(undefined, undefined);
+        }).toThrow(new ContaException(ContaException.DADOS_NULOS));
     });
 
     it('deve lançar um erro caso o payload não possua uma data de vencimento', () => {
         delete payload.dataVencimento;
         expect(() => {
             new ParseContaPipe().transform(payload, undefined);
-        }).toThrow(new ContaException(ContaException.DADOS_NULOS));
+        }).toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
     });
 
     it('deve lançar um erro caso o payload contenha uma data inválida', () => {
@@ -22,6 +29,13 @@ describe('ParseContaPipe', () => {
         expect(() => {
             new ParseContaPipe().transform(payload, undefined);
         }).toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
+    });
+
+    it('deve lançar um erro caso não seja informado um tipo de conta', () => {
+        delete payload.tipo;
+        expect(() => {
+            new ParseContaPipe().transform(payload, undefined);
+        }).toThrow(new ContaException(ContaException.TIPO_INVALIDO));
     });
 
 });

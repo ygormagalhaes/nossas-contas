@@ -17,7 +17,7 @@ export class ContaNegocio {
     ) { }
 
     criar(conta: Conta) {
-        this.validarDataVencimento(conta);
+        // TODO: Retirar validações após pipe ser construído.
         this.validarTipo(conta);
         this.validarValor(conta);
         this.verificarCompraParcelada(conta);
@@ -39,14 +39,6 @@ export class ContaNegocio {
     }
 
     private validarTipo(conta: Conta) {
-        if (!conta.tipo) {
-            throw new ContaException(ContaException.TIPO_INVALIDO);
-        }
-
-        if (!EnumUtils.existeValorNoEnum(conta.tipo, TipoConta)) {
-            throw new ContaException(ContaException.TIPO_INVALIDO);
-        }
-
         const compraCartao = conta.tipo === TipoConta.CARTAO_CREDITO || conta.tipo === TipoConta.CARTAO_DEBITO;
         if (compraCartao && (!conta.cartao || !conta.cartao.id)) {
             throw new ContaException(ContaException.CARTAO_OBRIGATORIO);
