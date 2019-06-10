@@ -11,4 +11,16 @@ describe('DateUtils', () => {
         const testDate = new Date('2019-02-09');
         expect(DateUtils.obterUltimoDiaMes(testDate).getDate()).toEqual(28);
     });
+
+    it('deve retornar false caso o objeto informado não seja uma instância de Date', () => {
+        expect(DateUtils.isDate({})).toBeFalsy();
+    });
+
+    it('deve retornar false caso o objeto informado seja undefined', () => {
+        expect(DateUtils.isDate(undefined)).toBeFalsy();
+    });
+
+    it('deve retornar true caso o objeto informado seja uma instância de Date', () => {
+        expect(DateUtils.isDate(new Date())).toBeTruthy();
+    });
 });

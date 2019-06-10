@@ -124,26 +124,6 @@ describe('ContaNegocio', () => {
             await expect(contaNegocio.alterar(null, conta)).rejects.toThrow(new ContaException(ContaException.ID_OBRIGATORIO));
         });
 
-        it('deve lançar um erro com uma data de vencimento inválida', async () => {
-            conta.dataVencimento = null;
-            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
-        });
-
-        it('deve lançar um erro com um valor igual ou inferior a zero', async () => {
-            conta.valor = 0;
-            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.VALOR_INVALIDO));
-        });
-
-        it('deve lançar um erro caso a data de vencimento não seja informada', async () => {
-            delete conta.dataVencimento;
-            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.DATA_VENCIMENTO_INVALIDA));
-        });
-
-        it('deve lançar um erro caso o valor não seja informado', async () => {
-            delete conta.valor;
-            await expect(contaNegocio.alterar(1, conta)).rejects.toThrow(new ContaException(ContaException.VALOR_INVALIDO));
-        });
-
         it('caso a conta tenha parcelas deve atualizar o valor de cada parcela corretamente ao atualizar um valor', async () => {
             conta.quantidadeParcelas = 3;
             conta.valor = 478;

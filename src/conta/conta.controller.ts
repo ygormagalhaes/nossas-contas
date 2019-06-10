@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { ContaService } from './conta.service';
 import { Cartao } from './cartao.model';
 import { Conta } from './conta.model';
-import { ParseContaPipe } from '../pipes/parse-conta.pipe';
+import { ContaPipe } from '../pipes/conta.pipe';
 import { AuthGuard, PassportModule } from '@nestjs/passport';
 
 @UseGuards(AuthGuard())
@@ -18,7 +18,7 @@ export class ContaController {
     }
 
     @Post()
-    async criarConta(@Body(new ParseContaPipe()) conta: Conta) {
+    async criarConta(@Body(new ContaPipe()) conta: Conta) {
         return await this.contaService.criar(conta);
     }
 
