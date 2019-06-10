@@ -67,4 +67,9 @@ describe('ContaPipe', () => {
         }).not.toThrowError();
     });
 
+    it('deve retornar um objeto com uma data de vencimento que seja equivalente ao payload enviado', () => {
+        const payloadTratado = new ContaPipe().transform(payload, undefined);
+        expect(payloadTratado.dataVencimento).toEqual(new Date('2019-10-10 00:00:00 -3'));
+    });
+
 });
