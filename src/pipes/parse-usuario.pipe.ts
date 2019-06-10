@@ -7,7 +7,7 @@ import { ObjectUtils } from '../utils/object.utils';
 
 export class ParseUsuarioPipe implements PipeTransform<any, any> {
 
-    transform(value: any, metadata: ArgumentMetadata): Usuario {
+    transform(value: any, metadata: ArgumentMetadata) {
         if (ObjectUtils.isObjectEmpty(value)) {
             throw new UsuarioException(UsuarioException.DADOS_NULOS);
         }
