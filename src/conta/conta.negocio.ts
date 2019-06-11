@@ -6,7 +6,7 @@ import { ContaException } from './conta.exception';
 import { TipoConta } from './tipo-conta.enum';
 import { UsuarioService } from '../usuario/usuario.service';
 import { StatusParcela } from './status-parcela.enum';
-import { Transacao } from 'src/transacao/transacao.model';
+import { Usuario } from '../usuario/usuario.model';
 
 @Injectable()
 export class ContaNegocio {
@@ -82,6 +82,10 @@ export class ContaNegocio {
         if (!id) {
             throw new ContaException(ContaException.ID_OBRIGATORIO);
         }
+    }
+
+    atribuirUsuario(cartao: Cartao, usuario: Usuario): void {
+        cartao.usuario = usuario;
     }
 
 }

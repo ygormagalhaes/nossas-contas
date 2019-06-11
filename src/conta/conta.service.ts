@@ -6,6 +6,7 @@ import { Parcela } from './parcela.model';
 import { Transacao } from '../transacao/transacao.model';
 import { ContaRepository } from './conta.repository';
 import { ContaNegocio } from './conta.negocio';
+import { Usuario } from 'src/usuario/usuario.model';
 
 @Injectable()
 export class ContaService {
@@ -57,7 +58,8 @@ export class ContaService {
         return await this.contaRepository.listarContas();
     }
 
-    async criarCartao(cartao: Cartao): Promise<Cartao> {
+    async criarCartao(cartao: Cartao, usuario: Usuario): Promise<Cartao> {
+        this.contaNegocio.atribuirUsuario(cartao, usuario);
         return await this.cartaoRepository.criar(cartao);
     }
 
