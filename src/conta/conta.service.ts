@@ -63,4 +63,8 @@ export class ContaService {
         return await this.cartaoRepository.criar(cartao);
     }
 
+    async listarCartoes(): Promise<Cartao[]> {
+        return await this.cartaoRepository.find();
+    }
+
 }

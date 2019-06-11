@@ -5,8 +5,8 @@ import { Conta } from './conta.model';
 import { ContaPipe } from '../pipes/conta.pipe';
 import { AuthGuard, PassportModule } from '@nestjs/passport';
 import { CartaoPipe } from '../pipes/cartao.pipe';
-import { UsuarioLogado } from 'src/decorators/usuario-logado.decorator';
-import { Usuario } from 'src/usuario/usuario.model';
+import { UsuarioLogado } from '../decorators/usuario-logado.decorator';
+import { Usuario } from '../usuario/usuario.model';
 
 @UseGuards(AuthGuard())
 @Controller('conta')
@@ -28,6 +28,11 @@ export class ContaController {
     @Post('cartao')
     async criarCartao(@Body(new CartaoPipe()) cartao: Cartao, @UsuarioLogado() usuario: Usuario) {
         return await this.contaService.criarCartao(cartao, usuario);
+    }
+
+    @Get('cartao')
+    async listarCartoes(): Promise<Cartao[]> {
+        return await this.contaService.listarCartoes();
     }
 
 }

@@ -1,10 +1,10 @@
-import { AbstractRepository, EntityRepository } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { Cartao } from './cartao.model';
 
 @EntityRepository(Cartao)
-export class CartaoRepository extends AbstractRepository<Cartao> {
+export class CartaoRepository extends Repository<Cartao> {
 
     async criar(cartao: Cartao): Promise<Cartao> {
-        return await super.repository.save(cartao);
+        return await this.save(cartao);
     }
 }
