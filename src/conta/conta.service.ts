@@ -1,3 +1,4 @@
+import { ContaDTO } from './conta.dto';
 import { Injectable } from '@nestjs/common';
 import { CartaoRepository } from './cartao.repository';
 import { Cartao } from './cartao.model';
@@ -24,9 +25,8 @@ export class ContaService {
         throw new Error('Implementar método');
     }
 
-    async criar(conta: Conta): Promise<Conta> {
-        conta = this.contaNegocio.criar(conta);
-        // TODO: Verificar necessidade de transação.
+    async criar(contaDTO: ContaDTO): Promise<Conta> { // TODO: Verificar necessidade de transação.
+        const conta = this.contaNegocio.criar(contaDTO);
         return await this.contaRepository.salvar(conta);
     }
 

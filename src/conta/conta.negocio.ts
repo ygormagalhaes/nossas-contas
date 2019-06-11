@@ -1,3 +1,4 @@
+import { ContaDTO } from './conta.dto';
 import { Cartao } from './cartao.model';
 import { Injectable } from '@nestjs/common';
 import { Parcela } from './parcela.model';
@@ -15,7 +16,8 @@ export class ContaNegocio {
         private readonly usuarioService: UsuarioService,
     ) { }
 
-    criar(conta: Conta) {
+    criar(contaDTO: ContaDTO) {
+        let conta: Conta = Object.assign({} as Conta, contaDTO); // TODO: Revisar código.
         this.validarTipo(conta);
         this.verificarCompraParcelada(conta);
         this.setarDataLancamento(conta);

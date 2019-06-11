@@ -1,3 +1,4 @@
+import { ContaDTO } from './conta.dto';
 import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { ContaService } from './conta.service';
 import { Cartao } from './cartao.model';
@@ -7,8 +8,10 @@ import { AuthGuard, PassportModule } from '@nestjs/passport';
 import { CartaoPipe } from '../pipes/cartao.pipe';
 import { UsuarioLogado } from '../decorators/usuario-logado.decorator';
 import { Usuario } from '../usuario/usuario.model';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('contas')
 export class ContaController {
 
@@ -21,7 +24,7 @@ export class ContaController {
     }
 
     @Post()
-    async criarConta(@Body(new ContaPipe()) conta: Conta) {
+    async criarConta(@Body(new ContaPipe()) conta: ContaDTO) {
         return await this.contaService.criar(conta);
     }
 
