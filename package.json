@@ -70,7 +70,7 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "collectCoverageFrom": [
-        "**/*.{controller,pipe,service,negocio,utils,service}.ts"
+        "**/*.{pipe,service,negocio,utils,service}.ts"
     ]
 }
 }
