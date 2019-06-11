@@ -4,7 +4,7 @@ import { Cartao } from './cartao.model';
 import { Conta } from './conta.model';
 import { ContaPipe } from '../pipes/conta.pipe';
 import { AuthGuard, PassportModule } from '@nestjs/passport';
-import { CartaoPipe } from 'src/pipes/cartao.pipe';
+import { CartaoPipe } from '../pipes/cartao.pipe';
 
 @UseGuards(AuthGuard())
 @Controller('conta')

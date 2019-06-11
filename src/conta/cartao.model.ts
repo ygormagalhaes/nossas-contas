@@ -18,7 +18,9 @@ export class Cartao {
     })
     descricao: string;
 
-    @ManyToOne(type => Usuario)
+    @ManyToOne(type => Usuario, {
+        nullable: false,
+    })
     @JoinColumn({
         name: 'UsuarioID',
     })
