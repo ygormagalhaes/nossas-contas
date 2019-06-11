@@ -168,4 +168,27 @@ describe('ContaNegocio', () => {
 
     });
 
+    describe('ao criar um cartão', () => {
+
+        let cartao;
+
+        beforeEach(() => {
+            cartao = {
+                descricao: 'NU BANK',
+            };
+        });
+
+        it('deve lançar um erro caso o usuário a ser setado seja undefined', () => {
+            expect(() => {
+                contaNegocio.atribuirUsuarioCartao(cartao, undefined);
+            }).toThrow(new ContaException(ContaException.CARTAO_USUARIO_INVALIDO));
+        });
+
+        it('deve retornar o payload com um usuário setado', () => {
+            contaNegocio.atribuirUsuarioCartao(cartao, {id: 1, email: 'emaildoygor@gmail.com', senha: 'foo'});
+            expect(cartao.usuario).toBeDefined();
+        });
+
+    });
+
 });

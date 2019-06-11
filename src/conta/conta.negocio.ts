@@ -63,7 +63,7 @@ export class ContaNegocio {
         conta.dataLancamento = new Date();
     }
 
-    private setarUsuario(conta: Conta) {
+    private setarUsuario(conta: Conta) { // TODO: Usar decorator e refatorar método.
         const usuarioLogado: any = this.usuarioService.getUsuarioLogado();
         if (!usuarioLogado) {
             throw new ContaException(ContaException.USUARIO_NAO_LOGADO);
@@ -84,7 +84,10 @@ export class ContaNegocio {
         }
     }
 
-    atribuirUsuario(cartao: Cartao, usuario: Usuario): void {
+    atribuirUsuarioCartao(cartao: Cartao, usuario: Usuario): void {
+        if (!usuario) {
+            throw new ContaException(ContaException.CARTAO_USUARIO_INVALIDO);
+        }
         cartao.usuario = usuario;
     }
 

@@ -14,4 +14,5 @@ export class ContaException extends NegocioException {
     static readonly CARTAO_OBRIGATORIO = 'Para esse tipo de conta é obrigatório informar o cartão utilizado!';
     static readonly CARTAO_DESCRICAO = 'Ao inserir um novo cartão o campo descrição é obrigatório!';
     static readonly CARTAO_NULO = 'Informações do cartão inválidas ou nulas!';
+    static readonly CARTAO_USUARIO_INVALIDO = 'Usuário do cartão nulo ou inválido!';
 }

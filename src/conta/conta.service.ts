@@ -59,7 +59,7 @@ export class ContaService {
     }
 
     async criarCartao(cartao: Cartao, usuario: Usuario): Promise<Cartao> {
-        this.contaNegocio.atribuirUsuario(cartao, usuario);
+        this.contaNegocio.atribuirUsuarioCartao(cartao, usuario);
         return await this.cartaoRepository.criar(cartao);
     }
 
