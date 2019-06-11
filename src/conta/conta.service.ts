@@ -58,7 +58,6 @@ export class ContaService {
     }
 
     async criarCartao(cartao: Cartao): Promise<Cartao> {
-        // this.contaNegocio.validarCartao(cartao);
         return await this.cartaoRepository.criar(cartao);
     }
 

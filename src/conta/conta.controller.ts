@@ -4,6 +4,7 @@ import { Cartao } from './cartao.model';
 import { Conta } from './conta.model';
 import { ContaPipe } from '../pipes/conta.pipe';
 import { AuthGuard, PassportModule } from '@nestjs/passport';
+import { CartaoPipe } from 'src/pipes/cartao.pipe';
 
 @UseGuards(AuthGuard())
 @Controller('conta')
@@ -23,7 +24,7 @@ export class ContaController {
     }
 
     @Post('cartao')
-    async criarCartao(@Body() cartao: Cartao) {
+    async criarCartao(@Body(new CartaoPipe()) cartao: Cartao) {
         return await this.contaService.criarCartao(cartao);
     }
 

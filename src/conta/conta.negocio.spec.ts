@@ -168,29 +168,4 @@ describe('ContaNegocio', () => {
 
     });
 
-    describe('ao criar um cartão', () => {
-
-        let cartao;
-
-        beforeAll(() => {
-            cartao = {
-                descricao: 'Nu Bank',
-            };
-        });
-
-        it('deve lançar um erro caso a descrição não seja informada', () => {
-            delete cartao.descricao;
-            expect(() => {
-                contaNegocio.validarCartao(cartao);
-            }).toThrow(new ContaException(ContaException.CARTAO_DESCRICAO));
-        });
-
-        it('deve lançar um erro caso seja informado um valor undefined para o método', () => {
-            expect(() => {
-                contaNegocio.validarCartao(undefined);
-            }).toThrow(new ContaException(ContaException.CARTAO_NULO));
-        });
-
-    });
-
 });

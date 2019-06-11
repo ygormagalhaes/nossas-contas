@@ -84,13 +84,4 @@ export class ContaNegocio {
         }
     }
 
-    validarCartao(cartao: Cartao): void {
-        if (!cartao) {
-            throw new ContaException(ContaException.CARTAO_NULO);
-        }
-
-        if (!cartao.descricao) {
-            throw new ContaException(ContaException.CARTAO_DESCRICAO);
-        }
-    }
 }
