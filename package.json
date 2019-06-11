@@ -68,6 +68,9 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
-  }
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+        "**/*.{controller,pipe,service,negocio,utils,service}.ts"
+    ]
+}
 }
