@@ -5,9 +5,11 @@ import { CartaoRepository } from './cartao.repository';
 import { ContaNegocio } from './conta.negocio';
 import { UsuarioService } from '../usuario/usuario.service';
 import { UsuarioRepository } from '../usuario/usuario.repository';
+import { Usuario } from 'src/usuario/usuario.model';
 
 describe('ContaService', () => {
     let service: ContaService;
+    let cartaoRepository: CartaoRepository;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -22,6 +24,7 @@ describe('ContaService', () => {
         }).compile();
 
         service = module.get<ContaService>(ContaService);
+        cartaoRepository = module.get<CartaoRepository>(CartaoRepository);
     });
 
     describe('ao criar um cartão', () => {
@@ -35,6 +38,11 @@ describe('ContaService', () => {
 
         it('deve lançar um erro caso o usuário seja undefined', async () => {
             await expect(service.criarCartao(cartao, undefined)).rejects.toThrowError();
+        });
+
+        it('não deve lançar nenhum erro caso o payload e o usuário sejam válidos', async () => {
+            spyOn(cartaoRepository, 'criar').and.returnValue({});
+            await expect(service.criarCartao(cartao, {id: 1} as Usuario)).resolves.toBeDefined();
         });
 
     });
