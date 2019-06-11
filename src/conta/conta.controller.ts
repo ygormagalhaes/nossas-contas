@@ -9,7 +9,7 @@ import { UsuarioLogado } from '../decorators/usuario-logado.decorator';
 import { Usuario } from '../usuario/usuario.model';
 
 @UseGuards(AuthGuard())
-@Controller('conta')
+@Controller('contas')
 export class ContaController {
 
     constructor(private readonly contaService: ContaService) { }

@@ -2,7 +2,7 @@ import { Controller, Post, Body } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { UsuarioPipe } from '../pipes/usuario.pipe';
 
-@Controller('usuario')
+@Controller('usuarios')
 export class UsuarioController {
 
     constructor(private readonly usuarioService: UsuarioService) { }
