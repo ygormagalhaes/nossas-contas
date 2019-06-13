@@ -1,4 +1,4 @@
-import { UsuarioPayload } from './../interfaces/usuario-payload.interface';
+import { LoginDTO } from './../auth/login.dto';
 import { Injectable } from '@nestjs/common';
 import { UsuarioRepository } from './usuario.repository';
 import { Usuario } from './usuario.model';
@@ -16,7 +16,7 @@ export class UsuarioService {
         return await this.usuarioRepository.findOne(id);
     }
 
-    async obterPorEmailSenha(payload: UsuarioPayload): Promise<Usuario> {
+    async obterPorEmailSenha(payload: LoginDTO): Promise<Usuario> {
         return await this.usuarioRepository.findOne(payload);
     }
 

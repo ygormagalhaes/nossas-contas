@@ -1,22 +1,21 @@
-import { EntityRepository, AbstractRepository } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { Conta } from './conta.model';
 
 @EntityRepository(Conta)
-export class ContaRepository extends AbstractRepository<Conta> {
+export class ContaRepository extends Repository<Conta> {
 
-    async listarContas() {
-        const contas = await super.repository.find();
+    async listarContas() { // TODO: Remover método e chamar diretamente o disponivel por Repository.
+        const contas = await this.find();
         return contas;
     }
 
-    async excluir(id: number) {
-        await super.repository.delete({ id });
+    async excluir(id: number) { // TODO: Remover método e chamar diretamente o disponivel por Repository.
+        await this.delete({ id });
     }
 
     async salvar(conta: Conta) {
-        conta = super.repository.create(conta);
-        console.log(conta);
-        return await super.repository.save(conta);
+        conta = this.create(conta);
+        return await this.save(conta);
     }
 
 }

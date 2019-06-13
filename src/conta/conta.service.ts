@@ -30,6 +30,10 @@ export class ContaService {
         return await this.contaRepository.salvar(conta);
     }
 
+    async atualizar(conta: Conta): Promise<Conta> {
+        return await this.contaRepository.save(conta);
+    }
+
     async salvarParcela(parcela: Parcela): Promise<Parcela> {
         throw new Error('Implementar método');
     }

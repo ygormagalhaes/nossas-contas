@@ -1,7 +1,7 @@
+import { LoginDTO } from './login.dto';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthException } from './auth.exception';
-import { UsuarioPayload } from './../interfaces/usuario-payload.interface';
 import { UsuarioService } from './../usuario/usuario.service';
 import { JwtPayload } from './../interfaces/jwt-payload.interface';
 import { Usuario } from './../usuario/usuario.model';
@@ -14,7 +14,7 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) { }
 
-    async login(payload: UsuarioPayload): Promise<{token: string}> {
+    async login(payload: LoginDTO): Promise<{token: string}> {
         const usuario = await this.usuarioService.obterPorEmailSenha(payload);
         if (!usuario) {
             throw new AuthException(AuthException.CREDENCIAIS_INVALIDAS);
